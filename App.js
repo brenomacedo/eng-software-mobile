@@ -1,8 +1,8 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useCallback } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
-import useLoadInitialData from './hooks/useLoadInitialData';
+import useLoadInitialData from './src/hooks/useLoadInitialData';
+import LoginScreen from './src/screens/loginScreen/LoginScren';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -17,8 +17,7 @@ export default function App() {
 
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <LoginScreen />
     </View>
   );
 }
