@@ -1,55 +1,38 @@
-import { View, Text, Image } from 'react-native';
+import { useState } from 'react';
+import { View, TextInput, Image, TouchableOpacity } from 'react-native';
 
 import styles from './styles';
 
 export default function Input({
-  isPassword = false,
-  leftIcon = null,
-  rightIncon = null
+  isPassword,
+  leftIcon,
+  placeHolder,
+  OptionOneRightIcon,
+  OptionTwoRightIcon
 }) {
+  const [hidePassword, setHidePassword] = useState(isPassword);
   return (
     <View style={styles.InputContainer}>
-      <Image
-        source={PasswordVector}
-        style={{
-          position: 'absolute',
-          left: 15,
-          top: 25,
-          width: 25,
-          height: 20,
-          zIndex: 2,
-          resizeMode: 'center'
-        }}
-      />
+      {leftIcon && <Image source={leftIcon} style={styles.Icon} />}
+
       <TextInput
-        textContentType="password"
         secureTextEntry={hidePassword}
-        style={styles.Input}
-        placeholder="Senha"
+        style={styles.Input(leftIcon ? true : false)}
+        placeholder={placeHolder}
       />
-      <TouchableOpacity
-        style={{
-          position: 'absolute',
-          right: 15,
-          top: 25,
-          width: 25,
-          height: 20,
-          zIndex: 2,
-          resizeMode: 'center'
-        }}
-        onPress={() => {
-          setHidePassword(!hidePassword);
-        }}
-      >
-        <Image
-          source={hidePassword ? DontShowPassVector : ShowPassVector}
-          style={{
-            width: 25,
-            height: 20,
-            resizeMode: 'center'
+      {isPassword && (
+        <TouchableOpacity
+          style={styles.ButtonIcon}
+          onPress={() => {
+            setHidePassword(!hidePassword);
           }}
-        />
-      </TouchableOpacity>
+        >
+          <Image
+            source={hidePassword ? OptionOneRightIcon : OptionTwoRightIcon}
+            style={styles.ButtonIconImage}
+          />
+        </TouchableOpacity>
+      )}
     </View>
   );
 }
