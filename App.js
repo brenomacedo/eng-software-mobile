@@ -3,6 +3,7 @@ import { useCallback } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 import useLoadInitialData from './src/hooks/useLoadInitialData';
 import LoginScreen from './src/screens/loginScreen/LoginScren';
+import SignUpScreen from './src/screens/SignUpScreen/SignUpScreen';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -17,7 +18,7 @@ export default function App() {
 
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
-      <LoginScreen />
+      <SignUpScreen />
     </View>
   );
 }
