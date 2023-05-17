@@ -1,17 +1,15 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  Image: {
-    width: 312,
-    height: 312,
-    resizeMode: 'center'
-  },
-
-  InputsButtonsContainer: {
+  Container: {
+    backgroundColor: '#212121',
+    width: '100%',
+    height: '100%',
+    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'space-around',
-    height: 450,
-    width: '80%'
+    flex: 1,
+    fontFamily: 'Poppins'
   }
 });
 
