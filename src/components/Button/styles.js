@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
   Button: {
     backgroundColor: '#F90000',
     color: 'white',
-    height: 70,
+    height: 50,
     width: '100%',
     maxWidth: 700,
     borderRadius: 15,

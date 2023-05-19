@@ -19,6 +19,7 @@ export default function Input({
         secureTextEntry={hidePassword}
         style={styles.Input(leftIcon ? true : false)}
         placeholder={placeHolder}
+        keyboardType=""
       />
       {isPassword && (
         <TouchableOpacity
