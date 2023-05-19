@@ -6,12 +6,21 @@ import DontShowPassVector from '../../../assets/DontShowPassVector.png';
 import ShowPassVector from '../../../assets/ShowPassVector.png';
 import UserNamevector from '../../../assets/UserNameVector.png';
 import CalendarVector from '../../../assets/CalendarVector.png';
+import { Input, ButtonApp, ContainerView } from '../../components/index.js';
+import DateTimeInput from './components/DateTimeInput/DateTimeInput';
 
 import styles from './styles/styles';
-
-import { Input, ButtonApp, ContainerView } from '../../components/index.js';
+import { useState } from 'react';
 
 export default function SignUpScreen() {
+  const [date, setDate] = useState(new Date(Date.now()));
+  const [showDateTime, setShowDateTime] = useState(false);
+
+  const onDateChange = (event, value) => {
+    setDate(value);
+    setShowDateTime(false);
+  };
+
   return (
     <ContainerView>
       <Image source={PickLogoWithText} style={styles.Image} />
@@ -25,11 +34,21 @@ export default function SignUpScreen() {
           leftIcon={UserNamevector}
           placeHolder={'Nome'}
         />
-        <Input
+
+        <DateTimeInput
+          dateToShow={date}
+          setDate={onDateChange}
+          show={showDateTime}
+          setShow={() => {
+            setShowDateTime(!showDateTime);
+          }}
+        />
+
+        {/* <Input
           isPassword={false}
           leftIcon={CalendarVector}
           placeHolder={'Data de Nascimento'}
-        />
+        /> */}
         <Input
           isPassword={false}
           leftIcon={EmailVector}
