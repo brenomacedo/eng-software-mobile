@@ -5,7 +5,7 @@ import PasswordVector from '../../../assets/PasswordVector.png';
 import DontShowPassVector from '../../../assets/DontShowPassVector.png';
 import ShowPassVector from '../../../assets/ShowPassVector.png';
 import UserNamevector from '../../../assets/UserNameVector.png';
-import CalendarVector from '../../../assets/CalendarVector.png';
+
 import { Input, ButtonApp, ContainerView } from '../../components/index.js';
 import DateTimeInput from './components/DateTimeInput/DateTimeInput';
 
