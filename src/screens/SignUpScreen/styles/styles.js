@@ -29,6 +29,12 @@ const styles = StyleSheet.create({
     width: '100%',
     textAlign: 'right',
     fontFamily: 'Poppins'
+  },
+  haveAccoountButton: {
+    display: 'flex',
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    width: '100%'
   }
 });
 

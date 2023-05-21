@@ -1,4 +1,4 @@
-import { View, Image, Text } from 'react-native';
+import { View, Image, Text, Platform, TouchableOpacity } from 'react-native';
 import PickLogoWithText from '../../../assets/LogoWithName.png';
 import EmailVector from '../../../assets/EmailVector.png';
 import PasswordVector from '../../../assets/PasswordVector.png';
@@ -8,17 +8,20 @@ import UserNamevector from '../../../assets/UserNameVector.png';
 
 import { Input, ButtonApp, ContainerView } from '../../components/index.js';
 import DateTimeInput from './components/DateTimeInput/DateTimeInput';
-
+/* import DateTimePicker from '@react-native-community/datetimepicker';
+ */
 import styles from './styles/styles';
 import { useState } from 'react';
 
 export default function SignUpScreen() {
   const [date, setDate] = useState(new Date(Date.now()));
-  const [showDateTime, setShowDateTime] = useState(false);
+  const [showPicker, setShowPicker] = useState(false);
 
-  const onDateChange = (event, value) => {
+  const onChangeDate = (event, value) => {
+    if (Platform.OS === 'android') {
+      setShowPicker(false);
+    }
     setDate(value);
-    setShowDateTime(false);
   };
 
   return (
@@ -37,18 +40,11 @@ export default function SignUpScreen() {
 
         <DateTimeInput
           dateToShow={date}
-          setDate={onDateChange}
-          show={showDateTime}
-          setShow={() => {
-            setShowDateTime(!showDateTime);
-          }}
+          setDate={onChangeDate}
+          showPicker={showPicker}
+          setShow={setShowPicker}
         />
 
-        {/* <Input
-          isPassword={false}
-          leftIcon={CalendarVector}
-          placeHolder={'Data de Nascimento'}
-        /> */}
         <Input
           isPassword={false}
           leftIcon={EmailVector}
@@ -70,7 +66,9 @@ export default function SignUpScreen() {
         />
 
         <ButtonApp textValue={'Criar conta'} />
-        <Text style={styles.haveAccoount}>Já tenho uma conta</Text>
+        <TouchableOpacity style={styles.haveAccoountButton}>
+          <Text style={styles.haveAccoount}>Já tenho uma conta!</Text>
+        </TouchableOpacity>
       </View>
     </ContainerView>
   );

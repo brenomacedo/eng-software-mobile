@@ -6,7 +6,8 @@ const styles = StyleSheet.create({
     height: 70,
     width: '100%',
     borderRadius: 15,
-    paddingRight: 45
+    paddingRight: 45,
+    alignItems: 'center'
   },
   containerView: {
     position: 'relative',
@@ -26,14 +27,14 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     display: 'flex',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'center',
-    paddingLeft: 0,
-    backgroundColor: 'pink'
+    paddingLeft: 45
   },
   Text: {
     fontFamily: 'Poppins',
-    color: 'gray'
+    color: 'gray',
+    textAlign: 'left'
   }
 });
 
