@@ -1,5 +1,5 @@
 import { View, Text, Image, TouchableOpacity, Platform } from 'react-native';
-import DateIcon from '../../../../../assets/CalendarVector.png';
+import DateIcon from '../../../../../../assets/CalendarVector.png';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import styles from './styles';
 

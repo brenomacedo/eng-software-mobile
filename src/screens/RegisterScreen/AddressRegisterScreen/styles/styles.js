@@ -11,6 +11,19 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     height: '68%',
     width: '80%'
+  },
+  backArrow: {
+    width: 30,
+    height: 30,
+    resizeMode: 'center'
+  },
+  backArrowButton: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    top: 50,
+    left: 20
   }
 });
 
