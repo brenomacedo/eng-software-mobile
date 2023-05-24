@@ -13,7 +13,7 @@ import DateTimeInput from './components/DateTimeInput/DateTimeInput';
 import styles from './styles/styles';
 import { useState } from 'react';
 
-export default function SignUpScreen() {
+export default function UserProfileRegisterScreen() {
   const [date, setDate] = useState(new Date(Date.now()));
   const [showPicker, setShowPicker] = useState(false);
 
