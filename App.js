@@ -1,8 +1,5 @@
 import 'react-native-gesture-handler';
-import {
-  createStackNavigator,
-  CardStyleInterpolators
-} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { StyleSheet, View } from 'react-native';
 import { useCallback } from 'react';
