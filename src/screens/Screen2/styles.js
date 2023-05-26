@@ -1,33 +1,4 @@
-import React from 'react';
-import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
-
-const Screen3 = ({ navigation }) => {
-    const subtitleText = "Crie seus eventos e reúna\npessoas para jogar com você."; 
-    React.useLayoutEffect(() => {
-        navigation.setOptions({ headerShown: false }); // Hide the header
-      }, [navigation]);
-  return (
-    <View style={styles.container}>
-      <Image source={require('../../assets/xadrez.png')} style={styles.image} />
-      <Text style={styles.title}>Marque encontros</Text>
-      <Text style={styles.subtitle} numberOfLines={3} >
-        {subtitleText}
-      </Text>
-
-      <View style={styles.rectangleContainer}>
-        <View style={[styles.rectangle2, styles.spacing]}/>
-        <View style={[styles.rectangle2, styles.spacing]}/>
-        <View style={[styles.rectangle, styles.spacing]}/>
-      </View>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate('Screen1')}
-      >
-        <Text style={styles.buttonText}>Próximo</Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     container: {
@@ -55,13 +26,13 @@ const styles = StyleSheet.create({
     subtitle: {
       fontSize: 18,
       marginVertical: 10,
-      marginLeft: -45,
+      marginLeft: -70,
       color: '#FFFFFF',
       textAlign: 'left',
       // fontFamily: 'Poppins',
       fontStyle: "normal",
       fontWeight: 500,
-      marginBottom: "21%"
+      marginBottom: "16%",
     },
     button: {
       backgroundColor: '#F90000',
@@ -70,14 +41,15 @@ const styles = StyleSheet.create({
       paddingVertical: 20,
       paddingHorizontal: 110,
       borderRadius: 10,
-      marginTop: 10
+      marginTop: 10,
+      marginBottom: 0
     },
-
     buttonText: {
       color: '#FFFFFF',
       fontSize: 18,
       textAlign: 'center',
     },
+
     rectangle: {
       width:12,
       height:6,
@@ -102,4 +74,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Screen3;
+export default styles;
