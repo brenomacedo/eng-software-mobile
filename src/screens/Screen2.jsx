@@ -13,6 +13,11 @@ const Screen2 = ({ navigation }) => {
       <Text style={styles.subtitle} numberOfLines={3} >
         {subtitleText}
       </Text>
+      <View style={styles.rectangleContainer}>
+        <View style={[styles.rectangle2, styles.spacing]}/>
+        <View style={[styles.rectangle, styles.spacing]}/>
+        <View style={[styles.rectangle2, styles.spacing]}/>
+      </View>
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate('Screen3')}
@@ -31,17 +36,20 @@ const styles = StyleSheet.create({
       backgroundColor: '#212121',
     },
     image: {
-      width: 200,
-      height: 200,
+      width: "71%",
+      height: "40%",
       marginTop: 30
     },
     title: {
       fontSize: 28,
-      marginVertical: 40,
+      marginVertical: 0,
       marginLeft: -60,
       color: '#FFFFFF',
       marginBottom: 10,
       textAlign: 'left',
+      fontFamily: 'Roboto',
+      fontStyle: "normal",
+      fontWeight: 700,
     },
     subtitle: {
       fontSize: 18,
@@ -49,19 +57,49 @@ const styles = StyleSheet.create({
       marginLeft: -70,
       color: '#FFFFFF',
       textAlign: 'left',
+      // fontFamily: 'Poppins',
+      fontStyle: "normal",
+      fontWeight: 500,
+      marginBottom: "16%",
     },
     button: {
       backgroundColor: '#F90000',
+      fontStyle: "normal",
+      fontWeight: 500,
       paddingVertical: 20,
       paddingHorizontal: 110,
       borderRadius: 10,
-      marginTop: 70,
+      marginTop: 10,
+      marginBottom: 0
     },
     buttonText: {
       color: '#FFFFFF',
       fontSize: 18,
       textAlign: 'center',
     },
+
+    rectangle: {
+      width:12,
+      height:6,
+      backgroundColor: "#FFFFFF",
+      borderRadius:2
+    },
+
+    rectangle2: {
+      backgroundColor:"#616161",
+      width:6,
+      height:6,
+      borderRadius: 3
+    },
+
+    rectangleContainer: {
+      flexDirection:"row",
+      alignItems:"center"
+    },
+
+    spacing:{
+      marginHorizontal:1
+    }
 });
 
 export default Screen2;
