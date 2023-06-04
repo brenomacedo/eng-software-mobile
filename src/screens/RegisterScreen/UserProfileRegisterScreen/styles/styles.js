@@ -17,11 +17,10 @@ const styles = StyleSheet.create({
     height: 170,
     resizeMode: 'center'
   },
-
   InputsButtonsContainer: {
     alignItems: 'center',
     justifyContent: 'space-around',
-    height: '68%',
+    height: 660,
     width: '80%'
   },
   haveAccoount: {

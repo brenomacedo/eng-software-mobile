@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   InputsButtonsContainer: {
     alignItems: 'center',
     justifyContent: 'space-around',
-    height: '68%',
+    height: 450,
     width: '80%'
   },
   backArrow: {

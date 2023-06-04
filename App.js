@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
 import { useCallback } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 import useLoadInitialData from './src/hooks/useLoadInitialData';
@@ -22,7 +22,11 @@ export default function App() {
   if (!isReady) return null;
 
   return (
-    <View style={styles.container} onLayout={onLayoutRootView}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+      style={styles.container}
+      onLayout={onLayoutRootView}
+    >
       <NavigationContainer>
         <Stack.Navigator
           initialRouteName="Login"
@@ -42,7 +46,7 @@ export default function App() {
           />
         </Stack.Navigator>
       </NavigationContainer>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -59,3 +63,7 @@ const styles = StyleSheet.create({
       <SignUpScreen />
     </View> */
 }
+
+/* 
+
+*/

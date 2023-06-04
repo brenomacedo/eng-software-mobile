@@ -5,9 +5,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#212121',
     width: '100%',
     height: '100%',
-    flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
     flex: 1,
     fontFamily: 'Poppins'
   }
