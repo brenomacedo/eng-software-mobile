@@ -2,7 +2,6 @@ import { StyleSheet, View } from 'react-native';
 import { useCallback } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 import useLoadInitialData from './src/hooks/useLoadInitialData';
-import Navigation from './src/screens/Navigation/Navigation';
 import LoginScreen from './src/screens/loginScreen/LoginScren';
 
 SplashScreen.preventAutoHideAsync();
