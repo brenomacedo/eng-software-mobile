@@ -1,11 +1,19 @@
 import { useEffect, useState } from 'react';
+import * as Font from 'expo-font';
 
 //fiz esse hook separado pensando que já poderia ser usada futuramente para fazer fetch
 function useLoadInitialData() {
   const [isReady, setIsReady] = useState(false);
+  /* const [fontsLoaded] = useFonts({
+    Poppins: require('../../assets/fonts/Poppins-Light.ttf')
+  }); */
 
   async function fetchData() {
     try {
+      /*  if (!fontsLoaded) return null; */
+      await Font.loadAsync({
+        Poppins: require('../../assets/fonts/Poppins-Light.ttf')
+      });
       await new Promise(resolve => setTimeout(resolve, 3000));
     } catch (error) {
       alert('Something went wrong!');

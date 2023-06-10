@@ -1,23 +1,25 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useCallback } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 import useLoadInitialData from './src/hooks/useLoadInitialData';
 import Navigation from './src/screens/Navigation/Navigation';
+import LoginScreen from './src/screens/loginScreen/LoginScren';
 
-// SplashScreen.preventAutoHideAsync();
+SplashScreen.preventAutoHideAsync();
 
-export default function App () {
-  //  const { isReady } = useLoadInitialData();
+export default function App() {
+  const { isReady } = useLoadInitialData();
 
-  //  const onLayoutRootView = useCallback(async () => {
-  //    if (isReady) await SplashScreen.hideAsync();
-  //  }, [isReady]);
+  const onLayoutRootView = useCallback(async () => {
+    if (isReady) await SplashScreen.hideAsync();
+  }, [isReady]);
 
-  //  if (!isReady) return null;
- 
+  if (!isReady) return null;
+
   return (
-     <Navigation/>
+    <View style={styles.container} onLayout={onLayoutRootView}>
+      <LoginScreen />
+    </View>
   );
 }
 
@@ -29,6 +31,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   }
 });
-
-
-
