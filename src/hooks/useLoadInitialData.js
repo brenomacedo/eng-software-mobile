@@ -12,7 +12,9 @@ function useLoadInitialData() {
     try {
       /*  if (!fontsLoaded) return null; */
       await Font.loadAsync({
-        Poppins: require('../../assets/fonts/Poppins-Light.ttf')
+        Poppins: require('../../assets/fonts/Poppins-Light.ttf'),
+        PoppinsMedium: require('../../assets/fonts/Poppins-Medium.ttf'),
+        PoppinsRegular: require('../../assets/fonts/Poppins-Regular.ttf')
       });
       await new Promise(resolve => setTimeout(resolve, 3000));
     } catch (error) {

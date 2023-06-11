@@ -2,7 +2,7 @@ import { StyleSheet, View } from 'react-native';
 import { useCallback } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 import useLoadInitialData from './src/hooks/useLoadInitialData';
-import LoginScreen from './src/screens/loginScreen/LoginScren';
+import Navigation from './src/components/Navigation/Navigation';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -17,16 +17,13 @@ export default function App() {
 
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
-      <LoginScreen />
+      <Navigation />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
+    flex: 1
   }
 });

@@ -5,9 +5,7 @@ import styles from './styles';
 const Screen3 = ({ navigation }) => {
   const subtitleText =
     'Crie seus eventos e reúna\npessoas para jogar com você.';
-  React.useLayoutEffect(() => {
-    navigation.setOptions({ headerShown: false }); // Hide the header
-  }, [navigation]);
+
   return (
     <View style={styles.container}>
       <Image
@@ -26,7 +24,7 @@ const Screen3 = ({ navigation }) => {
       </View>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate('Screen1')}
+        onPress={() => navigation.navigate('BottomTabNavigator')}
       >
         <Text style={styles.buttonText}>Próximo</Text>
       </TouchableOpacity>
