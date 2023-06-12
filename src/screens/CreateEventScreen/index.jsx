@@ -4,7 +4,8 @@ import {
   Input,
   ButtonApp,
   DateTimeInput,
-  SelectButton
+  SelectButton,
+  MapInput
 } from '../../components';
 import BackArrow from '../../../assets/BackArrow.png';
 import RedClockIcon from '../../../assets/redClockIcon.png';
@@ -99,12 +100,9 @@ export default function CreateEventScreen() {
           itemToShow={selectedItem}
           setSelectItem={onItemSelected}
         />
-        {/* <Input
-          isPassword={false}
-          placeHolder={'Selecione o tipo do seu evento'}
-          labelText={'Tipo'}
-          containerWidth={'90%'}
-        /> */}
+
+        <MapInput />
+
         {/* <ButtonApp textValue={'Criar evento'} /> */}
       </ScrollView>
     </ContainerView>
