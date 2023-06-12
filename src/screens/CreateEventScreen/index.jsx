@@ -94,6 +94,7 @@ export default function CreateEventScreen() {
         </View>
 
         <SelectButton
+          labelText={'Tipo'}
           itensList={data}
           itemToShow={selectedItem}
           setSelectItem={onItemSelected}

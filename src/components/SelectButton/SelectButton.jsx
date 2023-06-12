@@ -1,18 +1,32 @@
 import { Picker } from '@react-native-picker/picker';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
+import styles from './styles';
 
-export default function SelectButton({ itensList, setSelectItem, itemToShow }) {
+export default function SelectButton({
+  itensList,
+  setSelectItem,
+  itemToShow,
+  labelText
+}) {
   return (
-    <View>
-      <Picker selectedValue={'itemToShow'} onValueChange={setSelectItem}>
-        {itensList.map(item => (
-          <Picker.Item
-            label={item.typeName}
-            value={item.typeValue}
-            key={item.id}
-          />
-        ))}
-      </Picker>
+    <View style={styles.view}>
+      {labelText && <Text style={styles.label}>{labelText}</Text>}
+
+      <View style={styles.pickerView}>
+        <Picker
+          selectedValue={itemToShow}
+          onValueChange={setSelectItem}
+          style={styles.picker}
+        >
+          {itensList.map(item => (
+            <Picker.Item
+              label={item.typeName}
+              value={item.typeValue}
+              key={item.id}
+            />
+          ))}
+        </Picker>
+      </View>
     </View>
   );
 }
