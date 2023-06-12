@@ -1,19 +1,19 @@
 import { View, Image, Text, Platform, TouchableOpacity } from 'react-native';
-import PickLogoWithText from '../../../assets/LogoWithName.png';
-import EmailVector from '../../../assets/EmailVector.png';
-import PasswordVector from '../../../assets/PasswordVector.png';
-import DontShowPassVector from '../../../assets/DontShowPassVector.png';
-import ShowPassVector from '../../../assets/ShowPassVector.png';
-import UserNamevector from '../../../assets/UserNameVector.png';
+import PickLogoWithText from '../../../../assets/LogoWithName.png';
+import EmailVector from '../../../../assets/EmailVector.png';
+import PasswordVector from '../../../../assets/PasswordVector.png';
+import DontShowPassVector from '../../../../assets/DontShowPassVector.png';
+import ShowPassVector from '../../../../assets/ShowPassVector.png';
+import UserNamevector from '../../../../assets/UserNameVector.png';
 
-import { Input, ButtonApp, ContainerView } from '../../components/index.js';
+import { Input, ButtonApp, ContainerView } from '../../../components/index.js';
 import DateTimeInput from './components/DateTimeInput/DateTimeInput';
 /* import DateTimePicker from '@react-native-community/datetimepicker';
  */
 import styles from './styles/styles';
 import { useState } from 'react';
 
-export default function SignUpScreen() {
+export default function UserProfileRegisterScreen({ navigation }) {
   const [date, setDate] = useState(new Date(Date.now()));
   const [showPicker, setShowPicker] = useState(false);
 
@@ -65,8 +65,17 @@ export default function SignUpScreen() {
           placeHolder={'Confime sua senha'}
         />
 
-        <ButtonApp textValue={'Criar conta'} />
-        <TouchableOpacity style={styles.haveAccoountButton}>
+        <ButtonApp
+          textValue={'Próximo passo'}
+          navigation={navigation}
+          screen={'AddressRegister'}
+        />
+        <TouchableOpacity
+          style={styles.haveAccoountButton}
+          onPress={() => {
+            navigation.goBack();
+          }}
+        >
           <Text style={styles.haveAccoount}>Já tenho uma conta!</Text>
         </TouchableOpacity>
       </View>

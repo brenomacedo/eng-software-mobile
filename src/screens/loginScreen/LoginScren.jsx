@@ -9,7 +9,7 @@ import styles from './styles/styles';
 
 import { Input, ButtonApp, ContainerView } from '../../components/index.js';
 
-export default function LoginScreen() {
+export default function LoginScreen({ navigation }) {
   return (
     <ContainerView>
       <Image source={PickLogoWithText} style={styles.Image} />
@@ -60,7 +60,11 @@ export default function LoginScreen() {
             }}
           />
         </View>
-        <ButtonApp textValue={'Criar conta'} />
+        <ButtonApp
+          textValue={'Criar conta'}
+          navigation={navigation}
+          screen={'UserProfileRegister'}
+        />
       </View>
     </ContainerView>
   );
