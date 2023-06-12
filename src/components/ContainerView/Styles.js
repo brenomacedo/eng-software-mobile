@@ -1,16 +1,14 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  Button: {
-    backgroundColor: '#F90000',
-    color: 'white',
-    height: 50,
+  Container: {
+    backgroundColor: '#212121',
     width: '100%',
-    maxWidth: 700,
-    borderRadius: 15,
-    display: 'flex',
-    justifyContent: 'center',
+    height: '100%',
+    flexDirection: 'column',
     alignItems: 'center',
+    justifyContent: 'space-around',
+    flex: 1,
     fontFamily: 'Poppins'
   }
 });

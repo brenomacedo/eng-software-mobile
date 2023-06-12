@@ -1,10 +1,4 @@
-import {
-  View,
-  Image,
-  Text,
-  KeyboardAvoidingView,
-  Platform
-} from 'react-native';
+import { View, Image, Text } from 'react-native';
 import PickLogoWithText from '../../../assets/LogoWithName.png';
 import EmailVector from '../../../assets/EmailVector.png';
 import PasswordVector from '../../../assets/PasswordVector.png';
@@ -13,14 +7,11 @@ import ShowPassVector from '../../../assets/ShowPassVector.png';
 
 import styles from './styles/styles';
 
-import { Input, ButtonApp } from '../../components/index.js';
+import { Input, ButtonApp, ContainerView } from '../../components/index.js';
 
 export default function LoginScreen() {
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.Container}
-    >
+    <ContainerView>
       <Image source={PickLogoWithText} style={styles.Image} />
 
       <View style={styles.InputsButtonsContainer}>
@@ -71,6 +62,6 @@ export default function LoginScreen() {
         </View>
         <ButtonApp textValue={'Criar conta'} />
       </View>
-    </KeyboardAvoidingView>
+    </ContainerView>
   );
 }
