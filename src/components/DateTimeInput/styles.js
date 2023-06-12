@@ -1,14 +1,14 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  TextInput: {
+  TextInput: containerHeight => ({
     backgroundColor: '#D2D2D2',
     height: 70,
-    width: '100%',
+    width: containerHeight ? containerHeight : '100%',
     borderRadius: 15,
     paddingRight: 45,
     alignItems: 'center'
-  },
+  }),
   containerView: {
     position: 'relative',
     width: '100%'
@@ -35,6 +35,9 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins',
     color: 'gray',
     textAlign: 'left'
+  },
+  label: {
+    color: 'white'
   }
 });
 

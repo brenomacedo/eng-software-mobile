@@ -1,16 +1,56 @@
-import { TouchableOpacity, View, Image, ScrollView } from 'react-native';
-import { ContainerView, Input, ButtonApp } from '../../components';
+import { TouchableOpacity, View, Image, ScrollView, Text } from 'react-native';
+import {
+  ContainerView,
+  Input,
+  ButtonApp,
+  DateTimeInput,
+  SelectButton
+} from '../../components';
 import BackArrow from '../../../assets/BackArrow.png';
+import RedClockIcon from '../../../assets/redClockIcon.png';
+import greenClockIcon from '../../../assets/greenClockIcon.png';
 import styles from './styles';
+import { useState } from 'react';
+
+import data from './mockData';
 
 export default function CreateEventScreen() {
+  const [date, setDate] = useState(new Date(Date.now()));
+  const [showPicker, setShowPicker] = useState(false);
+
+  const [date2, setDate2] = useState(new Date(Date.now()));
+  const [showPicker2, setShowPicker2] = useState(false);
+
+  const [selectedItem, setSelectedItem] = useState(data[0].typeValue);
+
+  const onChangeDate = (event, value) => {
+    if (Platform.OS === 'android') {
+      setShowPicker(false);
+    }
+    setDate(value);
+  };
+
+  const onChangeDate2 = (event, value) => {
+    if (Platform.OS === 'android') {
+      setShowPicker2(false);
+    }
+    setDate2(value);
+  };
+
+  const onItemSelected = (itemValue, itemIndex) => {
+    setSelectedItem(itemValue);
+  };
+
   return (
     <ContainerView>
       <TouchableOpacity style={styles.arrowButton}>
         <Image style={styles.arrowImage} source={BackArrow} />
       </TouchableOpacity>
 
-      <ScrollView>
+      <ScrollView
+        contentInsetAdjustmentBehavior=".never"
+        contentContainerStyle={styles.scroll}
+      >
         <Input
           isPassword={false}
           placeHolder={'Adicione um título'}
@@ -31,24 +71,39 @@ export default function CreateEventScreen() {
           containerWidth={'90%'}
         />
         <View style={styles.hourDiv}>
-          <Input
-            isPassword={false}
-            placeHolder={'Hora de início'}
-            containerWidth={'45%'}
-            labelText={'Horário'}
+          <Text style={styles.hourText}>Horário de inicio e fim</Text>
+          <DateTimeInput
+            containerHeight={'45%'}
+            dateToShow={date}
+            setDate={onChangeDate}
+            showPicker={showPicker}
+            setShow={setShowPicker}
+            inputMode={'time'}
+            rightSideIcon={greenClockIcon}
           />
-          <Input
-            isPassword={false}
-            placeHolder={'Hora de fim'}
-            containerWidth={'45%'}
+
+          <DateTimeInput
+            containerHeight={'45%'}
+            dateToShow={date2}
+            setDate={onChangeDate2}
+            showPicker={showPicker2}
+            setShow={setShowPicker2}
+            inputMode={'time'}
+            rightSideIcon={RedClockIcon}
           />
         </View>
-        <Input
+
+        <SelectButton
+          itensList={data}
+          itemToShow={selectedItem}
+          setSelectItem={onItemSelected}
+        />
+        {/* <Input
           isPassword={false}
           placeHolder={'Selecione o tipo do seu evento'}
           labelText={'Tipo'}
           containerWidth={'90%'}
-        />
+        /> */}
         {/* <ButtonApp textValue={'Criar evento'} /> */}
       </ScrollView>
     </ContainerView>
