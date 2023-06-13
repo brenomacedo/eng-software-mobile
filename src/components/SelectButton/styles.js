@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { Platform } from 'react-native';
 
 const styles = StyleSheet.create({
   view: {
@@ -10,7 +11,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#D2D2D2',
     borderRadius: 20,
     overflow: 'hidden',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    height: Platform.OS === 'ios' ? 70 : 'auto'
   },
   picker: {
     backgroundColor: '#D2D2D2'

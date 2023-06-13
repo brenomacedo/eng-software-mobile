@@ -1,10 +1,16 @@
 import { TouchableOpacity, Text } from 'react-native';
 import styles from './styles';
 
-export default function ButtonApp({ textValue, navigation, screen }) {
+export default function ButtonApp({
+  textValue,
+  navigation,
+  screen,
+  buttonWidth,
+  buttonMargin
+}) {
   return (
     <TouchableOpacity
-      style={styles.Button}
+      style={styles.Button(buttonWidth, buttonMargin)}
       onPress={() => {
         if (navigation && screen) {
           navigation.navigate(screen);

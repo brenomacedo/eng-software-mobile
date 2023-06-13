@@ -20,17 +20,35 @@ const styles = StyleSheet.create({
     height: 30
   },
   scroll: {
-    alignItems: 'center',
-    justifyContent: 'center',
     flex: 1,
-    padding: 0,
-    width: Dimensions.get('window').width
+    width: Dimensions.get('window').width,
+    backgroundColor: '#212121',
+    paddingTop: 10,
+    paddingBottom: 20,
+    position: 'relative'
   },
   hourText: {
     color: 'white',
     position: 'absolute',
     top: 0,
     left: 0
+  },
+  scrollView: {
+    height: '20%',
+    width: '80%',
+    margin: 20,
+    alignSelf: 'center',
+    padding: 20,
+    borderWidth: 5,
+    borderRadius: 5,
+    borderColor: 'black',
+    backgroundColor: 'lightblue'
+  },
+  contentContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 80,
+    paddingBottom: 20
   }
 });
 
