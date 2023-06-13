@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     overflow: 'hidden',
     position: 'relative',
-    marginTop: 10
+    marginTop: 15
   },
   map: {
     height: '100%',

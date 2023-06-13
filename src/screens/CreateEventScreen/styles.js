@@ -7,7 +7,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '90%',
     height: 120,
-    position: 'relative'
+    position: 'relative',
+    marginTop: 15
   },
   arrowButton: {
     position: 'absolute',
