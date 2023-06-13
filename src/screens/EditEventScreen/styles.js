@@ -50,6 +50,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 80,
     paddingBottom: 20
+  },
+  eventTitle: {
+    color: 'white',
+    width: '100%',
+    textAlign: 'center',
+    fontSize: 20
   }
 });
 

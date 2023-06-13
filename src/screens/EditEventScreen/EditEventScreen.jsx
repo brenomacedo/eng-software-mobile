@@ -19,6 +19,7 @@ import RedClockIcon from '../../../assets/redClockIcon.png';
 import greenClockIcon from '../../../assets/greenClockIcon.png';
 import styles from './styles';
 import { useState } from 'react';
+import data from './mockData';
 
 export default function EditEventScreen() {
   const [date, setDate] = useState(new Date(Date.now()));
@@ -28,6 +29,10 @@ export default function EditEventScreen() {
   const [showPicker2, setShowPicker2] = useState(false);
 
   const [selectedItem, setSelectedItem] = useState(data[0].typeValue);
+
+  const [tittle, setTittle] = useState('');
+  const [description, setDescription] = useState('');
+  const [place, setPlace] = useState('');
 
   const onChangeDate = (event, value) => {
     if (Platform.OS === 'android') {
@@ -52,6 +57,7 @@ export default function EditEventScreen() {
       style={styles.scroll}
       contentContainerStyle={styles.contentContainer}
     >
+      <Text style={styles.eventTitle}>Calourada da computaria</Text>
       <TouchableOpacity style={styles.arrowButton}>
         <Image style={styles.arrowImage} source={BackArrow} />
       </TouchableOpacity>
@@ -61,6 +67,8 @@ export default function EditEventScreen() {
         placeHolder={'Adicione um título'}
         labelText={'Título'}
         containerWidth={'90%'}
+        value={tittle}
+        setValue={setTittle}
       />
       <Input
         isPassword={false}
@@ -68,12 +76,16 @@ export default function EditEventScreen() {
         labelText={'Descrição'}
         containerWidth={'90%'}
         containerHeight={200}
+        value={description}
+        setValue={setDescription}
       />
       <Input
         isPassword={false}
         placeHolder={'Rua, cidade e estado do evento'}
         labelText={'Local'}
         containerWidth={'90%'}
+        value={place}
+        setValue={setPlace}
       />
       <View style={styles.hourDiv}>
         <Text style={styles.hourText}>Horário de inicio e fim</Text>
@@ -110,7 +122,7 @@ export default function EditEventScreen() {
       <ButtonApp
         buttonWidth={'90%'}
         buttonMargin={10}
-        textValue={'Criar evento'}
+        textValue={'Atualizar'}
       />
     </ScrollView>
   );
