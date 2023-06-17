@@ -7,7 +7,7 @@ import ShowPassVector from '../../../../assets/ShowPassVector.png';
 import UserNamevector from '../../../../assets/UserNameVector.png';
 
 import { Input, ButtonApp, ContainerView } from '../../../components/index.js';
-import DateTimeInput from './components/DateTimeInput/DateTimeInput';
+import DateTimeInput from '../../../components/DateTimeInput/DateTimeInput';
 /* import DateTimePicker from '@react-native-community/datetimepicker';
  */
 import styles from './styles/styles';

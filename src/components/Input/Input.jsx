@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, TextInput, Image, TouchableOpacity } from 'react-native';
+import { View, TextInput, Image, TouchableOpacity, Text } from 'react-native';
 
 import styles from './styles';
 
@@ -8,16 +8,20 @@ export default function Input({
   leftIcon,
   placeHolder,
   OptionOneRightIcon,
-  OptionTwoRightIcon
+  OptionTwoRightIcon,
+  labelText,
+  containerWidth,
+  containerHeight
 }) {
   const [hidePassword, setHidePassword] = useState(isPassword);
   return (
-    <View style={styles.InputContainer}>
+    <View style={styles.InputContainer(containerWidth, containerHeight)}>
       {leftIcon && <Image source={leftIcon} style={styles.Icon} />}
 
+      <Text style={styles.label}>{labelText ? labelText : ''}</Text>
       <TextInput
         secureTextEntry={hidePassword}
-        style={styles.Input(leftIcon ? true : false)}
+        style={styles.Input(leftIcon ? true : false, containerHeight)}
         placeholder={placeHolder}
         keyboardType="default"
       />

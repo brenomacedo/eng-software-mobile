@@ -1,20 +1,26 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  Input: doesTheInputHaveAnIcon => ({
+  Input: (doesTheInputHaveAnIcon, containerHeight) => ({
     backgroundColor: '#D2D2D2',
-    height: 70,
+    height: '78%',
     width: '100%',
     borderRadius: 15,
     fontFamily: 'Poppins',
     paddingLeft: doesTheInputHaveAnIcon ? 50 : 15,
-    paddingRight: 45
+    paddingRight: 45,
+    paddingTop: containerHeight > 100 ? 10 : 0,
+    textAlignVertical: containerHeight > 100 ? 'top' : 'center',
+    textAlign: 'left',
+    marginTop: 4
   }),
-  InputContainer: {
+  InputContainer: (containerWidth, containerHeight) => ({
     position: 'relative',
-    width: '100%',
-    maxWidth: 700
-  },
+    height: containerHeight ? containerHeight : 90,
+    width: containerWidth ? containerWidth : '100%',
+    maxWidth: 700,
+    marginBottom: 10
+  }),
   Icon: {
     position: 'absolute',
     left: 15,
@@ -37,6 +43,9 @@ const styles = StyleSheet.create({
     width: 25,
     height: 20,
     resizeMode: 'center'
+  },
+  label: {
+    color: 'white'
   }
 });
 /* tabText: (activeJobType, item) => ({
