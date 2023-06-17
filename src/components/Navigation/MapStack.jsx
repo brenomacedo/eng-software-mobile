@@ -1,12 +1,12 @@
 import EventsMap from '../../screens/EventsMap/EventsMap';
 import { createStackNavigator } from '@react-navigation/stack';
-import CreateEventScreen from '../../screens/CreateEventScreen';
+import EditEventScreen from '../../screens/EditEventScreen/EditEventScreen';
 
 const MapStack = createStackNavigator();
 const MainScreenStack = () => {
   return (
     <MapStack.Navigator screenOptions={{ headerShown: false }}>
-      <MapStack.Screen name="EventsMap" component={CreateEventScreen} />
+      <MapStack.Screen name="EventsMap" component={EditEventScreen} />
     </MapStack.Navigator>
   );
 };

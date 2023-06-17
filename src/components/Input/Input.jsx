@@ -11,7 +11,9 @@ export default function Input({
   OptionTwoRightIcon,
   labelText,
   containerWidth,
-  containerHeight
+  containerHeight,
+  setValue,
+  value
 }) {
   const [hidePassword, setHidePassword] = useState(isPassword);
   return (
@@ -24,6 +26,8 @@ export default function Input({
         style={styles.Input(leftIcon ? true : false, containerHeight)}
         placeholder={placeHolder}
         keyboardType="default"
+        defaultValue={value}
+        onChangeText={setValue}
       />
       {isPassword && (
         <TouchableOpacity
