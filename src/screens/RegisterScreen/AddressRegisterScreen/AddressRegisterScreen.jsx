@@ -1,22 +1,16 @@
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Text, View } from 'react-native';
 import { ContainerView, Input, ButtonApp } from '../../../components';
 import PickUpPal from '../../../../assets/LogoWithName.png';
 import HomeVector from '../../../../assets/HomeVector.png';
 import BuildingVector from '../../../../assets/BuildingVector.png';
 import FactVector from '../../../../assets/FactVector.png';
-import BackArrow from '../../../../assets/BackArrow.png';
 import styles from './styles/styles';
+import ArrowBack from '../../../components/ArrowBack/ArrowBack';
+
 export default function AddressRegisterScreen({ navigation }) {
   return (
     <ContainerView>
-      <TouchableOpacity
-        style={styles.backArrowButton}
-        onPress={() => {
-          navigation.goBack();
-        }}
-      >
-        <Image source={BackArrow} style={styles.backArrow} />
-      </TouchableOpacity>
+      <ArrowBack onPress={() => navigation.goBack()} />
       <Image source={PickUpPal} style={styles.Image} />
       <View style={styles.InputsButtonsContainer}>
         <Text style={{ color: 'white', fontSize: 20, fontFamily: 'Poppins' }}>

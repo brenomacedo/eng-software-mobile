@@ -2,6 +2,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MapStack from './MapStack';
 import styles from './styles';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
+import Profile from '../../screens/Profile/Profile';
 
 const BOTTOM_TAB_ROUTES = [
   {
@@ -69,10 +70,11 @@ const BottomNavigator = () => {
   return (
     <BottomTab.Navigator
       screenOptions={{ headerShown: false }}
-      initialRouteName="MapStack"
+      initialRouteName="mapStack"
       tabBar={tabBar}
     >
-      <BottomTab.Screen name="MapStack" component={MapStack} />
+      <BottomTab.Screen name="mapStack" component={MapStack} />
+      <BottomTab.Screen name="profile" component={Profile} />
     </BottomTab.Navigator>
   );
 };
