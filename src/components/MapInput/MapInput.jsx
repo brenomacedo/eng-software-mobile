@@ -5,7 +5,7 @@ import styles from './styles';
 import balao from '../../../assets/balao_2.png';
 import { useState } from 'react';
 
-export default function MapInput() {
+export default function MapInput({ hideLabel, style, readOnly }) {
   const [mapPosition, setMapPosition] = useState({
     latitude: 35.6762,
     longitude: 139.6503,
@@ -19,13 +19,14 @@ export default function MapInput() {
     longitudeDelta: 0.01
   }; */
   return (
-    <View style={styles.view}>
-      <Text style={styles.text}>Localização</Text>
+    <View style={[styles.view, style ? style : {}]}>
+      {!hideLabel && <Text style={styles.text}>Localização</Text>}
       <View style={styles.mapView}>
         <MapView
           initialRegion={mapPosition}
           style={styles.map}
           onPress={e => {
+            if (readOnly) return;
             let newCoordinates = { ...mapPosition };
             newCoordinates.latitude = e.nativeEvent.coordinate.latitude;
             newCoordinates.longitude = e.nativeEvent.coordinate.longitude;

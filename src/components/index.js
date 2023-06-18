@@ -4,6 +4,7 @@ import ContainerView from './ContainerView/ContainerView';
 import DateTimeInput from './DateTimeInput/DateTimeInput';
 import SelectButton from './SelectButton/SelectButton';
 import MapInput from './MapInput/MapInput';
+import ArrowBack from './ArrowBack/ArrowBack';
 
 export {
   Input,
@@ -11,5 +12,6 @@ export {
   ContainerView,
   DateTimeInput,
   SelectButton,
-  MapInput
+  MapInput,
+  ArrowBack
 };
