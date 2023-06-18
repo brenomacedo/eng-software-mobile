@@ -69,6 +69,7 @@ export default function EditEventScreen() {
         containerWidth={'90%'}
         value={tittle}
         setValue={setTittle}
+        marginBottom={15}
       />
       <Input
         isPassword={false}
@@ -97,6 +98,7 @@ export default function EditEventScreen() {
           setShow={setShowPicker}
           inputMode={'time'}
           rightSideIcon={greenClockIcon}
+          marginTop={15}
         />
 
         <DateTimeInput
@@ -107,6 +109,7 @@ export default function EditEventScreen() {
           setShow={setShowPicker2}
           inputMode={'time'}
           rightSideIcon={RedClockIcon}
+          marginTop={15}
         />
       </View>
 

@@ -1,13 +1,15 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  TextInput: containerHeight => ({
+  TextInput: (containerHeight, marginTop) => ({
     backgroundColor: '#D2D2D2',
     height: 70,
     width: containerHeight ? containerHeight : '100%',
     borderRadius: 15,
     paddingRight: 45,
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: 15,
+    marginTop: marginTop ? marginTop : 0
   }),
   containerView: {
     position: 'relative',

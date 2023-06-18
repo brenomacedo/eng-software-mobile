@@ -43,6 +43,7 @@ export default function UserProfileRegisterScreen({ navigation }) {
           setDate={onChangeDate}
           showPicker={showPicker}
           setShow={setShowPicker}
+          inputMode={'date'}
         />
 
         <Input

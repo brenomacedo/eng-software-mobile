@@ -10,17 +10,20 @@ export default function DateTimeInput({
   showPicker,
   inputMode,
   containerHeight,
-  rightSideIcon
+  rightSideIcon,
+  marginTop
 }) {
   return (
-    <View style={styles.TextInput(containerHeight)}>
+    <View style={styles.TextInput(containerHeight, marginTop)}>
       <TouchableOpacity onPress={setShow} style={styles.Button}>
         <Image
           source={rightSideIcon ? rightSideIcon : DateIcon}
           style={styles.Image}
         />
         <Text style={styles.Text}>
-          {dateToShow.getHours() + ':' + dateToShow.getMinutes()}
+          {inputMode == 'time'
+            ? dateToShow.toLocaleTimeString('pt-BR').slice(0, 5)
+            : dateToShow.toLocaleDateString('pt-BR')}
         </Text>
       </TouchableOpacity>
 

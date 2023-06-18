@@ -63,6 +63,7 @@ export default function CreateEventScreen() {
         placeHolder={'Adicione um título'}
         labelText={'Título'}
         containerWidth={'90%'}
+        marginBottom={15}
       />
       <Input
         isPassword={false}
@@ -87,6 +88,7 @@ export default function CreateEventScreen() {
           setShow={setShowPicker}
           inputMode={'time'}
           rightSideIcon={greenClockIcon}
+          marginTop={15}
         />
 
         <DateTimeInput
@@ -97,6 +99,7 @@ export default function CreateEventScreen() {
           setShow={setShowPicker2}
           inputMode={'time'}
           rightSideIcon={RedClockIcon}
+          marginTop={15}
         />
       </View>
 

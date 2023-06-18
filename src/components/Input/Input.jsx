@@ -13,14 +13,28 @@ export default function Input({
   containerWidth,
   containerHeight,
   setValue,
-  value
+  value,
+  marginBottom
 }) {
   const [hidePassword, setHidePassword] = useState(isPassword);
   return (
-    <View style={styles.InputContainer(containerWidth, containerHeight)}>
-      {leftIcon && <Image source={leftIcon} style={styles.Icon} />}
+    <View
+      style={styles.InputContainer(
+        containerWidth,
+        containerHeight,
+        marginBottom
+      )}
+    >
+      {leftIcon && (
+        <Image
+          source={leftIcon}
+          style={styles.Icon(labelText ? true : false)}
+        />
+      )}
 
-      <Text style={styles.label}>{labelText ? labelText : ''}</Text>
+      {labelText && (
+        <Text style={styles.label}>{labelText ? labelText : ''}</Text>
+      )}
       <TextInput
         secureTextEntry={hidePassword}
         style={styles.Input(leftIcon ? true : false, containerHeight)}
@@ -31,7 +45,7 @@ export default function Input({
       />
       {isPassword && (
         <TouchableOpacity
-          style={styles.ButtonIcon}
+          style={styles.ButtonIcon(labelText ? true : false)}
           onPress={() => {
             setHidePassword(!hidePassword);
           }}

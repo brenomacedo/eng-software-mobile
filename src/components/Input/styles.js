@@ -14,31 +14,31 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     marginTop: 4
   }),
-  InputContainer: (containerWidth, containerHeight) => ({
+  InputContainer: (containerWidth, containerHeight, marginBottom) => ({
     position: 'relative',
     height: containerHeight ? containerHeight : 90,
     width: containerWidth ? containerWidth : '100%',
     maxWidth: 700,
-    marginBottom: 10
+    marginBottom: marginBottom ? marginBottom : 0
   }),
-  Icon: {
+  Icon: doesInputHaveLabel => ({
     position: 'absolute',
     left: 15,
-    top: 25,
+    top: doesInputHaveLabel ? 46 : 25,
     width: 25,
     height: 20,
     zIndex: 2,
     resizeMode: 'center'
-  },
-  ButtonIcon: {
+  }),
+  ButtonIcon: doesInputHaveLabel => ({
     position: 'absolute',
     right: 15,
-    top: 25,
+    top: doesInputHaveLabel ? 45 : 25,
     width: 25,
     height: 20,
     zIndex: 2,
     resizeMode: 'center'
-  },
+  }),
   ButtonIconImage: {
     width: 25,
     height: 20,
