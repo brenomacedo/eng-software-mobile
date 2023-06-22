@@ -4,6 +4,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import useLoadInitialData from './src/hooks/useLoadInitialData';
 import Navigation from './src/components/Navigation/Navigation';
 import { StatusBar } from 'expo-status-bar';
+import EventRequests from './src/screens/EventRequests/EventRequests';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -18,8 +19,9 @@ export default function App() {
 
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
-      <StatusBar style="light" />
-      <Navigation />
+      {/* <StatusBar style="light" />
+      <Navigation /> */}
+      <EventRequests></EventRequests>
     </View>
   );
 }
