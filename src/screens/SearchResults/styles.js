@@ -5,9 +5,23 @@ export default StyleSheet.create({
     flex: 1
   },
   bell:{
-    height:27,
+    height:30,
     width: 25,
     margin:5,
+    zIndex:1
+  },
+  circle:{
+    width: 14,
+    height: 14,
+    borderRadius: 19,
+    backgroundColor:"black",
+    position:"absolute",
+    top: 23,
+    left: 18,
+    color:"white",
+    textAlign:"center",
+    fontSize:10,
+    zIndex:2
   },
 
   pen:{

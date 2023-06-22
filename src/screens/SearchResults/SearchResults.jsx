@@ -19,10 +19,16 @@ const Button = function(data, index){
                 </Text>
       </View>
       <View style={styles.buttonIcons}>
-        <Image
-          source={require('../../../assets/iconBell.png')}
-          style={styles.bell}
-        />
+        <View>
+
+          <Image
+            source={require('../../../assets/iconBell.png')}
+            style={styles.bell}
+            />
+          <Text style={styles.circle}>
+            {data.bellCount} 
+          </Text>
+        </View>
         <Image
           source={require('../../../assets/Pencil.png')}
           style={styles.pen}
@@ -33,9 +39,17 @@ const Button = function(data, index){
 }
 
 const SearchResults = () => {
-  let buttons = [{Titulo: 'Título do evento', Local: 'Local', Horario:'16:30-17:30'}, {Titulo: 'Título do evento', Local: 'Local', Horario:'16:30-17:30'}, {Titulo: 'Título do evento', Local: 'Local', Horario:'16:30-17:30'}, {Titulo: 'Título do evento', Local: 'Local', Horario:'16:30-17:30'}, {Titulo: 'Título do evento', Local: 'Local', Horario:'16:30-17:30'}, {Titulo: 'Título do evento', Local: 'Local', Horario:'16:30-17:30'}];
 
-  // buttons = buttons.concat(buttons).concat(buttons);
+  //Recebe do backend as informações, 
+  let buttons = [{Titulo: 'Título do evento', Local: 'Local', Horario:'16:30-17:30',bellCount:5}, 
+                 {Titulo: 'Olimpiada', Local: 'Estônia', Horario:'29:30-47:30',bellCount:71},
+                 {Titulo: 'Show de fogos', Local: 'Coreia do Norte', Horario:'19:87-35:83',bellCount:71}
+                ];
+
+  //Teste para multiplos botões
+  buttons = buttons.concat(buttons).concat(buttons);
+  buttons = buttons.concat(buttons).concat(buttons)
+  // buttons = buttons.concat(buttons).concat(buttons)
   return (
       <ScrollView 
         style={styles.scroll}
