@@ -70,6 +70,7 @@ const UserEventRequestsScreen = () => {
 
   return (
     <ScrollView style={styles.scroll} contentContainerStyle={styles.eventDetailsContainer}>
+       <ArrowBack onPress={() => {}} />
       <Text style={styles.eventDetailsInfoTitle}>Solicitações de {eventName}</Text>
 
       {messages.map((data, index) => (
