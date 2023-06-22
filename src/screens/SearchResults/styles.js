@@ -4,9 +4,23 @@ export default StyleSheet.create({
   scroll: {
     flex: 1
   },
+  bell:{
+    height:27,
+    width: 25,
+    margin:5,
+  },
+
+  pen:{
+    height:25,
+    width: 25,
+    margin:5,
+    overflow:"visible"
+  },
+
   eventDetailsContainer: {
     backgroundColor: '#212121',
-    alignItems: 'center'
+    alignItems: 'center',
+    minHeight:'100%',
   },
   eventDetailsTitle: {
     color: 'white',
@@ -15,10 +29,10 @@ export default StyleSheet.create({
   },
   eventDetailsInfoTitle: {
     color: 'white',
-    fontFamily: 'PoppinsRegular',
-    fontSize: 18,
-    alignSelf: 'flex-start',
-    paddingLeft: 32,
+    fontFamily: 'Poppins',
+    fontSize: 16,
+    alignSelf: 'center',
+    fontWeight:300,
     marginTop: 16
   },
   eventDetailsInfo: {
@@ -41,18 +55,32 @@ export default StyleSheet.create({
     paddingBottom: 16
   },
   button: {
-    width: '85%',
+    width: '91%',
     height: 100,
     backgroundColor: '#FFF',
     borderRadius: 15,
     marginTop: 16,
-    justifyContent: 'center',
-    alignItems: 'flex-start'
+    display:"flex",
+    justifyContent: "flex-start",
+    alignItems: 'center',
+    flexDirection:"row"
+  },
+  buttonText:{
+    flexBasis:"80%",
+    
+
+  },
+  buttonIcons:{
+    flexBasis:"20%",
+    display:"flex",
+    justifyContent:"center",
+    alignItems:"center",
+    flexDirection:"column",
   },
   buttonTextTitle: {
     color: '#000',
     fontFamily: 'PoppinsRegular',
-    fontSize: 18,
+    fontSize: 20,
     textAlign: 'left',
     marginLeft: 14,
     fontWeight: '700'
