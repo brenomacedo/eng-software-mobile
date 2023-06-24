@@ -14,7 +14,6 @@ export default StyleSheet.create({
     padding: 24
   },
   loginButton: {
-    padding: 12,
     backgroundColor: '#F90000',
     alignSelf: 'flex-end',
     marginTop: 24,

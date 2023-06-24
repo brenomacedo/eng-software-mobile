@@ -6,16 +6,23 @@ export default function ButtonApp({
   navigation,
   screen,
   buttonWidth,
-  buttonMargin
+  buttonMargin,
+  loading,
+  onPress
 }) {
   return (
     <TouchableOpacity
-      style={styles.Button(buttonWidth, buttonMargin)}
-      onPress={() => {
-        if (navigation && screen) {
-          navigation.navigate(screen);
-        }
-      }}
+      disabled={loading}
+      style={styles.Button(buttonWidth, buttonMargin, loading)}
+      onPress={
+        onPress
+          ? onPress
+          : () => {
+              if (navigation && screen) {
+                navigation.navigate(screen);
+              }
+            }
+      }
     >
       <Text style={{ color: 'white' }}>{textValue}</Text>
     </TouchableOpacity>

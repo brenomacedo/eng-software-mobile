@@ -10,7 +10,7 @@ import ArrowBack from '../../../components/ArrowBack/ArrowBack';
 export default function AddressRegisterScreen({ navigation }) {
   return (
     <ContainerView>
-      <ArrowBack onPress={() => navigation.goBack()} />
+      <ArrowBack style={{ marginTop: 0 }} onPress={() => navigation.goBack()} />
       <Image source={PickUpPal} style={styles.Image} />
       <View style={styles.InputsButtonsContainer}>
         <Text style={{ color: 'white', fontSize: 20, fontFamily: 'Poppins' }}>
@@ -32,7 +32,7 @@ export default function AddressRegisterScreen({ navigation }) {
           leftIcon={HomeVector}
           placeHolder={'Bairro'}
         />
-        <ButtonApp textValue={'Criar conta'} />
+        <ButtonApp loading={true} textValue={'Criar conta'} />
       </View>
     </ContainerView>
   );

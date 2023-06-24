@@ -1,4 +1,5 @@
 import { createContext, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AuthContext = createContext({});
 
@@ -10,6 +11,17 @@ const AuthProvider = ({ children }) => {
   const [address, setAddress] = useState(null);
   const [events, setEvents] = useState([]);
   const [requests, setRequests] = useState([]);
+
+  const logout = async () => {
+    setIsAuth(false);
+    setUser(null);
+    setAddress(null);
+    setAuthToken(null);
+    setEvents([]);
+    setRequests([]);
+
+    await AsyncStorage.removeItem('token');
+  };
 
   return (
     <AuthContext.Provider
@@ -25,7 +37,8 @@ const AuthProvider = ({ children }) => {
         requests,
         setRequests,
         authToken,
-        setAuthToken
+        setAuthToken,
+        logout
       }}
     >
       {children}

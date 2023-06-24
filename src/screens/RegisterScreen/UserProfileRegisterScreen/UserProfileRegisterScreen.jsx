@@ -26,7 +26,7 @@ export default function UserProfileRegisterScreen({ navigation }) {
 
   return (
     <ContainerView>
-      <Image source={PickLogoWithText} style={styles.Image} />
+      <Image source={PickLogoWithText} style={[styles.Image]} />
 
       <View style={styles.InputsButtonsContainer}>
         <Text style={{ color: 'white', fontSize: 20, fontFamily: 'Poppins' }}>
@@ -69,7 +69,7 @@ export default function UserProfileRegisterScreen({ navigation }) {
         <ButtonApp
           textValue={'Próximo passo'}
           navigation={navigation}
-          screen={'AddressRegister'}
+          screen={'AddressRegisterScreen'}
         />
         <TouchableOpacity
           style={styles.haveAccoountButton}

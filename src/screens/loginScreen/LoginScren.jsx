@@ -4,12 +4,63 @@ import EmailVector from '../../../assets/EmailVector.png';
 import PasswordVector from '../../../assets/PasswordVector.png';
 import DontShowPassVector from '../../../assets/DontShowPassVector.png';
 import ShowPassVector from '../../../assets/ShowPassVector.png';
+import useAuth from '../../hooks/useAuth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import api from '../../api';
 
 import styles from './styles/styles';
 
 import { Input, ButtonApp, ContainerView } from '../../components/index.js';
+import { useState } from 'react';
 
 export default function LoginScreen({ navigation }) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const {
+    setIsAuth,
+    setUser,
+    setEvents,
+    setRequests,
+    setAddress,
+    setAuthToken
+  } = useAuth();
+
+  const handleLogin = async () => {
+    setLoading(true);
+
+    const data = await api
+      .post('/user/login', {
+        email,
+        password
+      })
+      .then(res => res.data)
+      .catch(() => null);
+
+    if (data) {
+      setIsAuth(true);
+
+      setAddress(data.user.address);
+      delete data.user.address;
+
+      setEvents(data.user.events);
+      delete data.user.events;
+
+      setRequests(data.user.requests);
+      delete data.user.requests;
+
+      setUser(data.user);
+      setAuthToken(data.accessToken);
+      await AsyncStorage.setItem('token', data.accessToken);
+
+      navigation.navigate('BottomTabNavigator');
+    } else {
+      alert('Usuário ou senha incorretos');
+      setLoading(false);
+    }
+  };
+
   return (
     <ContainerView>
       <Image source={PickLogoWithText} style={styles.Image} />
@@ -19,11 +70,15 @@ export default function LoginScreen({ navigation }) {
           Bem-Vindo!
         </Text>
         <Input
+          value={email}
+          setValue={setEmail}
           isPassword={false}
           leftIcon={EmailVector}
           placeHolder={'email'}
         />
         <Input
+          value={password}
+          setValue={setPassword}
           isPassword={true}
           leftIcon={PasswordVector}
           OptionOneRightIcon={ShowPassVector}
@@ -31,8 +86,14 @@ export default function LoginScreen({ navigation }) {
           placeHolder={'Senha'}
         />
 
-        <ButtonApp textValue={'Login'} />
-        <View style={{ flexDirection: 'row', maxWidth: '70%' }}>
+        <ButtonApp
+          loading={loading}
+          onPress={handleLogin}
+          textValue={'Login'}
+        />
+        <View
+          style={{ flexDirection: 'row', maxWidth: '70%', marginVertical: 4 }}
+        >
           <View
             style={{
               flex: 1,
@@ -61,9 +122,10 @@ export default function LoginScreen({ navigation }) {
           />
         </View>
         <ButtonApp
+          loading={loading}
           textValue={'Criar conta'}
           navigation={navigation}
-          screen={'UserProfileRegister'}
+          screen={'UserProfileRegisterScreen'}
         />
       </View>
     </ContainerView>

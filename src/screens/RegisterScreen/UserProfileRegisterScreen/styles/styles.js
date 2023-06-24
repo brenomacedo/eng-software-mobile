@@ -8,19 +8,19 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
     flex: 1,
     fontFamily: 'Poppins'
   },
   Image: {
     width: 170,
     height: 170,
-    resizeMode: 'center'
+    resizeMode: 'center',
+    marginTop: 20
   },
   InputsButtonsContainer: {
     alignItems: 'center',
-    justifyContent: 'space-around',
-    height: 660,
+    justifyContent: 'center',
     width: '80%'
   },
   haveAccoount: {
@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins'
   },
   haveAccoountButton: {
+    marginTop: 8,
     display: 'flex',
     alignItems: 'flex-end',
     justifyContent: 'center',

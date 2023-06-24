@@ -1,14 +1,41 @@
 import { View, Text, TextInput, Image, TouchableOpacity } from 'react-native';
 import MapView, { Marker, Callout } from 'react-native-maps';
+import useAuth from '../../hooks/useAuth';
 import styles from './styles';
 
-const EventsMap = () => {
+const EventsMap = ({ navigation }) => {
+  const { isAuth, logout } = useAuth();
+
+  const navigateToLogin = () => {
+    navigation.navigate('LoginScreen');
+  };
+
+  const handleLogout = () => {
+    logout()
+      .then(() => {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'LoginScreen' }]
+        });
+      })
+      .catch(() => {});
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.topBarContainer}>
-        <TouchableOpacity style={styles.loginButton}>
-          <Text style={styles.loginButtonText}>Login</Text>
-        </TouchableOpacity>
+        {!isAuth ? (
+          <TouchableOpacity
+            onPress={navigateToLogin}
+            style={styles.loginButton}
+          >
+            <Text style={styles.loginButtonText}>Login</Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity onPress={handleLogout} style={styles.loginButton}>
+            <Text style={styles.loginButtonText}>Sair</Text>
+          </TouchableOpacity>
+        )}
         <Text style={styles.topBarText}>Mostrando os eventos próximos</Text>
       </View>
       <View style={styles.searchFieldContainer}>
