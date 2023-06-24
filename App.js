@@ -4,10 +4,11 @@ import * as SplashScreen from 'expo-splash-screen';
 import useLoadInitialData from './src/hooks/useLoadInitialData';
 import Navigation from './src/components/Navigation/Navigation';
 import { StatusBar } from 'expo-status-bar';
+import { AuthProvider } from './src/contexts/AuthContext';
 
 SplashScreen.preventAutoHideAsync();
 
-export default function App() {
+const AppContent = () => {
   const { isReady, firstTimeOnApp } = useLoadInitialData();
 
   const onLayoutRootView = useCallback(async () => {
@@ -21,6 +22,14 @@ export default function App() {
       <StatusBar style="light" />
       <Navigation firstTimeOnApp={firstTimeOnApp} />
     </View>
+  );
+};
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 }
 
