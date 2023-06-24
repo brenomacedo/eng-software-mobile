@@ -14,7 +14,8 @@ export default function Input({
   containerHeight,
   setValue,
   value,
-  marginBottom
+  marginBottom,
+  onBlur
 }) {
   const [hidePassword, setHidePassword] = useState(isPassword);
   return (
@@ -36,6 +37,7 @@ export default function Input({
         <Text style={styles.label}>{labelText ? labelText : ''}</Text>
       )}
       <TextInput
+        onBlur={onBlur || (() => {})}
         secureTextEntry={hidePassword}
         style={styles.Input(leftIcon ? true : false, containerHeight)}
         placeholder={placeHolder}

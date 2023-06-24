@@ -1,10 +1,18 @@
-import { View, Image, Text, Platform, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Image,
+  Text,
+  Platform,
+  TouchableOpacity,
+  Alert
+} from 'react-native';
 import PickLogoWithText from '../../../../assets/LogoWithName.png';
 import EmailVector from '../../../../assets/EmailVector.png';
 import PasswordVector from '../../../../assets/PasswordVector.png';
 import DontShowPassVector from '../../../../assets/DontShowPassVector.png';
 import ShowPassVector from '../../../../assets/ShowPassVector.png';
 import UserNamevector from '../../../../assets/UserNameVector.png';
+import dayjs from 'dayjs';
 
 import { Input, ButtonApp, ContainerView } from '../../../components/index.js';
 import DateTimeInput from '../../../components/DateTimeInput/DateTimeInput';
@@ -17,11 +25,50 @@ export default function UserProfileRegisterScreen({ navigation }) {
   const [date, setDate] = useState(new Date(Date.now()));
   const [showPicker, setShowPicker] = useState(false);
 
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
   const onChangeDate = (event, value) => {
     if (Platform.OS === 'android') {
       setShowPicker(false);
     }
     setDate(value);
+  };
+
+  const handleNextScreen = async () => {
+    const age = dayjs().diff(date, 'year');
+
+    if (age < 16) {
+      return Alert.alert(
+        'Erro',
+        'O usuário deve ter, no mínimo, 16 anos de idade!'
+      );
+    }
+
+    if (password !== confirmPassword) {
+      return Alert.alert('Erro', 'A senha é diferente da confirmação!');
+    }
+
+    if (!name) {
+      return Alert.alert('Erro', 'O nome é um campo obrigatório!');
+    }
+
+    if (!email) {
+      return Alert.alert('Erro', 'O email é um campo obrigatório!');
+    }
+
+    if (!password) {
+      return Alert.alert('Erro', 'A senha é um campo obrigatório!');
+    }
+
+    navigation.navigate('AddressRegisterScreen', {
+      name,
+      email,
+      password,
+      birth_date: date.toISOString()
+    });
   };
 
   return (
@@ -33,6 +80,8 @@ export default function UserProfileRegisterScreen({ navigation }) {
           Cadastro!
         </Text>
         <Input
+          value={name}
+          setValue={setName}
           isPassword={false}
           leftIcon={UserNamevector}
           placeHolder={'Nome'}
@@ -47,11 +96,15 @@ export default function UserProfileRegisterScreen({ navigation }) {
         />
 
         <Input
+          value={email}
+          setValue={setEmail}
           isPassword={false}
           leftIcon={EmailVector}
           placeHolder={'email'}
         />
         <Input
+          value={password}
+          setValue={setPassword}
           isPassword={true}
           leftIcon={PasswordVector}
           OptionOneRightIcon={ShowPassVector}
@@ -59,6 +112,8 @@ export default function UserProfileRegisterScreen({ navigation }) {
           placeHolder={'Senha'}
         />
         <Input
+          value={confirmPassword}
+          setValue={setConfirmPassword}
           isPassword={true}
           leftIcon={PasswordVector}
           OptionOneRightIcon={ShowPassVector}
@@ -66,11 +121,7 @@ export default function UserProfileRegisterScreen({ navigation }) {
           placeHolder={'Confime sua senha'}
         />
 
-        <ButtonApp
-          textValue={'Próximo passo'}
-          navigation={navigation}
-          screen={'AddressRegisterScreen'}
-        />
+        <ButtonApp textValue={'Próximo passo'} onPress={handleNextScreen} />
         <TouchableOpacity
           style={styles.haveAccoountButton}
           onPress={() => {
