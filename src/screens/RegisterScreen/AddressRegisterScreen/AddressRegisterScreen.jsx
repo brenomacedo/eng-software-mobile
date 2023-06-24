@@ -10,6 +10,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import api from '../../../api';
 import useAuth from '../../../hooks/useAuth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function AddressRegisterScreen({ navigation, route }) {
   const [loading, setLoading] = useState(false);
@@ -56,13 +57,9 @@ export default function AddressRegisterScreen({ navigation, route }) {
         return null;
       });
 
-    console.log(data);
-
     if (!data) {
       return setLoading(false);
     }
-
-    console.log('teste');
 
     const user = data.user;
     const authToken = data.accessToken;
@@ -88,11 +85,10 @@ export default function AddressRegisterScreen({ navigation, route }) {
       return setLoading(false);
     }
 
-    console.log('teste');
-
     setAddress(address);
     setIsAuth(true);
     setAuthToken(authToken);
+    await AsyncStorage.setItem('token', authToken);
 
     navigation.reset({
       index: 0,

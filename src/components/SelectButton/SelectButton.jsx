@@ -19,11 +19,7 @@ export default function SelectButton({
           style={styles.picker}
         >
           {itensList.map(item => (
-            <Picker.Item
-              label={item.typeName}
-              value={item.typeValue}
-              key={item.id}
-            />
+            <Picker.Item label={item.label} value={item.id} key={item.id} />
           ))}
         </Picker>
       </View>

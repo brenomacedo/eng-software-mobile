@@ -1,10 +1,18 @@
 import { View, Text, TextInput, Image, TouchableOpacity } from 'react-native';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import useAuth from '../../hooks/useAuth';
+import useGeoLocation from '../../hooks/useGeoLocation';
 import styles from './styles';
+import { useEffect } from 'react';
 
 const EventsMap = ({ navigation }) => {
   const { isAuth, logout } = useAuth();
+
+  const { requestGeoLocation } = useGeoLocation();
+
+  const navigateToCreateEvent = () => {
+    navigation.navigate('CreateEvent');
+  };
 
   const navigateToLogin = () => {
     navigation.navigate('LoginScreen');
@@ -20,6 +28,10 @@ const EventsMap = ({ navigation }) => {
       })
       .catch(() => {});
   };
+
+  useEffect(() => {
+    requestGeoLocation();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -51,7 +63,10 @@ const EventsMap = ({ navigation }) => {
           style={styles.searchFieldInput}
         />
       </View>
-      <TouchableOpacity style={styles.addEventButton}>
+      <TouchableOpacity
+        onPress={navigateToCreateEvent}
+        style={styles.addEventButton}
+      >
         <Text style={styles.addEventButtonText}>+</Text>
       </TouchableOpacity>
       <MapView

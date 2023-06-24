@@ -5,6 +5,7 @@ import useLoadInitialData from './src/hooks/useLoadInitialData';
 import Navigation from './src/components/Navigation/Navigation';
 import { StatusBar } from 'expo-status-bar';
 import { AuthProvider } from './src/contexts/AuthContext';
+import { GeoLocationProvider } from './src/contexts/GeoLocationContext';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -28,7 +29,9 @@ const AppContent = () => {
 export default function App() {
   return (
     <AuthProvider>
-      <AppContent />
+      <GeoLocationProvider>
+        <AppContent />
+      </GeoLocationProvider>
     </AuthProvider>
   );
 }
