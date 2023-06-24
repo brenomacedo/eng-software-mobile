@@ -8,7 +8,7 @@ import { StatusBar } from 'expo-status-bar';
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
-  const { isReady } = useLoadInitialData();
+  const { isReady, firstTimeOnApp } = useLoadInitialData();
 
   const onLayoutRootView = useCallback(async () => {
     if (isReady) await SplashScreen.hideAsync();
@@ -19,7 +19,7 @@ export default function App() {
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
       <StatusBar style="light" />
-      <Navigation />
+      <Navigation firstTimeOnApp={firstTimeOnApp} />
     </View>
   );
 }

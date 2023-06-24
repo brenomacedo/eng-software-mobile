@@ -7,11 +7,13 @@ import Screen3 from '../../screens/Screen3/Screen3';
 import BottomTabNavigator from './BottomTab';
 
 const Stack = createStackNavigator();
-const Navigation = () => {
+const Navigation = ({ firstTimeOnApp }) => {
+  const initialScreen = firstTimeOnApp ? 'Screen1' : 'BottomTabNavigator';
+
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Screen1"
+        initialRouteName={initialScreen}
         screenOptions={{
           cardStyleInterpolator: ({ current }) => ({
             cardStyle: {

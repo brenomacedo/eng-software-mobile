@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Font from 'expo-font';
 
 //fiz esse hook separado pensando que já poderia ser usada futuramente para fazer fetch
 function useLoadInitialData() {
   const [isReady, setIsReady] = useState(false);
+  const [firstTimeOnApp, setFirstTimeOnApp] = useState(true);
   /* const [fontsLoaded] = useFonts({
     Poppins: require('../../assets/fonts/Poppins-Light.ttf')
   }); */
@@ -16,6 +18,14 @@ function useLoadInitialData() {
         PoppinsMedium: require('../../assets/fonts/Poppins-Medium.ttf'),
         PoppinsRegular: require('../../assets/fonts/Poppins-Regular.ttf')
       });
+
+      const firstTimeOnAppJson = await AsyncStorage.getItem('firstTimeOnApp');
+      const firstTimeOnApp = JSON.parse(firstTimeOnAppJson);
+
+      if (firstTimeOnApp != null && !firstTimeOnApp) {
+        setFirstTimeOnApp(false);
+      }
+
       await new Promise(resolve => setTimeout(resolve, 3000));
     } catch (error) {
       alert('Something went wrong!');
@@ -24,11 +34,12 @@ function useLoadInitialData() {
       setIsReady(true);
     }
   }
+
   useEffect(() => {
     fetchData();
   }, []);
 
-  return { isReady };
+  return { isReady, firstTimeOnApp };
 }
 
 export default useLoadInitialData;
