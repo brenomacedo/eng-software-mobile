@@ -4,7 +4,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import useLoadInitialData from './src/hooks/useLoadInitialData';
 import Navigation from './src/components/Navigation/Navigation';
 import { StatusBar } from 'expo-status-bar';
-import SearchResults from './src/screens/SearchResults/SearchResults'
+import MyEvents from './src/screens/MyEvents/MyEvents';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -19,9 +19,10 @@ export default function App() {
 
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
-      <SearchResults></SearchResults>
+      {/* <StatusBar style="light" />
+      <Navigation /> */}
+      <MyEvents />
     </View>
-
   );
 }
 
