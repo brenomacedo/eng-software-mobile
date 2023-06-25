@@ -2,36 +2,37 @@ import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { ArrowBack, MapInput } from '../../components';
 import styles from './styles';
 
-const EventDetails = () => {
+const EventDetails = ({navigation, route}) => {
+
+  const {
+    title,
+    location,
+    hour,
+    eventDescription,
+    eventLatitude,
+    eventLongitude
+  } = route.params;
+
   return (
     <ScrollView
       style={styles.scroll}
       contentContainerStyle={styles.eventDetailsContainer}
     >
-      <ArrowBack onPress={() => {}} />
-      <Text style={styles.eventDetailsTitle}>Titulo do Evento</Text>
+      <ArrowBack onPress={() => {navigation.goBack()}} />
+      <Text style={styles.eventDetailsTitle}>{title}</Text>
 
       <Text style={styles.eventDetailsInfoTitle}>Local</Text>
       <Text style={styles.eventDetailsInfo}>
-        Rua dos bobos, número 0, Caucaia CE mas e o this
+        {location}
       </Text>
 
       <Text style={styles.eventDetailsInfoTitle}>Descrição</Text>
       <Text style={styles.eventDetailsInfo}>
-        Titulo do evento essa é uma descrição legal lorem ipsum kkkkk quem
-        caralhos usa essa porra de preencher texto cara, meu deus do ceuTitulo
-        do evento essa é uma descrição legal lorem ipsum kkkkk quem caralhos usa
-        essa porra de preencher texto cara, meu deus do ceuTitulo do evento essa
-        é uma descrição legal lorem ipsum kkkkk quem caralhos usa essa porra de
-        preencher texto cara, meu deus do ceuTitulo do evento essa é uma
-        descrição legal lorem ipsum kkkkk quem caralhos usa essa porra de
-        preencher texto cara, meu deus do ceuTitulo do evento essa é uma
-        descrição legal lorem ipsum kkkkk quem caralhos usa essa porra de
-        preencher texto cara, meu deus do ceu
+        {eventDescription}
       </Text>
 
       <Text style={styles.eventDetailsInfoTitle}>Horário</Text>
-      <Text style={styles.eventDetailsInfo}>16:30 - 19:45</Text>
+      <Text style={styles.eventDetailsInfo}>{hour}</Text>
 
       <Text style={styles.eventDetailsInfoTitle}>Local no mapa</Text>
       <MapInput
@@ -39,12 +40,12 @@ const EventDetails = () => {
         style={styles.map}
         readOnly
         initialPosition={{
-          latitude: -3.7327,
-          longitude: -38.527
+          latitude: eventLatitude,
+          longitude: eventLongitude
         }}
         value={{
-          latitude: -3.7327,
-          longitude: -38.527
+          latitude: eventLatitude,
+          longitude: eventLongitude
         }}
       />
 

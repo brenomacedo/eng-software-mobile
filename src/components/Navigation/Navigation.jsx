@@ -9,7 +9,7 @@ import AddressRegisterScreen from '../../screens/RegisterScreen/AddressRegisterS
 import UserProfileRegisterScreen from '../../screens/RegisterScreen/UserProfileRegisterScreen/UserProfileRegisterScreen';
 import BottomTabNavigator from './BottomTab';
 import SearchResult from "../../screens/SearchResults/SearchResults";
-
+import EventDetails from "../../screens/EventDetails/EventDetails";
 
 const Stack = createStackNavigator();
 const Navigation = ({ firstTimeOnApp }) => {
@@ -52,7 +52,7 @@ const Navigation = ({ firstTimeOnApp }) => {
           component={BottomTabNavigator}
         />
         <Stack.Screen name="SearchResults" component={SearchResult} />
-        
+        <Stack.Screen name="EventDetails" component={EventDetails} />
       </Stack.Navigator>
     </NavigationContainer>
   );

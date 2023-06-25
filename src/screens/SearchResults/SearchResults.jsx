@@ -17,13 +17,13 @@ const Button = function(press, data, index, user_Id){
     >
       <View style={styles.buttonText}>
                 <Text style={styles.buttonTextTitle}>
-                    {data.Titulo}
+                    {data.title}
                 </Text>
                 <Text style={styles.buttonTextSubtitle}>
-                    {data.Local}
+                    {data.location}
                 </Text>
                 <Text style={styles.buttonTextSubtitle}>
-                    {data.Horario}
+                    {data.hour}
                 </Text>
       </View>
       {(data.userId === user_Id ) &&
@@ -70,12 +70,16 @@ const SearchResults = ({navigation, route}) => {
   */
 
   const seeDetails = (data) => {
-    try {
-      navigation.navigate('CreateEvent')
-    }catch(err) {
-      console.log(err)
-    }
-    
+    navigation.navigate('EventDetails', {
+          title: data.title,
+          location: data.location,
+          hour: data.hour,
+          bellCount:0,
+          userId: data.user_id,
+          eventDescription: data.eventDescription,
+          eventLatitude: data.eventLatitude,
+          eventLongitude: data.eventLongitude,
+        });
   }
   
 
@@ -86,9 +90,9 @@ const SearchResults = ({navigation, route}) => {
       console.log(response)
       response.map((event) => {
         let newEventObject = {
-          Titulo: event.title,
-          Local: event.location,
-          Horario:`${event.start_time.slice(0,5)}-${event.end_time.slice(0,5)}`,
+          title: event.title,
+          location: event.location,
+          hour:`${event.start_time.slice(0,5)}-${event.end_time.slice(0,5)}`,
           bellCount:0,
           userId: event.user_id,
           eventDescription: event.description,
@@ -134,14 +138,5 @@ export default SearchResults;
 //{buttons.map((data, index) => Button(data,index))}
 /* 
 
-{
-          title: data.title,
-          location: data.location,
-          hour: data.Horario,
-          bellCount:0,
-          userId: data.user_id,
-          eventDescription: data.description,
-          eventLatitude: data.latitude,
-          eventLongitude: data.longitude,
-        }
+
 */
