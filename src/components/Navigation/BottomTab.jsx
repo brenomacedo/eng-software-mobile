@@ -1,6 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MapStack from './MapStack';
 import eventStack from "./eventStack";
+import requestStack from "./requestStack";
 import styles from './styles';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import Profile from '../../screens/Profile/Profile';
@@ -82,6 +83,7 @@ const BottomNavigator = () => {
       <BottomTab.Screen name="mapStack" component={MapStack} />
       <BottomTab.Screen name="profile" component={Profile} />
       <BottomTab.Screen name="eventStack" component={eventStack} />
+      <BottomTab.Screen name="requests" component={requestStack} />
     </BottomTab.Navigator>
   );
 };

@@ -1,7 +1,9 @@
-import React from 'react';
+import {useEffect, useState} from 'react';
 import { View, ScrollView, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
 import { ArrowBack, MapInput } from '../../components';
 import styles from './styles';
+import api from '../../api';
+import useAuth from '../../hooks/useAuth';
 
 const colorirStatus = (indice) => {
 
@@ -38,6 +40,10 @@ const Button = function(data, index){
 }
 
 const EventRequests = () => {
+  const [requests, setRequests] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const { authToken, logout } = useAuth();
+
 
   //Recebe do backend as informações, 
   let buttons = [{Titulo: 'Título do evento', Local: 'Local', Horario:'16:30-17:30',status:1,bellCount:5}, 
@@ -50,6 +56,86 @@ const EventRequests = () => {
   buttons = buttons.concat(buttons).concat(buttons)
   // buttons = buttons.concat(buttons).concat(buttons)
 
+
+  useEffect(() => {
+
+
+    /*
+      Request {
+    id: 2,
+    message: 'Sei la',
+    status: 'PENDING',
+    user_id: 6,
+    event_id: 2,
+    created_at: 2023-06-25T21:24:56.447Z,
+    updated_at: 2023-06-25T21:24:56.447Z,
+    title: 'Racha de basquete',
+    description: 'Um racha de basquete valendo um sorvete',
+    location: 'Avenida contorno norte, 981, conjunto esperança ',
+    latitude: -3.814874,
+    longitude: -38.587177,
+    start_time: '06:30:27',
+    end_time: '13:23:27',
+    type: 3
+  }
+    
+    'ACCEPTED', 'DENIED'
+
+    */
+
+    const findUserRequests = async () => {
+      
+      let newRequestsArray = [];
+      try {
+        const response = await api.get('/request/me', {
+              headers: {
+              authorization: `Bearer ${authToken}`
+            }}).then(res => res.data);
+        console.log(response);
+        response.map((request) => {
+          let newObject = {
+            Titulo: request.title,
+            Local: request.location,
+            Horario: `${request.start_time.slice(0,5)}-${request.end_time.slice(0,5)}`,
+            status: 'PENDING' ? 1 : ('ACCEPTED' ? 2 : 0)
+          }
+          newRequestsArray.push(newObject);
+        })
+        console.log("asjdasdhajsghdasdasdassdasd")  
+        setRequests(newRequestsArray);
+        console.log("terminei")
+        
+        setLoading(false);
+
+      }catch(err) {
+        if (err.response && err.response.status === 401) {
+          Alert.alert('Erro', 'Sessão expirada');
+          logout().then(() => {
+            navigation.reset({
+              index: 0,
+              routes: [{ name: 'LoginScreen' }]
+            });
+          });
+        } else if (
+          err.response &&
+          err.response.data &&
+          err.response.data.error
+        ) {
+          Alert.alert('Erro', err.response.data.error);
+        }
+      } 
+
+      
+        
+
+        }
+
+     findUserRequests();   
+
+
+
+  },[])
+
   return (
       <ScrollView 
         style={styles.scroll}
@@ -58,10 +144,33 @@ const EventRequests = () => {
 
         <Text style={styles.eventDetailsInfoTitle}>Solicitações</Text>
 
-        {buttons.map((data, index) => Button(data,index))}
+        {
+          loading ? (
+            <Text style={styles.loading}>Carregando...</Text>
+          ) : ( 
+            (requests.length > 0) ?
+            (requests.map((data, index) => Button(data,index))) :
+            (<Text style={styles.noResults}> Nenhum resultado encontrado</Text>) 
+          )
+        }
         
       </ScrollView>
   );
-};
+}; 
 
 export default EventRequests;
+
+
+/*
+
+{buttons.map((data, index) => Button(data,index))}
+
+
+[{"created_at": "2023-06-25T21:24:56.447Z",
+"event_id": 2, "id": 1,
+"message": "Sei la",
+"status": "PENDING",
+"updated_at": "2023-06-25T21:24:56.447Z",
+"user_id": 7}]
+
+ */
