@@ -139,6 +139,10 @@ const EventsMap = ({ navigation }) => {
     fetchEvents();
   }, [isAuth]);
 
+  const handleSearch = async (event) => {
+    navigation.navigate('SearchResults', {event});
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.topBarContainer}>
@@ -163,7 +167,7 @@ const EventsMap = ({ navigation }) => {
           source={require('../../../assets/search.png')}
         />
         <TextInput
-          onSubmitEditing={() => {}}
+          onSubmitEditing={({nativeEvent: {text, eventCount, target}}) => {handleSearch(text)}}
           placeholder="Buscar eventos"
           inputMode="search"
           style={styles.searchFieldInput}
