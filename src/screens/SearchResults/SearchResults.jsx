@@ -5,10 +5,16 @@ import useAuth from '../../hooks/useAuth';
 import styles from './styles';
 import api from '../../api';
 
-const Button = function(data, index, user_Id){
 
+
+const Button = function(press, data, index, user_Id){
+  
   return(
-    <TouchableOpacity key={index} style={styles.button}>
+    <TouchableOpacity
+      key={index}
+      style={styles.button} 
+      onPress={() => {press(data)}}
+    >
       <View style={styles.buttonText}>
                 <Text style={styles.buttonTextTitle}>
                     {data.Titulo}
@@ -49,6 +55,28 @@ const SearchResults = ({navigation, route}) => {
   const {user} = useAuth();
   console.log(user)
 
+  /*
+    {"description": "Um racha de basquete valendo um sorvete", 
+    "end_time": "13:23:27", 
+    "id": 2, 
+    "latitude": -3.814874, 
+    "location": "Avenida contorno norte, 981, conjunto esperança ", 
+    "longitude": -38.587177, 
+    "start_time": "06:30:27", 
+    "title": "Racha de basquete", 
+    "type": 3, 
+    "user_id": 6}
+
+  */
+
+  const seeDetails = (data) => {
+    try {
+      navigation.navigate('CreateEvent')
+    }catch(err) {
+      console.log(err)
+    }
+    
+  }
   
 
   useEffect(() => {
@@ -57,7 +85,18 @@ const SearchResults = ({navigation, route}) => {
       const response = await api.get(`/event/${event}/${user.id}`).then(res => res.data);  
       console.log(response)
       response.map((event) => {
-        let newEventObject = {Titulo: event.title, Local: event.location, Horario:`${event.start_time.slice(0,5)}-${event.end_time.slice(0,5)}`,bellCount:5, userId: event.user_id}
+        let newEventObject = {
+          Titulo: event.title,
+          Local: event.location,
+          Horario:`${event.start_time.slice(0,5)}-${event.end_time.slice(0,5)}`,
+          bellCount:0,
+          userId: event.user_id,
+          eventDescription: event.description,
+          eventLatitude: event.latitude,
+          eventLongitude: event.longitude,
+
+        }
+        
         newEventArray.push(newEventObject);
       })
       setResults(newEventArray);
@@ -65,21 +104,8 @@ const SearchResults = ({navigation, route}) => {
     }
     searchEvents(event);  
   }, [])
-
-  
-  
  
 
-  //Recebe do backend as informações, 
-  let buttons = [{Titulo: 'Título do evento', Local: 'Local', Horario:'16:30-17:30',bellCount:5}, 
-                 {Titulo: 'Olimpiada', Local: 'Estônia', Horario:'29:30-47:30',bellCount:71},
-                 {Titulo: 'Show de fogos', Local: 'Coreia do Norte', Horario:'19:87-35:83',bellCount:71}
-                ];
-
-  //Teste para multiplos botões
-  buttons = buttons.concat(buttons).concat(buttons);
-  buttons = buttons.concat(buttons).concat(buttons)
-  // buttons = buttons.concat(buttons).concat(buttons)
   return (
       <ScrollView 
         style={styles.scroll}
@@ -94,7 +120,7 @@ const SearchResults = ({navigation, route}) => {
             <Text>Carregando...</Text>
           ) : ( 
             (results.length > 0) ?
-            (results.map((data, index) => Button(data,index, user.id))) :
+            (results.map((data, index) => Button(seeDetails,data,index, user.id))) :
             (<Text style={styles.noResults}> Nenhum resultado encontrado</Text>) 
           )
         }
@@ -106,3 +132,16 @@ const SearchResults = ({navigation, route}) => {
 export default SearchResults;
 
 //{buttons.map((data, index) => Button(data,index))}
+/* 
+
+{
+          title: data.title,
+          location: data.location,
+          hour: data.Horario,
+          bellCount:0,
+          userId: data.user_id,
+          eventDescription: data.description,
+          eventLatitude: data.latitude,
+          eventLongitude: data.longitude,
+        }
+*/

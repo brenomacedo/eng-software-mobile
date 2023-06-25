@@ -8,7 +8,8 @@ import LoginScreen from '../../screens/loginScreen/LoginScreen';
 import AddressRegisterScreen from '../../screens/RegisterScreen/AddressRegisterScreen/AddressRegisterScreen';
 import UserProfileRegisterScreen from '../../screens/RegisterScreen/UserProfileRegisterScreen/UserProfileRegisterScreen';
 import BottomTabNavigator from './BottomTab';
-import SearchResult from "../../screens/SearchResults/SearchResults"
+import SearchResult from "../../screens/SearchResults/SearchResults";
+
 
 const Stack = createStackNavigator();
 const Navigation = ({ firstTimeOnApp }) => {
@@ -51,6 +52,7 @@ const Navigation = ({ firstTimeOnApp }) => {
           component={BottomTabNavigator}
         />
         <Stack.Screen name="SearchResults" component={SearchResult} />
+        
       </Stack.Navigator>
     </NavigationContainer>
   );
