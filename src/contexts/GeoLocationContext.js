@@ -5,7 +5,7 @@ import { Alert } from 'react-native';
 const GeoLocationContext = createContext({});
 
 const GeoLocationProvider = ({ children }) => {
-  const [location, setLocation] = useState(null);
+  const [location, setLocation] = useState({ latitude: 0, longitude: 0 });
   const [hasGeolocationPermission, setHasGeolocationPermission] =
     useState(false);
 
@@ -21,7 +21,6 @@ const GeoLocationProvider = ({ children }) => {
     if (granted) {
       const location = await Location.getCurrentPositionAsync();
       setLocation(location.coords);
-      console.log(location.coords);
     } else {
       Alert.alert(
         'Erro',

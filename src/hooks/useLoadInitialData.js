@@ -41,7 +41,9 @@ function useLoadInitialData() {
             '/auth',
             {},
             {
-              headers: `Bearer ${authToken}`
+              headers: {
+                authorization: `Bearer ${authToken}`
+              }
             }
           )
           .then(res => res.data)

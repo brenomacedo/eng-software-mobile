@@ -32,15 +32,13 @@ export default function LoginScreen({ navigation }) {
 
     const data = await api
       .post('/user/login', {
-        email,
+        email: email.toLowerCase(),
         password
       })
       .then(res => res.data)
       .catch(() => null);
 
     if (data) {
-      setIsAuth(true);
-
       setAddress(data.user.address);
       delete data.user.address;
 
@@ -52,8 +50,9 @@ export default function LoginScreen({ navigation }) {
 
       setUser(data.user);
       setAuthToken(data.accessToken);
-      await AsyncStorage.setItem('token', data.accessToken);
+      setIsAuth(true);
 
+      await AsyncStorage.setItem('token', data.accessToken);
       navigation.navigate('BottomTabNavigator');
     } else {
       alert('Usuário ou senha incorretos');

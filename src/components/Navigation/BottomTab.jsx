@@ -3,6 +3,7 @@ import MapStack from './MapStack';
 import styles from './styles';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import Profile from '../../screens/Profile/Profile';
+import useAuth from '../../hooks/useAuth';
 
 const BOTTOM_TAB_ROUTES = [
   {
@@ -31,42 +32,46 @@ const BOTTOM_TAB_ROUTES = [
   }
 ];
 
-const tabBar = ({ state, _descriptors, navigation }) => {
-  const renderIcons = () => {
-    return BOTTOM_TAB_ROUTES.map((route, index) => {
-      const isFocused = state.index === index;
-
-      return (
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate({ name: route.routeName, merge: true })
-          }
-          style={styles.topBarItemContainer}
-          key={route.label}
-        >
-          <Image
-            source={isFocused ? route.activeIcon : route.unactiveIcon}
-            resizeMode="center"
-            style={styles.topBarItem}
-          ></Image>
-          <Text
-            style={[
-              styles.topBarLabel,
-              { color: isFocused ? '#F90000' : '#fff' }
-            ]}
-          >
-            {route.label}
-          </Text>
-        </TouchableOpacity>
-      );
-    });
-  };
-
-  return <View style={styles.topBar}>{renderIcons()}</View>;
-};
-
 const BottomTab = createBottomTabNavigator();
 const BottomNavigator = () => {
+  const { isAuth } = useAuth();
+
+  const tabBar = ({ state, _descriptors, navigation }) => {
+    const renderIcons = () => {
+      return BOTTOM_TAB_ROUTES.map((route, index) => {
+        const isFocused = state.index === index;
+
+        return (
+          <TouchableOpacity
+            onPress={() => {
+              if (index !== 0 && !isAuth)
+                return navigation.navigate('LoginScreen');
+              navigation.navigate({ name: route.routeName, merge: true });
+            }}
+            style={styles.topBarItemContainer}
+            key={route.label}
+          >
+            <Image
+              source={isFocused ? route.activeIcon : route.unactiveIcon}
+              resizeMode="center"
+              style={styles.topBarItem}
+            ></Image>
+            <Text
+              style={[
+                styles.topBarLabel,
+                { color: isFocused ? '#F90000' : '#fff' }
+              ]}
+            >
+              {route.label}
+            </Text>
+          </TouchableOpacity>
+        );
+      });
+    };
+
+    return <View style={styles.topBar}>{renderIcons()}</View>;
+  };
+
   return (
     <BottomTab.Navigator
       screenOptions={{ headerShown: false }}

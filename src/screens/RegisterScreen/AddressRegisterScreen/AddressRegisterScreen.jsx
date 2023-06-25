@@ -44,7 +44,7 @@ export default function AddressRegisterScreen({ navigation, route }) {
     const data = await api
       .post('/user/signup', {
         name,
-        email,
+        email: email.toLowerCase(),
         password,
         birth_date
       })
@@ -86,8 +86,8 @@ export default function AddressRegisterScreen({ navigation, route }) {
     }
 
     setAddress(address);
-    setIsAuth(true);
     setAuthToken(authToken);
+    setIsAuth(true);
     await AsyncStorage.setItem('token', authToken);
 
     navigation.reset({

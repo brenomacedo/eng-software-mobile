@@ -34,7 +34,7 @@ export default function CreateEventScreen({ navigation }) {
   const [loading, setLoading] = useState(false);
 
   const { location: initialLocation } = useGeoLocation();
-  const { authToken, events, setEvents } = useAuth();
+  const { authToken, events, setEvents, logout } = useAuth();
 
   const onChangeDate = (event, value) => {
     if (Platform.OS === 'android') {
@@ -58,18 +58,22 @@ export default function CreateEventScreen({ navigation }) {
     setLoading(true);
 
     if (!title) {
+      setLoading(false);
       return Alert.alert('O título é obrigatório!');
     }
 
     if (!description) {
+      setLoading(false);
       return Alert.alert('A descrição é obrigatória!');
     }
 
     if (!local) {
+      setLoading(false);
       return Alert.alert('O local é obrigatório!');
     }
 
     if (!location) {
+      setLoading(false);
       return Alert.alert('A localização no mapa é obrigatória!');
     }
 
@@ -94,7 +98,19 @@ export default function CreateEventScreen({ navigation }) {
       )
       .then(res => res.data)
       .catch(err => {
-        if (err.response && err.response.data && err.response.data.error) {
+        if (err.response && err.response.status === 401) {
+          Alert.alert('Erro', 'Sessão expirada');
+          logout().then(() => {
+            navigation.reset({
+              index: 0,
+              routes: [{ name: 'LoginScreen' }]
+            });
+          });
+        } else if (
+          err.response &&
+          err.response.data &&
+          err.response.data.error
+        ) {
           Alert.alert('Erro', err.response.data.error);
         }
       });
