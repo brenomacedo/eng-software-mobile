@@ -34,7 +34,19 @@ const EventDetails = () => {
       <Text style={styles.eventDetailsInfo}>16:30 - 19:45</Text>
 
       <Text style={styles.eventDetailsInfoTitle}>Local no mapa</Text>
-      <MapInput hideLabel style={styles.map} readOnly />
+      <MapInput
+        hideLabel
+        style={styles.map}
+        readOnly
+        initialPosition={{
+          latitude: -3.7327,
+          longitude: -38.527
+        }}
+        value={{
+          latitude: -3.7327,
+          longitude: -38.527
+        }}
+      />
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button}>
