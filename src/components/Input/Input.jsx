@@ -15,6 +15,7 @@ export default function Input({
   setValue,
   value,
   marginBottom,
+  marginTop,
   onBlur
 }) {
   const [hidePassword, setHidePassword] = useState(isPassword);
@@ -23,7 +24,8 @@ export default function Input({
       style={styles.InputContainer(
         containerWidth,
         containerHeight,
-        marginBottom
+        marginBottom,
+        marginTop
       )}
     >
       {leftIcon && (

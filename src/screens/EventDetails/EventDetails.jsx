@@ -1,17 +1,68 @@
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import { ArrowBack, MapInput } from '../../components';
+import {useState} from 'react';
+import { ScrollView, Text, TouchableOpacity, View, Alert } from 'react-native';
+import { ArrowBack, MapInput, Input } from '../../components';
+import useAuth from '../../hooks/useAuth';
+import api from '../../api';
 import styles from './styles';
 
 const EventDetails = ({navigation, route}) => {
-
+  const { authToken, logout } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
   const {
     title,
     location,
     hour,
     eventDescription,
     eventLatitude,
-    eventLongitude
+    eventLongitude,
+    eventId
   } = route.params;
+
+  const handleRequest = async () => {
+    setLoading(true);
+    try {
+      const response = await api.post(
+        '/request',
+        {
+          eventId,
+          message
+        },
+        {
+          headers: {
+            authorization: `Bearer ${authToken}`
+          }
+        })
+
+      if(response) {
+        Alert.alert('Sucesso!', 'Solicitção feita!');
+        navigation.goBack();
+      } 
+      
+    }catch(err) {
+      if (err.response && err.response.status === 401) {
+          Alert.alert('Erro', 'Sessão expirada');
+          logout().then(() => {
+            navigation.reset({
+              index: 0,
+              routes: [{ name: 'LoginScreen' }]
+            });
+          });
+        } else if (
+          err.response &&
+          err.response.data &&
+          err.response.data.error
+        ) {
+          Alert.alert('Erro', err.response.data.error);
+        }
+      }
+
+      
+
+      setLoading(false);  
+
+    }
+  
 
   return (
     <ScrollView
@@ -48,9 +99,17 @@ const EventDetails = ({navigation, route}) => {
           longitude: eventLongitude
         }}
       />
-
+      <Input
+        labelText={"Mensagem: "}
+        placeHolder={"Digite uma mensagem"}
+        containerWidth={"85%"}
+        marginBottom={15}
+        marginTop={15}
+        value={message}
+        setValue={setMessage}
+      />
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity disabled={loading} style={styles.button} onPress={handleRequest}>
           <Text style={styles.buttonText}>Pedir para participar</Text>
         </TouchableOpacity>
       </View>

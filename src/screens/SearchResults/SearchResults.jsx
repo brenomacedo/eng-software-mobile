@@ -79,6 +79,7 @@ const SearchResults = ({navigation, route}) => {
           eventDescription: data.eventDescription,
           eventLatitude: data.eventLatitude,
           eventLongitude: data.eventLongitude,
+          eventId: data.eventId
         });
   }
   
@@ -94,10 +95,12 @@ const SearchResults = ({navigation, route}) => {
           location: event.location,
           hour:`${event.start_time.slice(0,5)}-${event.end_time.slice(0,5)}`,
           bellCount:0,
-          userId: event.user_id,
           eventDescription: event.description,
           eventLatitude: event.latitude,
           eventLongitude: event.longitude,
+          eventId: event.id,
+          userId: event.user_id,
+          requestUser: user.id
 
         }
         
