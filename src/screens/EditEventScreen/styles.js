@@ -56,6 +56,12 @@ const styles = StyleSheet.create({
     width: '100%',
     textAlign: 'center',
     fontSize: 20
+  },
+  map: {
+    paddingLeft: 32,
+    paddingRight: 32,
+    width: '100%',
+    height: 160
   }
 });
 

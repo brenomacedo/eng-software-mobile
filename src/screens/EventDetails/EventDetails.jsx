@@ -16,7 +16,9 @@ const EventDetails = ({navigation, route}) => {
     eventDescription,
     eventLatitude,
     eventLongitude,
-    eventId
+    eventId,
+    userReq,
+    userId
   } = route.params;
 
   const handleRequest = async () => {
@@ -99,20 +101,25 @@ const EventDetails = ({navigation, route}) => {
           longitude: eventLongitude
         }}
       />
-      <Input
-        labelText={"Mensagem: "}
-        placeHolder={"Digite uma mensagem"}
-        containerWidth={"85%"}
-        marginBottom={15}
-        marginTop={15}
-        value={message}
-        setValue={setMessage}
-      />
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity disabled={loading} style={styles.button} onPress={handleRequest}>
-          <Text style={styles.buttonText}>Pedir para participar</Text>
-        </TouchableOpacity>
-      </View>
+
+      {  (userId != userReq) && (
+                  <>
+                  <Input
+                    labelText={"Mensagem: "}
+                    placeHolder={"Digite uma mensagem"}
+                    containerWidth={"85%"}
+                    marginBottom={15}
+                    marginTop={15}
+                    value={message}
+                    setValue={setMessage}
+                  />
+                  <View style={styles.buttonContainer}>
+                    <TouchableOpacity disabled={loading} style={styles.button} onPress={handleRequest}>
+                      <Text style={styles.buttonText}>Pedir para participar</Text>
+                    </TouchableOpacity>
+                  </View>
+                  </>
+                )}
     </ScrollView>
   );
 };

@@ -7,7 +7,7 @@ import api from '../../api';
 
 
 
-const Button = function(press, data, index, user_Id){
+const Button = function(press, data, index, user_Id, navigation){
   
   return(
     <TouchableOpacity
@@ -23,10 +23,10 @@ const Button = function(press, data, index, user_Id){
                     {data.location}
                 </Text>
                 <Text style={styles.buttonTextSubtitle}>
-                    {data.hour}
+                    {`${data.start_time.slice(0,5)}-${data.end_time.slice(0,5)}`}
                 </Text>
       </View>
-      {(data.userId === user_Id ) &&
+      {(data.user_id === user_Id ) &&
         (<View style={styles.buttonIcons}>
                       <View>
               
@@ -38,10 +38,27 @@ const Button = function(press, data, index, user_Id){
                           {data.bellCount} 
                         </Text>
                       </View>
-                      <Image
-                        source={require('../../../assets/Pencil.png')}
-                        style={styles.pen}
-                      />
+
+                      <TouchableOpacity
+                        onPress={() => {navigation.navigate('EditEvent', {
+                          title: data.title,
+                          Edescription: data.description,
+                          location: data.location,
+                          start_time: data.start_time,
+                          end_time: data.end_time,
+                          type: data.type,
+                          latitude: data.latitude,
+                          longitude: data.longitude,
+                          event_id: data.id
+                        })}}
+
+                      >
+                        <Image
+                          source={require('../../../assets/Pencil.png')}
+                          style={styles.pen}
+                        />
+                      </TouchableOpacity>
+                      
                     </View>)
       }
     </TouchableOpacity>
@@ -51,8 +68,9 @@ const Button = function(press, data, index, user_Id){
 const SearchResults = ({navigation, route}) => {
   const [loading, setLoading] = useState(true);
   const [results, setResults] = useState([])
-  const {event} = route.params;
-  const {user} = useAuth();
+  const parameters = route.params;
+  const {user, authToken} = useAuth();
+  let requestUrl = '';
   console.log(user)
 
   /*
@@ -73,44 +91,53 @@ const SearchResults = ({navigation, route}) => {
     navigation.navigate('EventDetails', {
           title: data.title,
           location: data.location,
-          hour: data.hour,
-          bellCount:0,
+          hour: `${data.start_time.slice(0,5)}-${data.end_time.slice(0,5)}`,
           userId: data.user_id,
-          eventDescription: data.eventDescription,
-          eventLatitude: data.eventLatitude,
-          eventLongitude: data.eventLongitude,
-          eventId: data.eventId
+          eventDescription: data.description,
+          eventLatitude: data.latitude,
+          eventLongitude: data.longitude,
+          eventId: data.eventId,
+          userReq: user.id
         });
+  }
+
+  console.log(parameters);
+
+  if (parameters) {
+    requestUrl = `/event/${parameters.event}/${user.id}`
+  } else {
+    requestUrl = '/event/me'
   }
   
 
+
   useEffect(() => {
-    const searchEvents = async (event) => {
+    const searchEvents = async (parameters) => {
       let newEventArray = [];
-      const response = await api.get(`/event/${event}/${user.id}`).then(res => res.data);  
+      let response;
+      
+      if (parameters) {
+        response = await api.get(`/event/${parameters.event}/${user.id}`).then(res => res.data);
+      } else { 
+        response = await api.get('/event/me', {
+              headers: {
+              authorization: `Bearer ${authToken}`
+            }}).then(res => res.data);
+      }
+      
       console.log(response)
       response.map((event) => {
-        let newEventObject = {
-          title: event.title,
-          location: event.location,
-          hour:`${event.start_time.slice(0,5)}-${event.end_time.slice(0,5)}`,
-          bellCount:0,
-          eventDescription: event.description,
-          eventLatitude: event.latitude,
-          eventLongitude: event.longitude,
-          eventId: event.id,
-          userId: event.user_id,
-          requestUser: user.id
-
-        }
-        
+        let newEventObject = event;
+        newEventObject.bellCount = 0;
         newEventArray.push(newEventObject);
       })
       setResults(newEventArray);
       setLoading(false);
     }
-    searchEvents(event);  
+    searchEvents(parameters);  
   }, [])
+
+  
  
 
   return (
@@ -120,14 +147,18 @@ const SearchResults = ({navigation, route}) => {
       >
         <ArrowBack onPress={() => {navigation.goBack()}} />
 
-        <Text style={styles.eventDetailsInfoTitle}>Exibindo resultados para {`"${event}"`}</Text>
+        { parameters ? 
+          (<Text style={styles.eventDetailsInfoTitle}>Exibindo resultados para {`"${parameters.event}"`}</Text>)
+          :
+          (<Text style={styles.eventDetailsInfoTitle}>Meus Eventos</Text>)
+        }
 
         {
           loading ? (
             <Text>Carregando...</Text>
           ) : ( 
             (results.length > 0) ?
-            (results.map((data, index) => Button(seeDetails,data,index, user.id))) :
+            (results.map((data, index) => Button(seeDetails,data,index, user.id, navigation))) :
             (<Text style={styles.noResults}> Nenhum resultado encontrado</Text>) 
           )
         }
