@@ -85,7 +85,7 @@ export default function EditEventScreen({navigation, route}) {
       const response = await api.patch(
         `/event/${event_id}`,
         {
-          tittle,
+          title: tittle,
           description,
           location: place,
           latitude: mapLocation.latitude,
@@ -100,9 +100,6 @@ export default function EditEventScreen({navigation, route}) {
         }
       )
       .then(res => res.data)
-
-      console.log("asdaskdjashdkawerwrewrwerwerwwrjshdkjhaskdjah")
-
       if (response) {
         Alert.alert('Sucesso!', 'Evento atualizado!');
         navigation.goBack();

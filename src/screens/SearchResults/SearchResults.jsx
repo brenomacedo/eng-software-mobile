@@ -28,7 +28,7 @@ const Button = function(press, data, index, user_Id, navigation){
       </View>
       {(data.user_id === user_Id ) &&
         (<View style={styles.buttonIcons}>
-                      <View>
+                      <TouchableOpacity onPress={() => {navigation.navigate('ListEvents', {event_id: data.id})}}>
               
                         <Image
                           source={require('../../../assets/iconBell.png')}
@@ -37,7 +37,7 @@ const Button = function(press, data, index, user_Id, navigation){
                         <Text style={styles.circle}>
                           {data.bellCount} 
                         </Text>
-                      </View>
+                      </TouchableOpacity>
 
                       <TouchableOpacity
                         onPress={() => {navigation.navigate('EditEvent', {

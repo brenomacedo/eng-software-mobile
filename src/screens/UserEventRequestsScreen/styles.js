@@ -127,5 +127,10 @@ export default StyleSheet.create({
     flexDirection:"row",
     gap:17,
     marginLeft:11
+  },
+  noResults: {
+    color: "white",
+    fontSize: 20,
+    fontFamily: 'PoppinsRegular'
   }
 });
