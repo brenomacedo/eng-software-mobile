@@ -70,19 +70,20 @@ export default StyleSheet.create({
   },
   button: {
     width: '91%',
-    height: 100,
+    //height: 100,
     backgroundColor: '#FFF',
     borderRadius: 15,
     marginTop: 16,
     display:"flex",
     justifyContent: "flex-start",
     alignItems: 'center',
-    flexDirection:"row"
+    flexDirection:"row",
+    padding: 10,
+
   },
   buttonText:{
     flexBasis:"80%",
-    
-
+    padding: 10,
   },
   buttonIcons:{
     flexBasis:"20%",

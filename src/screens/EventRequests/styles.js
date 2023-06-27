@@ -8,7 +8,7 @@ export default StyleSheet.create({
   },
   bell:{
     height:30,
-    width: 25,
+    width: 25, 
     margin:5,
     zIndex:1
   },
@@ -72,7 +72,6 @@ export default StyleSheet.create({
   },
   button: {
     width: '85%',
-    height: 122,
     backgroundColor: '#FFF',
     borderRadius: 15,
     marginTop: 16,
@@ -82,9 +81,8 @@ export default StyleSheet.create({
     flexDirection:"row"
   },
   buttonText:{
-    flexBasis:"80%",
-    
-
+    width: "100%",
+    padding: 10    
   },
   buttonIcons:{
     flexBasis:"20%",

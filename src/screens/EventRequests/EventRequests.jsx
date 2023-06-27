@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import { View, ScrollView, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
+import { View, ScrollView, TouchableOpacity, Text, StyleSheet, Image , Alert} from 'react-native';
 import { ArrowBack, MapInput } from '../../components';
 import styles from './styles';
 import api from '../../api';
@@ -97,13 +97,13 @@ const EventRequests = () => {
             Titulo: request.title,
             Local: request.location,
             Horario: `${request.start_time.slice(0,5)}-${request.end_time.slice(0,5)}`,
-            status: 'PENDING' ? 1 : ('ACCEPTED' ? 2 : 0)
+            status: (request.status == 'PENDING') ? 1 : ( (request.status =='ACCEPTED') ? 2 : 0)
           }
           newRequestsArray.push(newObject);
         })
-        console.log("asjdasdhajsghdasdasdassdasd")  
+          
         setRequests(newRequestsArray);
-        console.log("terminei")
+        
         
         setLoading(false);
 
@@ -138,7 +138,7 @@ const EventRequests = () => {
 
   return (
       <ScrollView 
-        style={styles.scroll}
+        style={styles.scroll} 
         contentContainerStyle={styles.eventDetailsContainer}
       >
 

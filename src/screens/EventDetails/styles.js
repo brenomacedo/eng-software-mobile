@@ -6,7 +6,9 @@ export default StyleSheet.create({
   },
   eventDetailsContainer: {
     backgroundColor: '#212121',
-    alignItems: 'center'
+    alignItems: 'center',
+    minHeight:'100%',
+    paddingBottom: 20
   },
   eventDetailsTitle: {
     color: 'white',

@@ -24,10 +24,10 @@ const Message = function({ data, index, onMessageAction, loading }) {
 
         {data.status == "PENDING" ? 
           (
-            <View style={styles.buttonGroup}>
+            <View style={styles.buttonGroup}> 
               <TouchableOpacity
                 disabled={loading}
-                style={{ ...styles.button, backgroundColor: '#58D7B8' }}
+                style={{ ...styles.button, backgroundColor: loading ? "gray" : '#58D7B8' }}
                 onPress={handleAccept}
               >
                 <Text style={styles.buttonText}>Aceitar</Text>
@@ -35,7 +35,7 @@ const Message = function({ data, index, onMessageAction, loading }) {
     
               <TouchableOpacity
                 disabled={loading}
-                style={{ ...styles.button, backgroundColor: '#F90000' }}
+                style={{ ...styles.button, backgroundColor: loading ? "gray" : '#F90000' }}
                 onPress={handleReject}
               >
                 <Text style={styles.buttonText}>Recusar</Text>
@@ -44,8 +44,8 @@ const Message = function({ data, index, onMessageAction, loading }) {
           ) : 
           (
             (data.status == 'ACCEPTED') ?
-            (<Text>Solicitação já foi aceita.</Text>) :
-            (<Text>Solicitação foi recusada.</Text>)
+            (<Text style={styles.confirmMessage}>Solicitação já foi aceita.</Text>) :
+            (<Text style={styles.confirmMessage}>Solicitação foi recusada.</Text>)
           )
         }
 
@@ -87,7 +87,7 @@ const UserEventRequestsScreen = ({navigation, route}) => {
       setLoading(true);
       let newRequestsArray = [];
       try {
-        const response = await api.get(`/request/${event_id}`, {
+        const response = await api.get(`/request/all/${event_id}`, {
               headers: {
               authorization: `Bearer ${authToken}`
             }}).then(res => res.data);
@@ -140,6 +140,8 @@ const UserEventRequestsScreen = ({navigation, route}) => {
               headers: {
               authorization: `Bearer ${authToken}`
             }}).then(res => res.data);
+
+
         
         if (response) {
           Alert.alert('Sucesso!', 'Requisição respondida!');
@@ -147,6 +149,7 @@ const UserEventRequestsScreen = ({navigation, route}) => {
           newArray[newArray.indexOf(data)].status = action;
           setMessages(newArray);
         }
+
 
         setReqLoading(false);
       }catch(err) {
