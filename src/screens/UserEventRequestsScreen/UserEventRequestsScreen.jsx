@@ -7,13 +7,13 @@ import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import useAuth from '../../hooks/useAuth';
 import api from '../../api';
 
-const Message = function({ data, index, onMessageAction }) {
+const Message = function({ data, index, onMessageAction, loading }) {
   const handleAccept = () => {
-    onMessageAction(data, index, 'accept');
+    onMessageAction(data, index, 'ACCEPTED');
   };
 
   const handleReject = () => {
-    onMessageAction(data, index, 'reject');
+    onMessageAction(data, index, 'DENIED');
   };
 
   return (
@@ -22,21 +22,33 @@ const Message = function({ data, index, onMessageAction }) {
         <Text style={styles.messageTextTitle}>{data.Nome}</Text>
         <Text style={styles.messageTextSubtitle}>{data.Mensagem}</Text>
 
-        <View style={styles.buttonGroup}>
-          <TouchableOpacity
-            style={{ ...styles.button, backgroundColor: '#58D7B8' }}
-            onPress={handleAccept}
-          >
-            <Text style={styles.buttonText}>Aceitar</Text>
-          </TouchableOpacity>
+        {data.status == "PENDING" ? 
+          (
+            <View style={styles.buttonGroup}>
+              <TouchableOpacity
+                disabled={loading}
+                style={{ ...styles.button, backgroundColor: '#58D7B8' }}
+                onPress={handleAccept}
+              >
+                <Text style={styles.buttonText}>Aceitar</Text>
+              </TouchableOpacity>
+    
+              <TouchableOpacity
+                disabled={loading}
+                style={{ ...styles.button, backgroundColor: '#F90000' }}
+                onPress={handleReject}
+              >
+                <Text style={styles.buttonText}>Recusar</Text>
+              </TouchableOpacity>
+            </View>
+          ) : 
+          (
+            (data.status == 'ACCEPTED') ?
+            (<Text>Solicitação já foi aceita.</Text>) :
+            (<Text>Solicitação foi recusada.</Text>)
+          )
+        }
 
-          <TouchableOpacity
-            style={{ ...styles.button, backgroundColor: '#F90000' }}
-            onPress={handleReject}
-          >
-            <Text style={styles.buttonText}>Recusar</Text>
-          </TouchableOpacity>
-        </View>
       </View>
     </View>
   );
@@ -46,7 +58,7 @@ const UserEventRequestsScreen = ({navigation, route}) => {
 
   const {event_id} = route.params;
 
-  console.log(event_id);
+
 
   //Recebe do backend as informações, 
   let eventName = "Racha"
@@ -63,6 +75,7 @@ const UserEventRequestsScreen = ({navigation, route}) => {
   //Hook pra remover as mensagens de solicitação aceitam/rejeitam
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [reqLoading, setReqLoading] = useState(false);
 
   const {authToken} = useAuth();
 
@@ -79,7 +92,12 @@ const UserEventRequestsScreen = ({navigation, route}) => {
               authorization: `Bearer ${authToken}`
             }}).then(res => res.data);
         response.map((request) => {
-          let newObject = {Nome: request.name, Mensagem:request.message, id: request.id};
+          let newObject = {
+            Nome: request.name,
+            Mensagem:request.message,
+            id: request.id,
+            status: request.status
+          };
           newRequestsArray.push(newObject);
         });
         setMessages(newRequestsArray);
@@ -111,14 +129,43 @@ const UserEventRequestsScreen = ({navigation, route}) => {
 
   }, []);
 
-  const handleMessageAction = (data, index, action) => {
-    // Pode botar a lógica para mandar as informações pro backend aqui
-    // A action é se ela foi aceita ou rejeitada
+  const handleMessageAction = async (data, index, action) => {
+    setReqLoading(true);
+    
 
-    // Remove a ultima mensagem da lista
-    const updatedMessages = [...messages];
-    updatedMessages.splice(index, 1);
-    setMessages(updatedMessages);
+    try {
+        const response = await api.patch(`/request/${data.id}`, {
+          answer: action
+        }, {
+              headers: {
+              authorization: `Bearer ${authToken}`
+            }}).then(res => res.data);
+        
+        if (response) {
+          Alert.alert('Sucesso!', 'Requisição respondida!');
+          let newArray = [...messages];
+          newArray[newArray.indexOf(data)].status = action;
+          setMessages(newArray);
+        }
+
+        setReqLoading(false);
+      }catch(err) {
+        if (err.response && err.response.status === 401) {
+          Alert.alert('Erro', 'Sessão expirada');
+          logout().then(() => {
+            navigation.reset({
+              index: 0,
+              routes: [{ name: 'LoginScreen' }]
+            });
+          });
+        } else if (
+          err.response &&
+          err.response.data &&
+          err.response.data.error
+        ) {
+          Alert.alert('Erro', err.response.data.error);
+        }
+      }
   };
 
   return (
@@ -130,7 +177,7 @@ const UserEventRequestsScreen = ({navigation, route}) => {
             <Text>Carregando...</Text>
           ) : ( 
             (messages.length > 0) ?
-            (messages.map((data, index) => (<Message key={index} data={data} index={index} onMessageAction={handleMessageAction} />))) :
+            (messages.map((data, index) => (<Message key={index} data={data} index={index} onMessageAction={handleMessageAction} loading={reqLoading} />))) :
             (<Text style={styles.noResults}> Nenhum resultado encontrado</Text>) 
           )
         }

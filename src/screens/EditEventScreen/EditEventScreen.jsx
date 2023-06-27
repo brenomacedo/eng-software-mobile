@@ -215,14 +215,3 @@ export default function EditEventScreen({navigation, route}) {
   );
 }
 
-/*
-  {
-      title,
-      description,
-      location,
-      latitude,
-      longitude,
-      start_time,
-      end_time
-    }
-*/

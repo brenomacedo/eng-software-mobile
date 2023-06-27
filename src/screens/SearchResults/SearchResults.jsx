@@ -26,7 +26,7 @@ const Button = function(press, data, index, user_Id, navigation){
                     {`${data.start_time.slice(0,5)}-${data.end_time.slice(0,5)}`}
                 </Text>
       </View>
-      {(data.user_id === user_Id ) &&
+      {( user_Id != null && data.user_id === user_Id ) &&
         (<View style={styles.buttonIcons}>
                       <TouchableOpacity onPress={() => {navigation.navigate('ListEvents', {event_id: data.id})}}>
               
@@ -97,29 +97,32 @@ const SearchResults = ({navigation, route}) => {
           eventLatitude: data.latitude,
           eventLongitude: data.longitude,
           eventId: data.eventId,
-          userReq: user.id
+          userReq: (user != null ? user.id : null)
         });
   }
 
   console.log(parameters);
 
-  if (parameters) {
+  if (parameters && user != null) {
     requestUrl = `/event/${parameters.event}/${user.id}`
-  } else {
+  } else if (parameters) {
+    requestUrl = `/event/all/${parameters.event}/`
+  }
+   else {
     requestUrl = '/event/me'
   }
   
-
+  console.log(user) 
 
   useEffect(() => {
     const searchEvents = async (parameters) => {
       let newEventArray = [];
       let response;
-      
+
       if (parameters) {
-        response = await api.get(`/event/${parameters.event}/${user.id}`).then(res => res.data);
+        response = await api.get(requestUrl).then(res => res.data);
       } else { 
-        response = await api.get('/event/me', {
+        response = await api.get(requestUrl, {
               headers: {
               authorization: `Bearer ${authToken}`
             }}).then(res => res.data);
@@ -131,6 +134,9 @@ const SearchResults = ({navigation, route}) => {
         newEventObject.bellCount = 0;
         newEventArray.push(newEventObject);
       })
+
+      
+
       setResults(newEventArray);
       setLoading(false);
     }
@@ -158,7 +164,7 @@ const SearchResults = ({navigation, route}) => {
             <Text>Carregando...</Text>
           ) : ( 
             (results.length > 0) ?
-            (results.map((data, index) => Button(seeDetails,data,index, user.id, navigation))) :
+            (results.map((data, index) => Button(seeDetails,data,index, (user != null ? user.id : null), navigation))) :
             (<Text style={styles.noResults}> Nenhum resultado encontrado</Text>) 
           )
         }

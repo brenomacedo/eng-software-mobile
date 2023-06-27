@@ -6,7 +6,7 @@ import api from '../../api';
 import styles from './styles';
 
 const EventDetails = ({navigation, route}) => {
-  const { authToken, logout } = useAuth();
+  const { authToken, logout, isAuth } = useAuth();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const {
@@ -23,7 +23,9 @@ const EventDetails = ({navigation, route}) => {
 
   const handleRequest = async () => {
     setLoading(true);
-    try {
+
+    if (isAuth != false ) {
+      try {
       const response = await api.post(
         '/request',
         {
@@ -57,7 +59,12 @@ const EventDetails = ({navigation, route}) => {
         ) {
           Alert.alert('Erro', err.response.data.error);
         }
-      }
+      }  
+    }else {
+      navigation.navigate('LoginScreen');
+    }
+
+    
 
       
 
