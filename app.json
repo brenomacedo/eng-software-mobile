@@ -17,12 +17,18 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/basquete.png",
+        "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#212121"
-      }
+      },
+      "package": "com.brenosekiro.mobile"
     },
     "web": {
       "favicon": "./assets/icon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "0f8ef146-e989-47ce-9066-a83369eb3b3a"
+      }
     }
   }
 }
