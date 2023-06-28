@@ -65,8 +65,6 @@ function useLoadInitialData() {
           setUser(user);
         }
       }
-
-      await new Promise(resolve => setTimeout(resolve, 3000));
     } catch (error) {
       alert('Something went wrong!');
     } finally {
