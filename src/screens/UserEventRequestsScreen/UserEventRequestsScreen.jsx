@@ -174,7 +174,7 @@ const UserEventRequestsScreen = ({ navigation, route }) => {
       style={styles.scroll}
       contentContainerStyle={styles.eventDetailsContainer}
     >
-      <ArrowBack onPress={() => {}} />
+      <ArrowBack onPress={() => navigation.goBack()} />
       <Text style={styles.eventDetailsInfoTitle}>
         Solicitações de {eventName}
       </Text>

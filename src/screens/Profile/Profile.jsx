@@ -146,7 +146,10 @@ const Profile = ({ navigation }) => {
         paddingBottom: 30
       }}
     >
-      <ArrowBack onPress={() => {}} style={{ marginLeft: -10 }} />
+      <ArrowBack
+        onPress={() => navigation.goBack()}
+        style={{ marginLeft: -10 }}
+      />
       <Text
         style={{
           fontFamily: 'Poppins',

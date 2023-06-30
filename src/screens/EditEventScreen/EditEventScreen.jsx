@@ -8,7 +8,6 @@ import {
   Alert
 } from 'react-native';
 import {
-  ContainerView,
   Input,
   ButtonApp,
   DateTimeInput,
@@ -25,7 +24,7 @@ import useAuth from '../../hooks/useAuth';
 import api from '../../api';
 import dayjs from 'dayjs';
 
-export default function EditEventScreen({navigation, route}) {
+export default function EditEventScreen({ navigation, route }) {
   const {
     title,
     Edescription,
@@ -40,10 +39,16 @@ export default function EditEventScreen({navigation, route}) {
 
   const { authToken, logout } = useAuth();
 
-  const [date, setDate] = useState(new Date(new Date().setHours(start_time.slice(0,2), start_time.slice(3,5))));
+  const [date, setDate] = useState(
+    new Date(
+      new Date().setHours(start_time.slice(0, 2), start_time.slice(3, 5))
+    )
+  );
   const [showPicker, setShowPicker] = useState(false);
 
-  const [date2, setDate2] = useState(new Date(new Date().setHours(end_time.slice(0,2), end_time.slice(3,5))));
+  const [date2, setDate2] = useState(
+    new Date(new Date().setHours(end_time.slice(0, 2), end_time.slice(3, 5)))
+  );
   const [showPicker2, setShowPicker2] = useState(false);
 
   const [selectedItem, setSelectedItem] = useState(type);
@@ -52,11 +57,9 @@ export default function EditEventScreen({navigation, route}) {
   const [description, setDescription] = useState(Edescription);
   const [place, setPlace] = useState(location);
 
-  const [mapLocation, setMapLocation] = useState({ latitude, longitude});
+  const [mapLocation, setMapLocation] = useState({ latitude, longitude });
 
-  const [loading, setLoading] = useState(false)
-
-  
+  const [loading, setLoading] = useState(false);
 
   const onChangeDate = (event, value) => {
     if (Platform.OS === 'android') {
@@ -72,62 +75,55 @@ export default function EditEventScreen({navigation, route}) {
     setDate2(value);
   };
 
-  const onItemSelected = (itemValue, itemIndex) => {
+  const onItemSelected = (itemValue, _itemIndex) => {
     setSelectedItem(itemValue);
   };
 
   const handleEditRequest = async () => {
     setLoading(true);
     try {
+      console.log(tittle);
 
-      console.log(tittle)
-
-      const response = await api.patch(
-        `/event/${event_id}`,
-        {
-          title: tittle,
-          description,
-          location: place,
-          latitude: mapLocation.latitude,
-          longitude: mapLocation.longitude,
-          start_time: dayjs(date).format('HH:mm:ss'),
-          end_time: dayjs(date2).format('HH:mm:ss'),
-        },
-        {
-          headers: {
-            authorization: `Bearer ${authToken}`
+      const response = await api
+        .patch(
+          `/event/${event_id}`,
+          {
+            title: tittle,
+            description,
+            location: place,
+            latitude: mapLocation.latitude,
+            longitude: mapLocation.longitude,
+            start_time: dayjs(date).format('HH:mm:ss'),
+            end_time: dayjs(date2).format('HH:mm:ss')
+          },
+          {
+            headers: {
+              authorization: `Bearer ${authToken}`
+            }
           }
-        }
-      )
-      .then(res => res.data)
+        )
+        .then(res => res.data);
       if (response) {
         Alert.alert('Sucesso!', 'Evento atualizado!');
         navigation.goBack();
       }
 
-
-
       setLoading(false);
-    }catch(err) {
-      console.log(err)
+    } catch (err) {
+      console.log(err);
       if (err.response && err.response.status === 401) {
-          Alert.alert('Erro', 'Sessão expirada');
-          logout().then(() => {
-            navigation.reset({
-              index: 0,
-              routes: [{ name: 'LoginScreen' }]
-            });
+        Alert.alert('Erro', 'Sessão expirada');
+        logout().then(() => {
+          navigation.reset({
+            index: 0,
+            routes: [{ name: 'LoginScreen' }]
           });
-        } else if (
-          err.response &&
-          err.response.data &&
-          err.response.data.error
-        ) {
-          Alert.alert('Erro', err.response.data.error);
-        }
+        });
+      } else if (err.response && err.response.data && err.response.data.error) {
+        Alert.alert('Erro', err.response.data.error);
+      }
     }
-
-  }
+  };
 
   return (
     <ScrollView
@@ -135,7 +131,10 @@ export default function EditEventScreen({navigation, route}) {
       contentContainerStyle={styles.contentContainer}
     >
       <Text style={styles.eventTitle}>{title}</Text>
-      <TouchableOpacity style={styles.arrowButton}>
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={styles.arrowButton}
+      >
         <Image style={styles.arrowImage} source={BackArrow} />
       </TouchableOpacity>
 
@@ -202,7 +201,6 @@ export default function EditEventScreen({navigation, route}) {
         onChange={setMapLocation}
         initialPosition={mapLocation}
       />
-      
 
       <ButtonApp
         loading={loading}
@@ -214,4 +212,3 @@ export default function EditEventScreen({navigation, route}) {
     </ScrollView>
   );
 }
-
