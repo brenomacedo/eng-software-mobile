@@ -15,7 +15,7 @@ import api from '../../api';
 import data from '../CreateEventScreen/mockData';
 
 const EventsMap = ({ navigation }) => {
-  const { isAuth, logout, authToken } = useAuth();
+  const { isAuth, logout, authToken, user } = useAuth();
 
   const { requestGeoLocation, location } = useGeoLocation();
   const [nearestEvents, setNearestEvents] = useState([]);
@@ -29,8 +29,33 @@ const EventsMap = ({ navigation }) => {
     navigation.navigate('LoginScreen');
   };
 
+  /*{"description": "Um racha de basquete valendo um sorvete",
+  "end_time": "13:23:41",
+  "id": 2,
+  "latitude": -3.814874, 
+  "location": "Avenida contorno norte, 981, conjunto esperança ",
+  "longitude": -38.587177,
+  "start_time": "06:30:41",
+  "title": "Racha de basquete no polo ",
+  "type": 3,
+  "user_id": 6
+  }
+
+ */
+
   const navigateToDetails = event => {
-    navigation.navigate('EventDetails', event);
+    console.log(event);
+    navigation.navigate('EventDetails', {
+      title: event.title,
+      location: event.location,
+      hour: `${event.start_time.slice(0,5)}-${event.end_time.slice(0,5)}`,
+      eventDescription: event.description,
+      eventLatitude: event.latitude,
+      eventLongitude: event.longitude,
+      eventId: event.id,
+      userReq: ((user != null) ? user.id : null ),
+      userId: event.user_id
+    });
   };
 
   const handleLogout = () => {
@@ -139,6 +164,10 @@ const EventsMap = ({ navigation }) => {
     fetchEvents();
   }, [isAuth]);
 
+  const handleSearch = async (event) => {
+    navigation.navigate('SearchResults', {event});
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.topBarContainer}>
@@ -163,7 +192,7 @@ const EventsMap = ({ navigation }) => {
           source={require('../../../assets/search.png')}
         />
         <TextInput
-          onSubmitEditing={() => {}}
+          onSubmitEditing={({nativeEvent: {text, eventCount, target}}) => {handleSearch(text)}}
           placeholder="Buscar eventos"
           inputMode="search"
           style={styles.searchFieldInput}
