@@ -48,12 +48,12 @@ const EventsMap = ({ navigation }) => {
     navigation.navigate('EventDetails', {
       title: event.title,
       location: event.location,
-      hour: `${event.start_time.slice(0,5)}-${event.end_time.slice(0,5)}`,
+      hour: `${event.start_time.slice(0, 5)}-${event.end_time.slice(0, 5)}`,
       eventDescription: event.description,
       eventLatitude: event.latitude,
       eventLongitude: event.longitude,
       eventId: event.id,
-      userReq: ((user != null) ? user.id : null ),
+      userReq: user != null ? user.id : null,
       userId: event.user_id
     });
   };
@@ -164,9 +164,9 @@ const EventsMap = ({ navigation }) => {
     fetchEvents();
   }, [isAuth]);
 
-  const handleSearch = async (event) => {
-    navigation.navigate('SearchResults', {event});
-  }
+  const handleSearch = async event => {
+    navigation.navigate('SearchResults', { event });
+  };
 
   return (
     <View style={styles.container}>
@@ -192,7 +192,11 @@ const EventsMap = ({ navigation }) => {
           source={require('../../../assets/search.png')}
         />
         <TextInput
-          onSubmitEditing={({nativeEvent: {text, eventCount, target}}) => {handleSearch(text)}}
+          onSubmitEditing={({
+            nativeEvent: { text, _eventCount, _target }
+          }) => {
+            handleSearch(text);
+          }}
           placeholder="Buscar eventos"
           inputMode="search"
           style={styles.searchFieldInput}
@@ -207,8 +211,8 @@ const EventsMap = ({ navigation }) => {
       <MapView
         provider={PROVIDER_GOOGLE}
         initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
+          latitude: location.latitude,
+          longitude: location.longitude,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421
         }}
