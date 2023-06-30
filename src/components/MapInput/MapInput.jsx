@@ -20,8 +20,8 @@ export default function MapInput({
           provider={PROVIDER_GOOGLE}
           initialRegion={{
             ...initialPosition,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421
+            latitudeDelta: 0.014,
+            longitudeDelta: 0.014
           }}
           style={styles.map}
           onPress={e => {
@@ -29,8 +29,8 @@ export default function MapInput({
             let newCoordinates = {
               latitude: e.nativeEvent.coordinate.latitude,
               longitude: e.nativeEvent.coordinate.longitude,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421
+              latitudeDelta: 0.014,
+              longitudeDelta: 0.014
             };
 
             if (onChange) {

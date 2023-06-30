@@ -45,7 +45,6 @@ const EventsMap = ({ navigation }) => {
  */
 
   const navigateToDetails = event => {
-    console.log(event);
     navigation.navigate('EventDetails', {
       title: event.title,
       location: event.location,
@@ -122,6 +121,10 @@ const EventsMap = ({ navigation }) => {
     return nearestEvents.map(event => {
       return (
         <Marker
+          style={{
+            width: 64,
+            height: 64
+          }}
           key={event.id}
           title={event.title}
           description={event.description}
@@ -217,12 +220,7 @@ const EventsMap = ({ navigation }) => {
       </TouchableOpacity>
       <MapView
         provider={PROVIDER_GOOGLE}
-        initialRegion={{
-          latitude: location.latitude,
-          longitude: location.longitude,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421
-        }}
+        region={{ ...location, latitudeDelta: 0.014, longitudeDelta: 0.014 }}
         style={styles.mapView}
       >
         {renderEvents()}
