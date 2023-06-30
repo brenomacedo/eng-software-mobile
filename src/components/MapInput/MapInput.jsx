@@ -1,4 +1,4 @@
-import MapView from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { Marker } from 'react-native-maps';
 import { View, Text, Image } from 'react-native';
 import styles from './styles';
@@ -17,6 +17,7 @@ export default function MapInput({
       {!hideLabel && <Text style={styles.text}>Localização</Text>}
       <View style={styles.mapView}>
         <MapView
+          provider={PROVIDER_GOOGLE}
           initialRegion={{
             ...initialPosition,
             latitudeDelta: 0.0922,

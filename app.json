@@ -22,6 +22,11 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#212121"
       },
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyBz5p3rH9WvbV60hr00Qq1OXVBw60tVZGg"
+        }
+      },
       "package": "com.brenosekiro.mobile"
     },
     "web": {
@@ -29,7 +34,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "5ffb5a62-2a9f-494c-a43a-5487a774c156"
+        "projectId": "753910c2-7841-4db8-a4b6-b8b2d3070dcd"
       }
     }
   }

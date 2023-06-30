@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   Alert
 } from 'react-native';
-import MapView, { Marker, Callout } from 'react-native-maps';
+import MapView, { Marker, Callout, PROVIDER_GOOGLE } from 'react-native-maps';
 import useAuth from '../../hooks/useAuth';
 import useGeoLocation from '../../hooks/useGeoLocation';
 import styles from './styles';
@@ -176,6 +176,7 @@ const EventsMap = ({ navigation }) => {
         <Text style={styles.addEventButtonText}>+</Text>
       </TouchableOpacity>
       <MapView
+        provider={PROVIDER_GOOGLE}
         initialRegion={{
           latitude: 37.78825,
           longitude: -122.4324,
