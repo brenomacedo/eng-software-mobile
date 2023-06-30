@@ -19,6 +19,7 @@ const EventsMap = ({ navigation }) => {
 
   const { requestGeoLocation, location } = useGeoLocation();
   const [nearestEvents, setNearestEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const navigateToCreateEvent = () => {
     if (!isAuth) return navigateToLogin();
@@ -96,7 +97,8 @@ const EventsMap = ({ navigation }) => {
           }
 
           return [];
-        });
+        })
+        .finally(() => setLoading(false));
     } else {
       events = await api
         .get(
@@ -109,7 +111,8 @@ const EventsMap = ({ navigation }) => {
           }
 
           return [];
-        });
+        })
+        .finally(() => setLoading(false));
     }
 
     setNearestEvents(events);
@@ -183,7 +186,11 @@ const EventsMap = ({ navigation }) => {
             <Text style={styles.loginButtonText}>Sair</Text>
           </TouchableOpacity>
         )}
-        <Text style={styles.topBarText}>Mostrando os eventos próximos</Text>
+        <Text style={styles.topBarText}>
+          {loading
+            ? 'Carregando eventos próximos...'
+            : 'Mostrando os eventos próximos'}
+        </Text>
       </View>
       <View style={styles.searchFieldContainer}>
         <Image
