@@ -103,7 +103,7 @@ const Profile = ({ navigation }) => {
         }
       ),
       api.patch(
-        `/address/${user.id}`,
+        `/address/${address.id}`,
         {
           neighborhood,
           city,
