@@ -39,6 +39,7 @@ export default function AddressRegisterScreen({ navigation, route }) {
   };
 
   const handleRegister = async () => {
+    
     setLoading(true);
 
     const data = await api
@@ -57,9 +58,14 @@ export default function AddressRegisterScreen({ navigation, route }) {
         return null;
       });
 
+      console.log(data)
+
     if (!data) {
+      
       return setLoading(false);
     }
+
+
 
     const user = data.user;
     const authToken = data.accessToken;

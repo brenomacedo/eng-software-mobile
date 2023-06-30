@@ -82,9 +82,8 @@ export default StyleSheet.create({
     flexDirection:"row"
   },
   messageText:{
-    flexBasis:"80%",
     
-
+    width: "100%"
   },
   messageTextTitle: {
     color: '#000',
@@ -107,7 +106,7 @@ export default StyleSheet.create({
     backgroundColor: '#212121'
   },
   button:{
-    width:"57%",
+    width: "45%",
     height:44,
     borderRadius: 11,
   },
@@ -125,7 +124,21 @@ export default StyleSheet.create({
   buttonGroup:{
     display:"flex",
     flexDirection:"row",
-    gap:17,
-    marginLeft:11
+    paddingLeft: 15,
+    paddingRight: 15,
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "space-between"
+  },
+  noResults: {
+    color: "white",
+    fontSize: 20,
+    fontFamily: 'PoppinsRegular'
+  },
+  confirmMessage: {
+    fontSize: 15,
+    fontFamily: 'PoppinsRegular',
+    textAlign: "center",
+    width: "100%"
   }
 });

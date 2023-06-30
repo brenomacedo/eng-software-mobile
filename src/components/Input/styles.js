@@ -14,12 +14,13 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     marginTop: 4
   }),
-  InputContainer: (containerWidth, containerHeight, marginBottom) => ({
+  InputContainer: (containerWidth, containerHeight, marginBottom, marginTop) => ({
     position: 'relative',
     height: containerHeight ? containerHeight : 90,
     width: containerWidth ? containerWidth : '100%',
     maxWidth: 700,
-    marginBottom: marginBottom ? marginBottom : 0
+    marginBottom: marginBottom ? marginBottom : 0,
+    marginTop: marginTop ? marginTop : 0
   }),
   Icon: doesInputHaveLabel => ({
     position: 'absolute',
