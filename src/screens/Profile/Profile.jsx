@@ -1,4 +1,4 @@
-import { Text, Platform, ScrollView, Alert, Image} from 'react-native';
+import { Text, Platform, ScrollView, Alert, Image, TouchableOpacity,View} from 'react-native';
 import ArrowBack from '../../components/ArrowBack/ArrowBack';
 import { ButtonApp, DateTimeInput, Input } from '../../components';
 import { useState } from 'react';
@@ -145,7 +145,7 @@ const Profile = ({ navigation }) => {
         alignItems: 'center',
         paddingHorizontal: 30,
         paddingBottom: 30,
-        height:"200%"
+        height:"170%"
       }}
     >
       <ArrowBack
@@ -163,16 +163,38 @@ const Profile = ({ navigation }) => {
       >
         Perfil
       </Text>
-      <Image
-        source={require('../../../assets/testePic.jpeg')}
-        style={{
-          width: 210,
-          height: 210,
-          borderRadius:105,
-          marginBottom: 30,
-          resizeMode: 'contain'
-        }}
-      />
+
+      {/* Parte da foto do usuário*/}
+      <View>
+        <Image
+          source={require('../../../assets/testePic.jpeg')}
+          style={{
+            width: 210,
+            height: 210,
+            borderRadius:105,
+            marginBottom: 30,
+            resizeMode: 'contain'
+          }}
+          />
+          <TouchableOpacity
+            style={{
+              position:"absolute",
+              left:148,
+              bottom:20
+            }}
+          >
+            <Image 
+              source={require('../../../assets/Foto.png')}
+              style={{
+                height:72,
+                width:72,
+                resizeMode:"contain"
+              }}
+            />
+          </TouchableOpacity>
+      </View>
+
+
       <Input
         value={name}
         setValue={setName}
@@ -187,6 +209,7 @@ const Profile = ({ navigation }) => {
         leftIcon={Biografia}
         placeHolder={'Nome'}
         containerHeight={218}
+        lineHeight={24}
       />
 
       <Text
