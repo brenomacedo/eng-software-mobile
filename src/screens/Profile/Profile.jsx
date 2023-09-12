@@ -1,4 +1,4 @@
-import { Text, Platform, ScrollView, Alert, Image, TouchableOpacity,View} from 'react-native';
+import { Text, Platform, ScrollView, Alert, Image, TouchableOpacity,View, Modal, FlatList} from 'react-native';
 import ArrowBack from '../../components/ArrowBack/ArrowBack';
 import { ButtonApp, DateTimeInput, Input } from '../../components';
 import { useState } from 'react';
@@ -136,6 +136,55 @@ const Profile = ({ navigation }) => {
       .finally(() => setLoading(false));
   };
 
+  //Lógica de abrir e fechar janela para escolher foto
+  const [JanelaVisivel, setJanelaVisivel] = useState(false);
+
+  const abrirJanela = () => {
+    setJanelaVisivel(true);
+  };
+
+  const fecharJanela = () => {
+    setJanelaVisivel(false);
+  };
+
+  //Fotos de perfis possíveis
+  const images = [
+    { id: '1', source: require('../../../assets/telabranca.png') },
+    { id: '2', source: require('../../../assets/telabranca.png') },
+    { id: '3', source: require('../../../assets/telabranca.png') },
+    { id: '4', source: require('../../../assets/telabranca.png') },
+    { id: '5', source: require('../../../assets/telabranca.png') },
+    { id: '6', source: require('../../../assets/telabranca.png') },
+    { id: '7', source: require('../../../assets/telabranca.png') },
+    { id: '8', source: require('../../../assets/telabranca.png') },
+  ];
+
+  
+  const GridImages = () => {
+    return (
+      <FlatList
+        data={images}
+        numColumns={2} // 4 columns for a 2x4 grid
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <View>
+            <Image 
+              source={item.source} 
+              style={{width: 150,
+                    height: 150,
+                    borderRadius:75,
+                    margin:15,
+
+                    resizeMode: 'contain'
+                  }} 
+            />
+          </View>
+        )}
+      />
+    );
+  };
+
+
   return (
     <ScrollView
       style={{ flex: 1}}
@@ -182,6 +231,7 @@ const Profile = ({ navigation }) => {
               left:148,
               bottom:20
             }}
+            onPress={abrirJanela}
           >
             <Image 
               source={require('../../../assets/Foto.png')}
@@ -193,6 +243,68 @@ const Profile = ({ navigation }) => {
             />
           </TouchableOpacity>
       </View>
+
+
+      {/* Abre a janela para mudar a foto */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={JanelaVisivel}
+        onRequestClose={fecharJanela}
+      >
+        <View style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'rgba(255, 255, 255, 0)', // Semi-transparent background
+        }}>
+          <View style={{
+              backgroundColor: 'rgb(42,42,42)',
+              padding: 20,
+              borderRadius: 10,
+              elevation: 5,
+              alignItems: 'center',
+              width:"90%",
+              height:"85%"
+          }}>
+            {/* Titulo */}
+            <Text style={{
+              fontFamily: 'Poppins',
+              color: 'white',
+              fontSize: 18,
+              marginBottom: 30,
+              marginTop: 5
+            }}>
+              Foto de Perfil
+            </Text>
+
+            {/* Botão de exitJanela */}
+            <TouchableOpacity 
+              title="Close" 
+              onPress={fecharJanela}
+              style={{
+                position:"absolute",
+                top:-20,
+                left:"99%"
+              }}
+            >
+            
+              <Image 
+                source={require('../../../assets/ExitFotos.png')}
+                style={{
+                  height:61,
+                  width:61,
+                  resizeMode:"contain"
+                }}
+              />
+            </TouchableOpacity>
+
+            <GridImages></GridImages>
+
+
+          </View>
+        </View>
+      </Modal>
 
 
       <Input
