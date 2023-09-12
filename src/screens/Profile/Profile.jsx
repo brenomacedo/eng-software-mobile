@@ -1,4 +1,4 @@
-import { Text, Platform, ScrollView, Alert } from 'react-native';
+import { Text, Platform, ScrollView, Alert, Image} from 'react-native';
 import ArrowBack from '../../components/ArrowBack/ArrowBack';
 import { ButtonApp, DateTimeInput, Input } from '../../components';
 import { useState } from 'react';
@@ -12,6 +12,7 @@ import axios from 'axios';
 import useAuth from '../../hooks/useAuth';
 import api from '../../api';
 import dayjs from 'dayjs';
+import Biografia from '../../../assets/Biografia.png'
 
 const Profile = ({ navigation }) => {
   const { authToken, user, address, logout, setUser, setAddress } = useAuth();
@@ -137,13 +138,14 @@ const Profile = ({ navigation }) => {
 
   return (
     <ScrollView
-      style={{ flex: 1 }}
+      style={{ flex: 1}}
       contentContainerStyle={{
         backgroundColor: '#212121',
         flexDirection: 'column',
         alignItems: 'center',
         paddingHorizontal: 30,
-        paddingBottom: 30
+        paddingBottom: 30,
+        height:"200%"
       }}
     >
       <ArrowBack
@@ -155,11 +157,22 @@ const Profile = ({ navigation }) => {
           fontFamily: 'Poppins',
           color: 'white',
           fontSize: 18,
-          marginBottom: 10
+          marginBottom: 30,
+          marginTop: 20
         }}
       >
         Perfil
       </Text>
+      <Image
+        source={require('../../../assets/testePic.jpeg')}
+        style={{
+          width: 210,
+          height: 210,
+          borderRadius:105,
+          marginBottom: 30,
+          resizeMode: 'contain'
+        }}
+      />
       <Input
         value={name}
         setValue={setName}
@@ -167,6 +180,25 @@ const Profile = ({ navigation }) => {
         leftIcon={UserNamevector}
         placeHolder={'Nome'}
       />
+      <Input
+        value={"Biografia"}
+        setValue={() => "Biografia"}
+        isPassword={false}
+        leftIcon={Biografia}
+        placeHolder={'Nome'}
+        containerHeight={218}
+      />
+
+      <Text
+        style={{
+          fontFamily: 'Poppins',
+          color: 'white',
+          fontSize: 18,
+          marginBottom: 10
+        }}
+      >
+        Informações Pessoais
+      </Text>
 
       <DateTimeInput
         dateToShow={date}
