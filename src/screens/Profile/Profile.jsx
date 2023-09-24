@@ -32,12 +32,13 @@ const Profile = ({ navigation }) => {
 
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
-  const [bio, setBio] = useState('');
+  const [bio, setBio] = useState(user.description || '');
   const [postalCode, setPostalCode] = useState('');
   const [state, setState] = useState(address.state);
   const [city, setCity] = useState(address.city);
   const [neighborhood, setNeighborhood] = useState(address.neighborhood);
   const [loading, setLoading] = useState(false);
+  const [profilePic, setProfilePic] = useState(user.profile_pic);
 
   const onChangeDate = (event, value) => {
     if (Platform.OS === 'android') {
@@ -107,7 +108,9 @@ const Profile = ({ navigation }) => {
         {
           name,
           email,
-          birth_date: dayjs(date).format('MM-DD-YYYY')
+          birth_date: dayjs(date).format('MM-DD-YYYY'),
+          profile_pic: profilePic,
+          description: bio
         },
         {
           headers: {
@@ -161,14 +164,14 @@ const Profile = ({ navigation }) => {
 
   //Fotos de perfis possíveis
   const images = [
-    { id: 1, source: require('../../../assets/telabranca.png') },
-    { id: 2, source: require('../../../assets/telabranca.png') },
-    { id: 3, source: require('../../../assets/telabranca.png') },
-    { id: 4, source: require('../../../assets/telabranca.png') },
-    { id: 5, source: require('../../../assets/telabranca.png') },
-    { id: 6, source: require('../../../assets/telabranca.png') },
-    { id: 7, source: require('../../../assets/telabranca.png') },
-    { id: 8, source: require('../../../assets/telabranca.png') }
+    { id: 0, source: require('../../../assets/pfp0.png') },
+    { id: 1, source: require('../../../assets/pfp1.png') },
+    { id: 2, source: require('../../../assets/pfp2.png') },
+    { id: 3, source: require('../../../assets/pfp3.png') },
+    { id: 4, source: require('../../../assets/pfp4.png') },
+    { id: 5, source: require('../../../assets/pfp5.png') },
+    { id: 6, source: require('../../../assets/pfp6.png') },
+    { id: 7, source: require('../../../assets/pfp7.png') }
   ];
 
   const GridImages = () => {
@@ -182,7 +185,12 @@ const Profile = ({ navigation }) => {
           width: '100%'
         }}
         renderItem={({ item }) => (
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              setProfilePic(item.id);
+              fecharJanela();
+            }}
+          >
             <Image
               source={item.source}
               style={{
@@ -230,7 +238,7 @@ const Profile = ({ navigation }) => {
       {/* Parte da foto do usuário*/}
       <View>
         <Image
-          source={require('../../../assets/testePic.jpeg')}
+          source={images[profilePic].source}
           style={{
             width: 210,
             height: 210,
