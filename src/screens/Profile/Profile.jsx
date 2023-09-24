@@ -1,4 +1,15 @@
-import { Text, Platform, ScrollView, Alert, Image, TouchableOpacity,View, Modal, FlatList} from 'react-native';
+import {
+  Text,
+  Platform,
+  ScrollView,
+  Alert,
+  Image,
+  TouchableOpacity,
+  View,
+  Modal,
+  FlatList,
+  Dimensions
+} from 'react-native';
 import ArrowBack from '../../components/ArrowBack/ArrowBack';
 import { ButtonApp, DateTimeInput, Input } from '../../components';
 import { useState } from 'react';
@@ -12,7 +23,7 @@ import axios from 'axios';
 import useAuth from '../../hooks/useAuth';
 import api from '../../api';
 import dayjs from 'dayjs';
-import Biografia from '../../../assets/Biografia.png'
+import Biografia from '../../../assets/Biografia.png';
 
 const Profile = ({ navigation }) => {
   const { authToken, user, address, logout, setUser, setAddress } = useAuth();
@@ -21,6 +32,7 @@ const Profile = ({ navigation }) => {
 
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
+  const [bio, setBio] = useState('');
   const [postalCode, setPostalCode] = useState('');
   const [state, setState] = useState(address.state);
   const [city, setCity] = useState(address.city);
@@ -149,52 +161,54 @@ const Profile = ({ navigation }) => {
 
   //Fotos de perfis possíveis
   const images = [
-    { id: '1', source: require('../../../assets/telabranca.png') },
-    { id: '2', source: require('../../../assets/telabranca.png') },
-    { id: '3', source: require('../../../assets/telabranca.png') },
-    { id: '4', source: require('../../../assets/telabranca.png') },
-    { id: '5', source: require('../../../assets/telabranca.png') },
-    { id: '6', source: require('../../../assets/telabranca.png') },
-    { id: '7', source: require('../../../assets/telabranca.png') },
-    { id: '8', source: require('../../../assets/telabranca.png') },
+    { id: 1, source: require('../../../assets/telabranca.png') },
+    { id: 2, source: require('../../../assets/telabranca.png') },
+    { id: 3, source: require('../../../assets/telabranca.png') },
+    { id: 4, source: require('../../../assets/telabranca.png') },
+    { id: 5, source: require('../../../assets/telabranca.png') },
+    { id: 6, source: require('../../../assets/telabranca.png') },
+    { id: 7, source: require('../../../assets/telabranca.png') },
+    { id: 8, source: require('../../../assets/telabranca.png') }
   ];
 
-  
   const GridImages = () => {
     return (
       <FlatList
         data={images}
         numColumns={2} // 4 columns for a 2x4 grid
-        keyExtractor={(item) => item.id}
+        keyExtractor={item => item.id}
+        style={{
+          flex: 1,
+          width: '100%'
+        }}
         renderItem={({ item }) => (
-          <View>
-            <Image 
-              source={item.source} 
-              style={{width: 150,
-                    height: 150,
-                    borderRadius:75,
-                    margin:15,
-
-                    resizeMode: 'contain'
-                  }} 
+          <TouchableOpacity>
+            <Image
+              source={item.source}
+              style={{
+                width: (Dimensions.get('screen').width * 0.9 - 60) / 2,
+                height: (Dimensions.get('screen').width * 0.9 - 60) / 2,
+                borderRadius: 75,
+                marginRight: 20,
+                marginBottom: 20,
+                resizeMode: 'contain'
+              }}
             />
-          </View>
+          </TouchableOpacity>
         )}
       />
     );
   };
 
-
   return (
     <ScrollView
-      style={{ flex: 1}}
+      style={{ flex: 1 }}
       contentContainerStyle={{
         backgroundColor: '#212121',
         flexDirection: 'column',
         alignItems: 'center',
         paddingHorizontal: 30,
-        paddingBottom: 30,
-        height:"170%"
+        paddingBottom: 30
       }}
     >
       <ArrowBack
@@ -220,30 +234,29 @@ const Profile = ({ navigation }) => {
           style={{
             width: 210,
             height: 210,
-            borderRadius:105,
+            borderRadius: 105,
             marginBottom: 30,
             resizeMode: 'contain'
           }}
-          />
-          <TouchableOpacity
+        />
+        <TouchableOpacity
+          style={{
+            position: 'absolute',
+            left: 148,
+            bottom: 20
+          }}
+          onPress={abrirJanela}
+        >
+          <Image
+            source={require('../../../assets/Foto.png')}
             style={{
-              position:"absolute",
-              left:148,
-              bottom:20
+              height: 72,
+              width: 72,
+              resizeMode: 'contain'
             }}
-            onPress={abrirJanela}
-          >
-            <Image 
-              source={require('../../../assets/Foto.png')}
-              style={{
-                height:72,
-                width:72,
-                resizeMode:"contain"
-              }}
-            />
-          </TouchableOpacity>
+          />
+        </TouchableOpacity>
       </View>
-
 
       {/* Abre a janela para mudar a foto */}
       <Modal
@@ -252,60 +265,62 @@ const Profile = ({ navigation }) => {
         visible={JanelaVisivel}
         onRequestClose={fecharJanela}
       >
-        <View style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: 'rgba(255, 255, 255, 0)', // Semi-transparent background
-        }}>
-          <View style={{
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(255, 255, 255, 0)' // Semi-transparent background
+          }}
+        >
+          <View
+            style={{
               backgroundColor: 'rgb(42,42,42)',
               padding: 20,
               borderRadius: 10,
               elevation: 5,
               alignItems: 'center',
-              width:"90%",
-              height:"85%"
-          }}>
+              width: '90%',
+              height: '85%'
+            }}
+          >
             {/* Titulo */}
-            <Text style={{
-              fontFamily: 'Poppins',
-              color: 'white',
-              fontSize: 18,
-              marginBottom: 30,
-              marginTop: 5
-            }}>
+            <Text
+              style={{
+                fontFamily: 'Poppins',
+                color: 'white',
+                fontSize: 18,
+                marginBottom: 30,
+                marginTop: 5
+              }}
+            >
               Foto de Perfil
             </Text>
 
             {/* Botão de exitJanela */}
-            <TouchableOpacity 
-              title="Close" 
+            <TouchableOpacity
+              title="Close"
               onPress={fecharJanela}
               style={{
-                position:"absolute",
-                top:-20,
-                left:"99%"
+                position: 'absolute',
+                top: -20,
+                left: '99%'
               }}
             >
-            
-              <Image 
+              <Image
                 source={require('../../../assets/ExitFotos.png')}
                 style={{
-                  height:61,
-                  width:61,
-                  resizeMode:"contain"
+                  height: 61,
+                  width: 61,
+                  resizeMode: 'contain'
                 }}
               />
             </TouchableOpacity>
 
             <GridImages></GridImages>
-
-
           </View>
         </View>
       </Modal>
-
 
       <Input
         value={name}
@@ -315,13 +330,16 @@ const Profile = ({ navigation }) => {
         placeHolder={'Nome'}
       />
       <Input
-        value={"Biografia"}
-        setValue={() => "Biografia"}
+        value={bio}
+        setValue={bio => setBio(bio)}
         isPassword={false}
         leftIcon={Biografia}
-        placeHolder={'Nome'}
+        placeHolder={'Biografia'}
         containerHeight={218}
         lineHeight={24}
+        multiline={true}
+        numberOfLines={8}
+        textInputStyle={{ paddingTop: 18 }}
       />
 
       <Text

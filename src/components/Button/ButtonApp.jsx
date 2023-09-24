@@ -8,12 +8,13 @@ export default function ButtonApp({
   buttonWidth,
   buttonMargin,
   loading,
-  onPress
+  onPress,
+  style = {}
 }) {
   return (
     <TouchableOpacity
       disabled={loading}
-      style={styles.Button(buttonWidth, buttonMargin, loading)}
+      style={[styles.Button(buttonWidth, buttonMargin, loading), style]}
       onPress={
         onPress
           ? onPress

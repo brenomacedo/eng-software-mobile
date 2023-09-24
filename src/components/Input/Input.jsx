@@ -16,17 +16,24 @@ export default function Input({
   value,
   marginBottom,
   marginTop,
-  onBlur
+  onBlur,
+  multiline,
+  numberOfLines,
+  style = {},
+  textInputStyle = {}
 }) {
   const [hidePassword, setHidePassword] = useState(isPassword);
   return (
     <View
-      style={styles.InputContainer(
-        containerWidth,
-        containerHeight,
-        marginBottom,
-        marginTop
-      )}
+      style={[
+        styles.InputContainer(
+          containerWidth,
+          containerHeight,
+          marginBottom,
+          marginTop
+        ),
+        style
+      ]}
     >
       {leftIcon && (
         <Image
@@ -41,11 +48,15 @@ export default function Input({
       <TextInput
         onBlur={onBlur || (() => {})}
         secureTextEntry={hidePassword}
-        style={styles.Input(leftIcon ? true : false, containerHeight)}
+        style={[
+          styles.Input(leftIcon ? true : false, containerHeight),
+          textInputStyle
+        ]}
         placeholder={placeHolder}
         keyboardType="default"
         defaultValue={value}
         onChangeText={setValue}
+        {...{ multiline, numberOfLines }}
       />
       {isPassword && (
         <TouchableOpacity
