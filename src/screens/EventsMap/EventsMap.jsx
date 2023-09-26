@@ -15,7 +15,7 @@ import api from '../../api';
 import data from '../CreateEventScreen/mockData';
 
 const EventsMap = ({ navigation }) => {
-  const { isAuth, logout, authToken, user } = useAuth();
+  const { isAuth, logout, user } = useAuth();
 
   const { requestGeoLocation, location } = useGeoLocation();
   const [nearestEvents, setNearestEvents] = useState([]);
@@ -70,51 +70,25 @@ const EventsMap = ({ navigation }) => {
   };
 
   const fetchEvents = async () => {
-    let events;
+    const events = await api
+      .get(
+        `/event/all?latitude=${location.latitude}&longitude=${location.longitude}&distance=100000`
+      )
+      .then(res => res.data)
+      .catch(err => {
+        if (err.response && err.response.data && err.response.data.error) {
+          Alert.alert('Erro', err.response.data.error);
+        }
 
-    if (isAuth) {
-      events = await api
-        .get(
-          `/event?latitude=${location.latitude}&longitude=${location.longitude}&distance=100000`,
-          {
-            headers: {
-              authorization: `Bearer ${authToken}`
-            }
-          }
-        )
-        .then(res => res.data)
-        .catch(err => {
-          if (err.response && err.response.status === 401) {
-            Alert.alert('Erro', 'Sessão expirada');
-            handleLogout();
-          } else if (
-            err.response &&
-            err.response.data &&
-            err.response.data.error
-          ) {
-            Alert.alert('Erro', err.response.data.error);
-          }
-
-          return [];
-        })
-        .finally(() => setLoading(false));
-    } else {
-      events = await api
-        .get(
-          `/event/all?latitude=${location.latitude}&longitude=${location.longitude}&distance=100000`
-        )
-        .then(res => res.data)
-        .catch(err => {
-          if (err.response && err.response.data && err.response.data.error) {
-            Alert.alert('Erro', err.response.data.error);
-          }
-
-          return [];
-        })
-        .finally(() => setLoading(false));
-    }
+        return [];
+      })
+      .finally(() => setLoading(false));
 
     setNearestEvents(events);
+  };
+
+  const isEventCreatedByUser = event => {
+    return isAuth && user.id === event.user_id;
   };
 
   const renderEvents = () => {
@@ -129,32 +103,45 @@ const EventsMap = ({ navigation }) => {
           title={event.title}
           description={event.description}
           coordinate={{ latitude: event.latitude, longitude: event.longitude }}
-          image={data[event.type - 1].image}
+          image={
+            isEventCreatedByUser(event)
+              ? data[event.type - 1].event_owner_image
+              : data[event.type - 1].image
+          }
         >
-          <Callout tooltip onPress={() => navigateToDetails(event)}>
+          <Callout
+            tooltip
+            onPress={() => {
+              if (!isEventCreatedByUser(event)) {
+                navigateToDetails(event);
+              }
+            }}
+          >
             <View style={styles.calloutContentContainer}>
               <Text numberOfLines={3} style={styles.calloutText}>
                 {event.title}
               </Text>
-              <View
-                style={{
-                  width: '100%',
-                  paddingHorizontal: 4,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  backgroundColor: '#f90000',
-                  borderRadius: 4
-                }}
-              >
-                <Text
+              {!isEventCreatedByUser(event) && (
+                <View
                   style={{
-                    color: 'white',
-                    fontFamily: 'Poppins'
+                    width: '100%',
+                    paddingHorizontal: 4,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor: '#f90000',
+                    borderRadius: 4
                   }}
                 >
-                  Detalhes
-                </Text>
-              </View>
+                  <Text
+                    style={{
+                      color: 'white',
+                      fontFamily: 'Poppins'
+                    }}
+                  >
+                    Detalhes
+                  </Text>
+                </View>
+              )}
             </View>
           </Callout>
         </Marker>
