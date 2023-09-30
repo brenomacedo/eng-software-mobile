@@ -54,7 +54,8 @@ const EventsMap = ({ navigation }) => {
       eventLongitude: event.longitude,
       eventId: event.id,
       userReq: user != null ? user.id : null,
-      userId: event.user_id
+      userId: event.user_id,
+      requests: event.requests
     });
   };
 

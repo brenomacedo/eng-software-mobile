@@ -7,7 +7,7 @@ export default StyleSheet.create({
   eventDetailsContainer: {
     backgroundColor: '#212121',
     alignItems: 'center',
-    minHeight:'100%',
+    minHeight: '100%',
     paddingBottom: 20
   },
   eventDetailsTitle: {
@@ -55,5 +55,55 @@ export default StyleSheet.create({
     color: 'white',
     fontFamily: 'PoppinsRegular',
     fontSize: 16
+  },
+  seeParticipantsContainer: {
+    paddingHorizontal: 32,
+    width: '100%'
+  },
+  seeParticipants: {
+    width: '100%',
+    height: 40,
+    borderRadius: 15,
+    marginTop: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#f90000'
+  },
+  seeParticipantsText: {
+    color: 'white',
+    fontFamily: 'PoppinsRegular',
+    fontSize: 14
+  },
+  participantsModalTitle: {
+    color: 'white',
+    fontFamily: 'PoppinsRegular',
+    textAlign: 'center',
+    fontSize: 16
+  },
+  participantContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    columnGap: 12
+  },
+  participantPfp: {
+    width: 36,
+    height: 36,
+    borderRadius: 18
+  },
+  participantName: {
+    color: 'white',
+    fontFamily: 'PoppinsRegular',
+    fontSize: 16,
+    flex: 1
+  },
+  viewParticipantProfileButton: {
+    width: 18,
+    height: 18,
+    marginHorizontal: 8
+  },
+  viewParticipantProfile: {
+    width: 18,
+    height: 18
   }
 });

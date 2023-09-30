@@ -13,7 +13,6 @@ import {
 import ArrowBack from '../../components/ArrowBack/ArrowBack';
 import { ButtonApp, DateTimeInput, Input } from '../../components';
 import { useState } from 'react';
-
 import EmailVector from '../../../assets/EmailVector.png';
 import UserNamevector from '../../../assets/UserNameVector.png';
 import HomeVector from '../../../assets/HomeVector.png';
@@ -24,6 +23,7 @@ import useAuth from '../../hooks/useAuth';
 import api from '../../api';
 import dayjs from 'dayjs';
 import Biografia from '../../../assets/Biografia.png';
+import { images } from '../../utils/consts';
 
 const Profile = ({ navigation }) => {
   const { authToken, user, address, logout, setUser, setAddress } = useAuth();
@@ -100,8 +100,6 @@ const Profile = ({ navigation }) => {
       return Alert.alert('Erro', 'O bairro é obrigatório!');
     }
 
-    console.log(user);
-
     Promise.all([
       api.patch(
         `/user/${user.id}`,
@@ -163,16 +161,6 @@ const Profile = ({ navigation }) => {
   };
 
   //Fotos de perfis possíveis
-  const images = [
-    { id: 0, source: require('../../../assets/pfp0.png') },
-    { id: 1, source: require('../../../assets/pfp1.png') },
-    { id: 2, source: require('../../../assets/pfp2.png') },
-    { id: 3, source: require('../../../assets/pfp3.png') },
-    { id: 4, source: require('../../../assets/pfp4.png') },
-    { id: 5, source: require('../../../assets/pfp5.png') },
-    { id: 6, source: require('../../../assets/pfp6.png') },
-    { id: 7, source: require('../../../assets/pfp7.png') }
-  ];
 
   const GridImages = () => {
     return (
