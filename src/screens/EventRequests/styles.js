@@ -3,40 +3,40 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
   scroll: {
     flex: 1,
-    paddingTop:30,
-    backgroundColor:"black"
+    paddingTop: 30,
+    backgroundColor: '#212121'
   },
-  bell:{
-    height:30,
-    width: 25, 
-    margin:5,
-    zIndex:1
+  bell: {
+    height: 30,
+    width: 25,
+    margin: 5,
+    zIndex: 1
   },
-  circle:{
+  circle: {
     width: 14,
     height: 14,
     borderRadius: 19,
-    backgroundColor:"black",
-    position:"absolute",
+    backgroundColor: 'black',
+    position: 'absolute',
     top: 23,
     left: 18,
-    color:"white",
-    textAlign:"center",
-    fontSize:10,
-    zIndex:2
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 10,
+    zIndex: 2
   },
 
-  pen:{
-    height:25,
+  pen: {
+    height: 25,
     width: 25,
-    margin:5,
-    overflow:"visible"
+    margin: 5,
+    overflow: 'visible'
   },
 
   eventDetailsContainer: {
     backgroundColor: '#212121',
     alignItems: 'center',
-    minHeight:'100%',
+    minHeight: '100%'
   },
   eventDetailsTitle: {
     color: 'white',
@@ -48,7 +48,7 @@ export default StyleSheet.create({
     fontFamily: 'Poppins',
     fontSize: 24,
     alignSelf: 'center',
-    fontWeight:500,
+    fontWeight: 500,
     marginTop: 16
   },
   eventDetailsInfo: {
@@ -75,21 +75,21 @@ export default StyleSheet.create({
     backgroundColor: '#FFF',
     borderRadius: 15,
     marginTop: 16,
-    display:"flex",
-    justifyContent: "flex-start",
+    display: 'flex',
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    flexDirection:"row"
+    flexDirection: 'row'
   },
-  buttonText:{
-    width: "100%",
-    padding: 10    
+  buttonText: {
+    width: '100%',
+    padding: 10
   },
-  buttonIcons:{
-    flexBasis:"20%",
-    display:"flex",
-    justifyContent:"center",
-    alignItems:"center",
-    flexDirection:"column",
+  buttonIcons: {
+    flexBasis: '20%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column'
   },
   buttonTextTitle: {
     color: '#000',
@@ -111,12 +111,12 @@ export default StyleSheet.create({
     backgroundColor: '#212121'
   },
   noResults: {
-    color: "white",
+    color: 'white',
     fontSize: 20,
     fontFamily: 'PoppinsRegular'
   },
   loading: {
-    color: "white",
+    color: 'white',
     fontSize: 20,
     fontFamily: 'PoppinsRegular'
   }

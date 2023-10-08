@@ -13,6 +13,7 @@ import styles from './styles';
 import { useEffect, useState } from 'react';
 import api from '../../api';
 import data from '../CreateEventScreen/mockData';
+import { useIsFocused } from '@react-navigation/native';
 
 const EventsMap = ({ navigation }) => {
   const { isAuth, logout, user } = useAuth();
@@ -20,6 +21,7 @@ const EventsMap = ({ navigation }) => {
   const { requestGeoLocation, location } = useGeoLocation();
   const [nearestEvents, setNearestEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const isFocused = useIsFocused();
 
   const navigateToCreateEvent = () => {
     if (!isAuth) return navigateToLogin();
@@ -55,7 +57,8 @@ const EventsMap = ({ navigation }) => {
       eventId: event.id,
       userReq: user != null ? user.id : null,
       userId: event.user_id,
-      requests: event.requests
+      requests: event.requests,
+      user: event.user
     });
   };
 
@@ -155,11 +158,15 @@ const EventsMap = ({ navigation }) => {
   }, []);
 
   useEffect(() => {
-    fetchEvents();
-  }, [isAuth]);
+    if (isFocused) fetchEvents();
+  }, [isAuth, isFocused]);
 
   const handleSearch = async event => {
-    navigation.navigate('SearchResults', { event });
+    navigation.navigate('SearchResults', {
+      title: event,
+      latitude: location.latitude,
+      longitude: location.longitude
+    });
   };
 
   return (

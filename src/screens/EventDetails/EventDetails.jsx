@@ -16,7 +16,7 @@ import styles from './styles';
 import { images } from '../../utils/consts';
 
 const EventDetails = ({ navigation, route }) => {
-  const { authToken, logout, isAuth } = useAuth();
+  const { authToken, logout, isAuth, user: authUser } = useAuth();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const {
@@ -27,9 +27,9 @@ const EventDetails = ({ navigation, route }) => {
     eventLatitude,
     eventLongitude,
     eventId,
-    userReq,
     userId,
-    requests
+    requests,
+    user
   } = route.params;
   const [isParticipantsModalOpen, setIsParticipantsModalOpen] = useState(false);
 
@@ -39,6 +39,11 @@ const EventDetails = ({ navigation, route }) => {
 
   const openParticipantsModal = () => {
     setIsParticipantsModalOpen(true);
+  };
+
+  const viewUserProfile = user => {
+    setIsParticipantsModalOpen(false);
+    navigation.navigate('UserProfile', { user });
   };
 
   const handleRequest = async () => {
@@ -77,7 +82,7 @@ const EventDetails = ({ navigation, route }) => {
           err.response.data &&
           err.response.data.error
         ) {
-          Alert.alert('Erro', err.response.data.error);
+          Alert.alert('Erro', 'Você já pediu para participar desse evento!');
         }
       }
     } else {
@@ -91,6 +96,15 @@ const EventDetails = ({ navigation, route }) => {
     const acceptedRequests = requests.filter(
       request => request.status === 'ACCEPTED'
     );
+
+    if (acceptedRequests.length === 0) {
+      return (
+        <Text style={styles.eventWithoutParticipants}>
+          Este evento não possui nenhum participante.
+        </Text>
+      );
+    }
+
     return acceptedRequests.map(request => (
       <View style={styles.participantContainer} key={request.id}>
         <Image
@@ -100,7 +114,10 @@ const EventDetails = ({ navigation, route }) => {
         <Text numberOfLines={1} style={styles.participantName}>
           {request.user.name}
         </Text>
-        <TouchableOpacity style={styles.viewParticipantProfileButton}>
+        <TouchableOpacity
+          style={styles.viewParticipantProfileButton}
+          onPress={() => viewUserProfile(request.user)}
+        >
           <Image
             resizeMode="contain"
             source={require('../../../assets/eye.png')}
@@ -122,6 +139,27 @@ const EventDetails = ({ navigation, route }) => {
         }}
       />
       <Text style={styles.eventDetailsTitle}>{title}</Text>
+
+      <Text style={styles.eventDetailsInfoTitle}>Criado por:</Text>
+      <View style={styles.eventCreatorInfo}>
+        <Image
+          style={styles.eventCreatorProfilePic}
+          source={images[user.profile_pic].source}
+        />
+        <Text style={styles.eventCreatorName} numberOfLines={1}>
+          {user.name}
+        </Text>
+        <TouchableOpacity
+          style={styles.viewParticipantProfileButton}
+          onPress={() => viewUserProfile(user)}
+        >
+          <Image
+            resizeMode="contain"
+            source={require('../../../assets/eye.png')}
+            style={styles.viewParticipantProfile}
+          />
+        </TouchableOpacity>
+      </View>
 
       <Text style={styles.eventDetailsInfoTitle}>Local</Text>
       <Text style={styles.eventDetailsInfo}>{location}</Text>
@@ -156,7 +194,7 @@ const EventDetails = ({ navigation, route }) => {
         }}
       />
 
-      {userId != userReq && (
+      {(!authUser || userId != authUser.id) && (
         <>
           <Input
             labelText={'Mensagem: '}

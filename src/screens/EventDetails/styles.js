@@ -105,5 +105,30 @@ export default StyleSheet.create({
   viewParticipantProfile: {
     width: 18,
     height: 18
+  },
+  eventWithoutParticipants: {
+    color: 'white',
+    textAlign: 'center',
+    fontFamily: 'Poppins',
+    fontSize: 13
+  },
+  eventCreatorInfo: {
+    flexDirection: 'row',
+    width: '100%',
+    paddingHorizontal: 32,
+    columnGap: 16,
+    alignItems: 'center',
+    justifyContent: 'flex-start'
+  },
+  eventCreatorProfilePic: {
+    width: 36,
+    height: 36,
+    borderRadius: 18
+  },
+  eventCreatorName: {
+    color: 'white',
+    fontFamily: 'Poppins',
+    fontSize: 16,
+    flex: 1
   }
 });

@@ -27,11 +27,11 @@ import { images } from '../../utils/consts';
 
 const Profile = ({ navigation }) => {
   const { authToken, user, address, logout, setUser, setAddress } = useAuth();
-  const [date, setDate] = useState(new Date(user.birth_date));
+  const [date, setDate] = useState(new Date(user.birth_date || 0));
   const [showPicker, setShowPicker] = useState(false);
 
-  const [name, setName] = useState(user.name);
-  const [email, setEmail] = useState(user.email);
+  const [name, setName] = useState(user.nam || '');
+  const [email, setEmail] = useState(user.email || '');
   const [bio, setBio] = useState(user.description || '');
   const [postalCode, setPostalCode] = useState('');
   const [state, setState] = useState(address.state);
