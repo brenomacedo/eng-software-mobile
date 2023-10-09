@@ -2,7 +2,13 @@ import { Image, Modal, Text, TouchableOpacity, View } from 'react-native';
 import styles from './styles';
 import { useState } from 'react';
 
-const RateModal = ({ isOpen, closeModal, initialRate, onRateChosen }) => {
+const RateModal = ({
+  isOpen,
+  closeModal,
+  initialRate,
+  onRateChosen,
+  title
+}) => {
   const [rate, setRate] = useState(initialRate);
 
   return (
@@ -34,7 +40,7 @@ const RateModal = ({ isOpen, closeModal, initialRate, onRateChosen }) => {
               marginTop: 5
             }}
           >
-            Avaliar usuário
+            {title}
           </Text>
 
           <View style={styles.rateStars}>

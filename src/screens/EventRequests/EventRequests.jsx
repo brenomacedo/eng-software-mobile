@@ -23,21 +23,23 @@ const Button = function (data, index, navigation) {
       key={index}
       style={styles.button}
       onPress={() => {
-        // navigation.navigate('EventDetails', {
-        //   title: data.event.title,
-        //   location: data.event.location,
-        //   hour: `${data.event.start_time.slice(
-        //     0,
-        //     5
-        //   )}-${data.event.end_time.slice(0, 5)}`,
-        //   eventDescription: data.event.description,
-        //   eventLatitude: data.event.latitude,
-        //   eventLongitude: data.event.longitude,
-        //   eventId: data.event.id,
-        //   userId: data.event.user_id,
-        //   requests: data.event.requests,
-        //   user: data.event.user
-        // });
+        navigation.navigate('EventDetails', {
+          title: data.request.event.title,
+          location: data.request.event.location,
+          hour: `${data.request.event.start_time.slice(
+            0,
+            5
+          )}-${data.request.event.end_time.slice(0, 5)}`,
+          eventDescription: data.request.event.description,
+          eventLatitude: data.request.event.latitude,
+          eventLongitude: data.request.event.longitude,
+          eventId: data.request.event.id,
+          userId: data.request.event.user_id,
+          requests: data.request.event.requests,
+          user: data.request.event.user,
+          fromRequests: true,
+          endTime: data.request.event.end_time
+        });
       }}
     >
       <View style={styles.buttonText}>
@@ -96,12 +98,12 @@ const EventRequests = ({ navigation }) => {
 
         response.map(request => {
           let newObject = {
-            Titulo: request.title,
-            Local: request.location,
-            Horario: `${request.start_time.slice(
+            Titulo: request.event.title,
+            Local: request.event.location,
+            Horario: `${request.event.start_time.slice(
               0,
               5
-            )}-${request.end_time.slice(0, 5)}`,
+            )}-${request.event.end_time.slice(0, 5)}`,
             status:
               request.status == 'PENDING'
                 ? 1
@@ -112,6 +114,9 @@ const EventRequests = ({ navigation }) => {
           };
           newRequestsArray.push(newObject);
         });
+
+        console.log('MEU DEUS');
+        console.log(newRequestsArray[0].request.event);
 
         setRequests(newRequestsArray);
         setLoading(false);

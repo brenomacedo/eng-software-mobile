@@ -95,6 +95,12 @@ const styles = StyleSheet.create({
     width: 16,
     height: 16,
     marginBottom: 4
+  },
+  notLoadedText: {
+    color: 'white',
+    textAlign: 'center',
+    fontFamily: 'Poppins',
+    fontSize: 16
   }
 });
 

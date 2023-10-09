@@ -14,11 +14,14 @@ import useAuth from '../../hooks/useAuth';
 import api from '../../api';
 import styles from './styles';
 import { images } from '../../utils/consts';
+import dayjs from 'dayjs';
+import RateModal from '../../components/RateModal/RateModal';
 
 const EventDetails = ({ navigation, route }) => {
   const { authToken, logout, isAuth, user: authUser } = useAuth();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const [modalRateOpen, setModalRateOpen] = useState(false);
   const {
     title,
     location,
@@ -29,7 +32,9 @@ const EventDetails = ({ navigation, route }) => {
     eventId,
     userId,
     requests,
-    user
+    user,
+    fromRequests,
+    endTime
   } = route.params;
   const [isParticipantsModalOpen, setIsParticipantsModalOpen] = useState(false);
 
@@ -44,6 +49,39 @@ const EventDetails = ({ navigation, route }) => {
   const viewUserProfile = user => {
     setIsParticipantsModalOpen(false);
     navigation.navigate('UserProfile', { user });
+  };
+
+  const renderRating = _ratings => {
+    return (
+      <View
+        style={{
+          alignSelf: 'flex-start',
+          marginLeft: 32,
+          flexShrink: 1
+        }}
+      >
+        <View style={styles.userRatingStars}>
+          <View style={styles.userRatingYellowStars}>
+            {new Array(5).fill(0).map((_, index) => (
+              <Image
+                style={styles.userRatingStar}
+                key={index}
+                source={require('../../../assets/yellowstar.png')}
+              />
+            ))}
+          </View>
+          <View style={styles.userRatingGrayStars}>
+            {new Array(5).fill(0).map((_, index) => (
+              <Image
+                style={styles.userRatingStar}
+                key={index}
+                source={require('../../../assets/graystar.png')}
+              />
+            ))}
+          </View>
+        </View>
+      </View>
+    );
   };
 
   const handleRequest = async () => {
@@ -128,11 +166,20 @@ const EventDetails = ({ navigation, route }) => {
     ));
   };
 
+  const onRateChosen = _rate => {};
+
   return (
     <ScrollView
       style={styles.scroll}
       contentContainerStyle={styles.eventDetailsContainer}
     >
+      <RateModal
+        title="Avaliar evento"
+        closeModal={() => setModalRateOpen(false)}
+        initialRate={1}
+        isOpen={modalRateOpen}
+        onRateChosen={onRateChosen}
+      />
       <ArrowBack
         onPress={() => {
           navigation.goBack();
@@ -194,7 +241,7 @@ const EventDetails = ({ navigation, route }) => {
         }}
       />
 
-      {(!authUser || userId != authUser.id) && (
+      {(!authUser || userId != authUser.id) && !fromRequests && (
         <>
           <Input
             labelText={'Mensagem: '}
@@ -272,6 +319,33 @@ const EventDetails = ({ navigation, route }) => {
           </View>
         </View>
       </Modal>
+      {
+        /* TODO: MUDAR AQUI DEPOIS */ !dayjs().isAfter(dayjs(endTime)) &&
+          fromRequests && (
+            <>
+              <Text style={styles.ratingTitle}>Avaliação do evento</Text>
+              {renderRating()}
+              <View style={{ paddingHorizontal: 32, width: '100%' }}>
+                <TouchableOpacity
+                  style={styles.rateUser}
+                  onPress={() => setModalRateOpen(true)}
+                >
+                  <View style={styles.rateUserRatedText}>
+                    <Text style={styles.rateUserTitle}>Sua avaliação: 5 </Text>
+                    <Image
+                      style={styles.rateUserYellowStar}
+                      source={require('../../../assets/yellowstar.png')}
+                    />
+                  </View>
+                  <Text style={styles.rateUserSubTitle}>
+                    (Toque para editar)
+                  </Text>
+                  {/* <Text style={styles.rateUserTitle}>Avalie este usuário</Text> */}
+                </TouchableOpacity>
+              </View>
+            </>
+          )
+      }
     </ScrollView>
   );
 };
