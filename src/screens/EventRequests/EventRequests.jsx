@@ -3,6 +3,7 @@ import { View, ScrollView, TouchableOpacity, Text, Alert } from 'react-native';
 import styles from './styles';
 import api from '../../api';
 import useAuth from '../../hooks/useAuth';
+import { useIsFocused } from '@react-navigation/native';
 
 const colorirStatus = indice => {
   const estados = {
@@ -16,9 +17,29 @@ const colorirStatus = indice => {
   return <Text style={{ color: status.cor }}>{status.nome}</Text>;
 };
 
-const Button = function (data, index) {
+const Button = function (data, index, navigation) {
   return (
-    <TouchableOpacity key={index} style={styles.button}>
+    <TouchableOpacity
+      key={index}
+      style={styles.button}
+      onPress={() => {
+        // navigation.navigate('EventDetails', {
+        //   title: data.event.title,
+        //   location: data.event.location,
+        //   hour: `${data.event.start_time.slice(
+        //     0,
+        //     5
+        //   )}-${data.event.end_time.slice(0, 5)}`,
+        //   eventDescription: data.event.description,
+        //   eventLatitude: data.event.latitude,
+        //   eventLongitude: data.event.longitude,
+        //   eventId: data.event.id,
+        //   userId: data.event.user_id,
+        //   requests: data.event.requests,
+        //   user: data.event.user
+        // });
+      }}
+    >
       <View style={styles.buttonText}>
         <Text style={styles.buttonTextTitle}>{data.Titulo}</Text>
         <Text style={styles.buttonTextSubtitle}>{data.Local}</Text>
@@ -35,6 +56,8 @@ const EventRequests = ({ navigation }) => {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const { authToken, logout } = useAuth();
+
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     /*
@@ -84,7 +107,8 @@ const EventRequests = ({ navigation }) => {
                 ? 1
                 : request.status == 'ACCEPTED'
                 ? 2
-                : 0
+                : 0,
+            request
           };
           newRequestsArray.push(newObject);
         });
@@ -110,8 +134,10 @@ const EventRequests = ({ navigation }) => {
       }
     };
 
-    findUserRequests();
-  }, []);
+    if (isFocused) {
+      findUserRequests();
+    }
+  }, [isFocused]);
 
   return (
     <ScrollView
@@ -123,7 +149,7 @@ const EventRequests = ({ navigation }) => {
       {loading ? (
         <Text style={styles.loading}>Carregando...</Text>
       ) : requests.length > 0 ? (
-        requests.map((data, index) => Button(data, index))
+        requests.map((data, index) => Button(data, index, navigation))
       ) : (
         <Text style={styles.noResults}> Nenhum resultado encontrado</Text>
       )}

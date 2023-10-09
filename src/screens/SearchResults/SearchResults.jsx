@@ -110,7 +110,9 @@ const SearchResults = ({ navigation, route }) => {
 
       response.map(event => {
         let newEventObject = event;
-        newEventObject.bellCount = 0;
+        newEventObject.bellCount = event.requests.filter(
+          event => event.status === 'PENDING'
+        ).length;
         newEventArray.push(newEventObject);
       });
 
