@@ -24,7 +24,7 @@ const UserProfile = ({ navigation }) => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
   const [loadingRating, setLoadingRating] = useState(false);
-  const { authToken, user: loggedUser } = useAuth();
+  const { authToken, user: loggedUser, isAuth } = useAuth();
 
   const userEventsRate = useMemo(() => {
     let totalEventRating = 0;
@@ -64,6 +64,7 @@ const UserProfile = ({ navigation }) => {
 
   const userWasRated = useMemo(() => {
     return (
+      loggedUser &&
       user &&
       user.ratings &&
       user.ratings.find(rating => rating.user_id === loggedUser.id)
@@ -200,29 +201,31 @@ const UserProfile = ({ navigation }) => {
             <Text style={styles.ratingTitle}>Avaliações</Text>
             <Text style={styles.ratingSubTitle}>Avaliações de usuário</Text>
             {renderRating(userRate)}
-            <TouchableOpacity
-              style={styles.rateUser}
-              onPress={() => setModalRateOpen(true)}
-            >
-              {userWasRated ? (
-                <>
-                  <View style={styles.rateUserRatedText}>
-                    <Text style={styles.rateUserTitle}>
-                      Sua avaliação: {userWasRated.rating}{' '}
+            {isAuth && (
+              <TouchableOpacity
+                style={styles.rateUser}
+                onPress={() => setModalRateOpen(true)}
+              >
+                {userWasRated ? (
+                  <>
+                    <View style={styles.rateUserRatedText}>
+                      <Text style={styles.rateUserTitle}>
+                        Sua avaliação: {userWasRated.rating}{' '}
+                      </Text>
+                      <Image
+                        style={styles.rateUserYellowStar}
+                        source={require('../../../assets/yellowstar.png')}
+                      />
+                    </View>
+                    <Text style={styles.rateUserSubTitle}>
+                      (Toque para editar)
                     </Text>
-                    <Image
-                      style={styles.rateUserYellowStar}
-                      source={require('../../../assets/yellowstar.png')}
-                    />
-                  </View>
-                  <Text style={styles.rateUserSubTitle}>
-                    (Toque para editar)
-                  </Text>
-                </>
-              ) : (
-                <Text style={styles.rateUserTitle}>Avalie este usuário</Text>
-              )}
-            </TouchableOpacity>
+                  </>
+                ) : (
+                  <Text style={styles.rateUserTitle}>Avalie este usuário</Text>
+                )}
+              </TouchableOpacity>
+            )}
             <Text style={styles.ratingSubTitle}>Avaliações de eventos</Text>
             {renderRating(userEventsRate)}
           </ScrollView>

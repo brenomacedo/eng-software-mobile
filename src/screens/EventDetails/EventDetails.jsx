@@ -69,6 +69,7 @@ const EventDetails = ({ navigation, route }) => {
 
   const eventWasRated = useMemo(() => {
     return (
+      authUser &&
       event &&
       event.ratings &&
       event.ratings.find(rating => rating.user_id === authUser.id)
@@ -290,7 +291,7 @@ const EventDetails = ({ navigation, route }) => {
           <RateModal
             title="Avaliar evento"
             closeModal={() => setModalRateOpen(false)}
-            initialRate={eventWasRated.rating}
+            initialRate={eventWasRated ? eventWasRated.rating : 1}
             isOpen={modalRateOpen}
             onRateChosen={onRateChosen}
             loading={loadingRating}
@@ -442,33 +443,35 @@ const EventDetails = ({ navigation, route }) => {
               <>
                 <Text style={styles.ratingTitle}>Avaliação do evento</Text>
                 {renderRating()}
-                <View style={{ paddingHorizontal: 32, width: '100%' }}>
-                  <TouchableOpacity
-                    style={styles.rateUser}
-                    onPress={() => setModalRateOpen(true)}
-                  >
-                    {eventWasRated ? (
-                      <>
-                        <View style={styles.rateUserRatedText}>
-                          <Text style={styles.rateUserTitle}>
-                            Sua avaliação: {eventWasRated.rating}{' '}
+                {isAuth && (
+                  <View style={{ paddingHorizontal: 32, width: '100%' }}>
+                    <TouchableOpacity
+                      style={styles.rateUser}
+                      onPress={() => setModalRateOpen(true)}
+                    >
+                      {eventWasRated ? (
+                        <>
+                          <View style={styles.rateUserRatedText}>
+                            <Text style={styles.rateUserTitle}>
+                              Sua avaliação: {eventWasRated.rating}{' '}
+                            </Text>
+                            <Image
+                              style={styles.rateUserYellowStar}
+                              source={require('../../../assets/yellowstar.png')}
+                            />
+                          </View>
+                          <Text style={styles.rateUserSubTitle}>
+                            (Toque para editar)
                           </Text>
-                          <Image
-                            style={styles.rateUserYellowStar}
-                            source={require('../../../assets/yellowstar.png')}
-                          />
-                        </View>
-                        <Text style={styles.rateUserSubTitle}>
-                          (Toque para editar)
+                        </>
+                      ) : (
+                        <Text style={styles.rateUserTitle}>
+                          Avalie este evento
                         </Text>
-                      </>
-                    ) : (
-                      <Text style={styles.rateUserTitle}>
-                        Avalie este evento
-                      </Text>
-                    )}
-                  </TouchableOpacity>
-                </View>
+                      )}
+                    </TouchableOpacity>
+                  </View>
+                )}
               </>
             )
           }

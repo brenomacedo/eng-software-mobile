@@ -71,6 +71,7 @@ const SearchResults = ({ navigation, route }) => {
   const isFocused = useIsFocused();
 
   const seeDetails = data => {
+    console.log(data.eventId);
     navigation.navigate('EventDetails', {
       title: data.title,
       location: data.location,
@@ -79,7 +80,7 @@ const SearchResults = ({ navigation, route }) => {
       eventDescription: data.description,
       eventLatitude: data.latitude,
       eventLongitude: data.longitude,
-      eventId: data.eventId,
+      eventId: data.id,
       userReq: user != null ? user.id : null,
       user: data.user,
       requests: data.requests
