@@ -115,9 +115,6 @@ const EventRequests = ({ navigation }) => {
           newRequestsArray.push(newObject);
         });
 
-        console.log('MEU DEUS');
-        console.log(newRequestsArray[0].request.event);
-
         setRequests(newRequestsArray);
         setLoading(false);
       } catch (err) {

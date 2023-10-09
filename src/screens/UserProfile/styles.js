@@ -61,8 +61,7 @@ const styles = StyleSheet.create({
     fontSize: 12
   },
   userRatingStars: {
-    position: 'relative',
-    flex: 1
+    position: 'relative'
   },
   userRatingYellowStars: {
     flexDirection: 'row',
@@ -71,7 +70,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     top: 0,
-    width: 66,
     height: 20,
     zIndex: 2,
     overflow: 'hidden'
@@ -100,7 +98,8 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     fontFamily: 'Poppins',
-    fontSize: 16
+    fontSize: 16,
+    marginTop: 32
   }
 });
 

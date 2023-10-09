@@ -164,8 +164,7 @@ export default StyleSheet.create({
     fontSize: 12
   },
   userRatingStars: {
-    position: 'relative',
-    flex: 1
+    position: 'relative'
   },
   userRatingYellowStars: {
     flexDirection: 'row',
@@ -174,7 +173,6 @@ export default StyleSheet.create({
     position: 'absolute',
     left: 0,
     top: 0,
-    width: 66,
     height: 20,
     zIndex: 2,
     overflow: 'hidden'
@@ -198,5 +196,12 @@ export default StyleSheet.create({
     width: 16,
     height: 16,
     marginBottom: 4
+  },
+  notLoadedText: {
+    color: 'white',
+    textAlign: 'center',
+    fontFamily: 'Poppins',
+    fontSize: 16,
+    marginTop: 32
   }
 });

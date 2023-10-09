@@ -7,7 +7,8 @@ const RateModal = ({
   closeModal,
   initialRate,
   onRateChosen,
-  title
+  title,
+  loading
 }) => {
   const [rate, setRate] = useState(initialRate);
 
@@ -59,7 +60,11 @@ const RateModal = ({
           </View>
 
           <TouchableOpacity
-            style={styles.chooseRateButton}
+            disabled={loading}
+            style={[
+              styles.chooseRateButton,
+              { ...(loading ? { backgroundColor: '#bbb' } : {}) }
+            ]}
             onPress={() => onRateChosen(rate)}
           >
             <Text style={styles.chooseRateButtonText}>Atualizar avaliação</Text>
