@@ -30,7 +30,7 @@ const Profile = ({ navigation }) => {
   const [date, setDate] = useState(new Date(user.birth_date || 0));
   const [showPicker, setShowPicker] = useState(false);
 
-  const [name, setName] = useState(user.nam || '');
+  const [name, setName] = useState(user.name || '');
   const [email, setEmail] = useState(user.email || '');
   const [bio, setBio] = useState(user.description || '');
   const [postalCode, setPostalCode] = useState('');
