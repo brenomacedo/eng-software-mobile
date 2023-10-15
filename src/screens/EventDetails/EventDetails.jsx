@@ -15,8 +15,10 @@ import api from '../../api';
 import styles from './styles';
 import { images } from '../../utils/consts';
 import RateModal from '../../components/RateModal/RateModal';
+import { useIsFocused } from '@react-navigation/native';
 
 const EventDetails = ({ navigation, route }) => {
+  const isFocused = useIsFocused();
   const { authToken, logout, isAuth, user: authUser } = useAuth();
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState('');
@@ -29,7 +31,6 @@ const EventDetails = ({ navigation, route }) => {
     eventLongitude,
     eventId,
     userId,
-    requests,
     user,
     fromRequests
   } = route.params;
@@ -53,12 +54,11 @@ const EventDetails = ({ navigation, route }) => {
   const [error, setError] = useState(false);
 
   const eventRating = useMemo(() => {
-    let totalVotes = 0;
+    let totalVotes = event.ratings.length;
     let totalRating = 0;
 
     for (const i in event.ratings) {
       totalRating += event.ratings[i].rating;
-      totalVotes++;
     }
 
     return {
@@ -87,6 +87,48 @@ const EventDetails = ({ navigation, route }) => {
   const viewUserProfile = user => {
     setIsParticipantsModalOpen(false);
     navigation.navigate('UserProfile', { user });
+  };
+
+  const renderUserRating = ratings => {
+    const totalVotes = ratings.length;
+    let totalRating = 0;
+
+    for (let i = 0; i < totalVotes; i++) {
+      totalRating += ratings[i].rating;
+    }
+
+    const finalRating = totalRating / (totalVotes || 1);
+
+    return (
+      <View style={styles.participantRatingContainer}>
+        <View style={styles.participantRating}>
+          <View style={styles.participantGrayStars}>
+            {new Array(5).fill(0).map((_, index) => (
+              <Image
+                key={index}
+                style={{ width: 14, height: 14 }}
+                source={require('../../../assets/graystar.png')}
+              />
+            ))}
+          </View>
+          <View
+            style={[
+              styles.participantYellowStars,
+              { width: (finalRating / 5) * 78 }
+            ]}
+          >
+            {new Array(5).fill(0).map((_, index) => (
+              <Image
+                key={index}
+                style={{ width: 14, height: 14 }}
+                source={require('../../../assets/yellowstar.png')}
+              />
+            ))}
+          </View>
+        </View>
+        <Text style={styles.participantRatingCount}>({totalVotes})</Text>
+      </View>
+    );
   };
 
   const renderRating = () => {
@@ -178,7 +220,7 @@ const EventDetails = ({ navigation, route }) => {
   };
 
   const renderEventParticipants = () => {
-    const acceptedRequests = requests.filter(
+    const acceptedRequests = event.requests.filter(
       request => request.status === 'ACCEPTED'
     );
 
@@ -196,9 +238,12 @@ const EventDetails = ({ navigation, route }) => {
           source={images[request.user.profile_pic].source}
           style={styles.participantPfp}
         ></Image>
-        <Text numberOfLines={1} style={styles.participantName}>
-          {request.user.name}
-        </Text>
+        <View style={styles.userInfo}>
+          <Text numberOfLines={1} style={styles.participantName}>
+            {request.user.name}
+          </Text>
+          {renderUserRating(request.user.ratings)}
+        </View>
         <TouchableOpacity
           style={styles.viewParticipantProfileButton}
           onPress={() => viewUserProfile(request.user)}
@@ -272,8 +317,10 @@ const EventDetails = ({ navigation, route }) => {
       setLoading(false);
     };
 
-    getEvent(event.id);
-  }, []);
+    if (isFocused) {
+      getEvent(event.id);
+    }
+  }, [isFocused]);
 
   return (
     <ScrollView
@@ -309,9 +356,12 @@ const EventDetails = ({ navigation, route }) => {
               style={styles.eventCreatorProfilePic}
               source={images[event.user.profile_pic].source}
             />
-            <Text style={styles.eventCreatorName} numberOfLines={1}>
-              {event.user.name}
-            </Text>
+            <View style={styles.creatorInfo}>
+              <Text style={styles.eventCreatorName} numberOfLines={1}>
+                {event.user.name}
+              </Text>
+              {renderUserRating(event.user.ratings)}
+            </View>
             <TouchableOpacity
               style={styles.viewParticipantProfileButton}
               onPress={() => viewUserProfile(event.user)}

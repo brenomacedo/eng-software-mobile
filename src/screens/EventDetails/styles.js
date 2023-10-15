@@ -21,7 +21,8 @@ export default StyleSheet.create({
     fontSize: 18,
     alignSelf: 'flex-start',
     paddingLeft: 32,
-    marginTop: 16
+    marginTop: 16,
+    marginBottom: 8
   },
   eventDetailsInfo: {
     color: 'white',
@@ -95,7 +96,8 @@ export default StyleSheet.create({
     color: 'white',
     fontFamily: 'PoppinsRegular',
     fontSize: 16,
-    flex: 1
+    height: 18,
+    lineHeight: 18
   },
   viewParticipantProfileButton: {
     width: 18,
@@ -128,8 +130,9 @@ export default StyleSheet.create({
   eventCreatorName: {
     color: 'white',
     fontFamily: 'Poppins',
-    fontSize: 16,
-    flex: 1
+    fontSize: 14,
+    lineHeight: 15,
+    height: 15
   },
   ratingTitle: {
     color: 'white',
@@ -203,5 +206,39 @@ export default StyleSheet.create({
     fontFamily: 'Poppins',
     fontSize: 16,
     marginTop: 32
+  },
+  userInfo: {
+    flex: 1
+  },
+  participantRating: {
+    height: 14,
+    width: 78,
+    position: 'relative'
+  },
+  participantGrayStars: {
+    columnGap: 2,
+    flexDirection: 'row'
+  },
+  participantYellowStars: {
+    columnGap: 2,
+    flexDirection: 'row',
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    overflow: 'hidden'
+  },
+  participantRatingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  participantRatingCount: {
+    color: 'white',
+    fontFamily: 'Poppins',
+    fontSize: 10,
+    marginTop: 4,
+    marginLeft: 4
+  },
+  creatorInfo: {
+    flex: 1
   }
 });

@@ -32,9 +32,9 @@ const UserProfile = ({ navigation }) => {
 
     if (user && user.events) {
       for (const i in user.events) {
+        totalEventVotes += user.events[i].ratings.length;
         for (const j in user.events[i].ratings) {
           totalEventRating += user.events[i].ratings[j].rating;
-          totalEventVotes++;
         }
       }
     }
@@ -47,12 +47,11 @@ const UserProfile = ({ navigation }) => {
 
   const userRate = useMemo(() => {
     let totalUserRating = 0;
-    let totalUserVotes = 0;
+    let totalUserVotes = user.ratings.length;
 
     if (user && user.ratings) {
       for (const i in user.ratings) {
         totalUserRating += user.ratings[i].rating;
-        totalUserVotes++;
       }
     }
 
