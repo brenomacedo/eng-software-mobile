@@ -1,4 +1,4 @@
-import { View, Image, Text } from 'react-native';
+import { View, Image, Text, TouchableOpacity } from 'react-native';
 import PickLogoWithText from '../../../assets/LogoWithName.png';
 import EmailVector from '../../../assets/EmailVector.png';
 import PasswordVector from '../../../assets/PasswordVector.png';
@@ -73,7 +73,7 @@ export default function LoginScreen({ navigation }) {
           setValue={setEmail}
           isPassword={false}
           leftIcon={EmailVector}
-          placeHolder={'email'}
+          placeHolder={'Email'}
         />
         <Input
           value={password}
@@ -126,6 +126,14 @@ export default function LoginScreen({ navigation }) {
           navigation={navigation}
           screen={'UserProfileRegisterScreen'}
         />
+        <TouchableOpacity
+          style={{ marginTop: 16 }}
+          onPress={() => navigation.navigate('ForgotPassword')}
+        >
+          <Text style={{ color: 'white', fontFamily: 'Poppins' }}>
+            Esqueci minha senha
+          </Text>
+        </TouchableOpacity>
       </View>
     </ContainerView>
   );

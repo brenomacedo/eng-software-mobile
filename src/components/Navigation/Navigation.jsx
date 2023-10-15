@@ -5,6 +5,8 @@ import Screen1 from '../../screens/Screen1/Screen1';
 import Screen2 from '../../screens/Screen2/Screen2';
 import Screen3 from '../../screens/Screen3/Screen3';
 import LoginScreen from '../../screens/loginScreen/LoginScreen';
+import ForgotPassword from '../../screens/ForgotPassword/ForgotPassword';
+import RecoverPassword from '../../screens/RecoverPassword/RecoverPassword';
 import AddressRegisterScreen from '../../screens/RegisterScreen/AddressRegisterScreen/AddressRegisterScreen';
 import UserProfileRegisterScreen from '../../screens/RegisterScreen/UserProfileRegisterScreen/UserProfileRegisterScreen';
 import BottomTabNavigator from './BottomTab';
@@ -33,6 +35,8 @@ const Navigation = ({ firstTimeOnApp }) => {
           headerShown: false
         }}
       >
+        <Stack.Screen name="RecoverPassword" component={RecoverPassword} />
+        <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
         <Stack.Screen name="Screen1" component={Screen1} />
         <Stack.Screen name="Screen2" component={Screen2} />
         <Stack.Screen name="Screen3" component={Screen3} />
