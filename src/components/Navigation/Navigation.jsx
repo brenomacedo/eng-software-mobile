@@ -10,10 +10,18 @@ import RecoverPassword from '../../screens/RecoverPassword/RecoverPassword';
 import AddressRegisterScreen from '../../screens/RegisterScreen/AddressRegisterScreen/AddressRegisterScreen';
 import UserProfileRegisterScreen from '../../screens/RegisterScreen/UserProfileRegisterScreen/UserProfileRegisterScreen';
 import BottomTabNavigator from './BottomTab';
+import * as Linking from 'expo-linking';
 
 const Stack = createStackNavigator();
 const Navigation = ({ firstTimeOnApp }) => {
-  const initialScreen = firstTimeOnApp ? 'Screen1' : 'BottomTabNavigator';
+  const url = Linking.useURL();
+  const queryParams = url ? Linking.parse(url) : null;
+
+  const initialScreen = url
+    ? 'RecoverPassword'
+    : firstTimeOnApp
+    ? 'Screen1'
+    : 'BottomTabNavigator';
 
   return (
     <NavigationContainer>
@@ -35,7 +43,11 @@ const Navigation = ({ firstTimeOnApp }) => {
           headerShown: false
         }}
       >
-        <Stack.Screen name="RecoverPassword" component={RecoverPassword} />
+        <Stack.Screen
+          name="RecoverPassword"
+          component={RecoverPassword}
+          initialParams={{ queryParams }}
+        />
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
         <Stack.Screen name="Screen1" component={Screen1} />
         <Stack.Screen name="Screen2" component={Screen2} />

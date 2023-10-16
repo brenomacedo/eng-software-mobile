@@ -1,4 +1,4 @@
-import { View, Image, Text } from 'react-native';
+import { View, Image, Text, Alert } from 'react-native';
 import PickLogoWithText from '../../../assets/LogoWithName.png';
 import PasswordVector from '../../../assets/PasswordVector.png';
 import DontShowPassVector from '../../../assets/DontShowPassVector.png';
@@ -8,12 +8,38 @@ import styles from './styles';
 
 import { Input, ButtonApp } from '../../components/index.js';
 import { useState } from 'react';
+import api from '../../api';
 
-export default function RecoverPassword({ _navigation }) {
+export default function RecoverPassword({ navigation, route }) {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  // eslint-disable-next-line no-unused-vars
   const [loading, setLoading] = useState(false);
+  const { queryParams } = route.params;
+
+  const recoverPassword = async () => {
+    setLoading(true);
+    if (password !== confirmPassword) {
+      return Alert.alert(
+        'Erro',
+        'As senha e a confirmação de senha são diferentes!'
+      );
+    }
+
+    await api
+      .post('/changepassword', {
+        token: queryParams.token,
+        password
+      })
+      .then(() => {
+        Alert.alert('Sucesso', 'Senha alterada com sucesso!');
+        navigation.replace('LoginScreen');
+      })
+      .catch(() => {
+        Alert.alert('Erro', 'Token de recuperação de senha inválido!');
+      });
+
+    setLoading(false);
+  };
 
   return (
     <View
@@ -37,7 +63,7 @@ export default function RecoverPassword({ _navigation }) {
             fontFamily: 'PoppinsRegular'
           }}
         >
-          Olá, Usuário!
+          Olá, {queryParams.user}!
         </Text>
         <Text
           style={{
@@ -72,7 +98,7 @@ export default function RecoverPassword({ _navigation }) {
 
         <ButtonApp
           loading={loading}
-          onPress={() => {}}
+          onPress={recoverPassword}
           textValue={'Alterar senha'}
         />
       </View>

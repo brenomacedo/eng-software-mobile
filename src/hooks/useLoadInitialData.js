@@ -8,6 +8,7 @@ import useAuth from './useAuth';
 function useLoadInitialData() {
   const [isReady, setIsReady] = useState(false);
   const [firstTimeOnApp, setFirstTimeOnApp] = useState(true);
+
   const {
     setIsAuth,
     setUser,

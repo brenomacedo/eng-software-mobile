@@ -1,4 +1,4 @@
-import { View, Image, Text } from 'react-native';
+import { View, Image, Text, Alert } from 'react-native';
 import PickLogoWithText from '../../../assets/LogoWithName.png';
 import EmailVector from '../../../assets/EmailVector.png';
 
@@ -6,11 +6,25 @@ import styles from './styles';
 
 import { Input, ButtonApp, ArrowBack } from '../../components/index.js';
 import { useState } from 'react';
+import api from '../../api';
 
 export default function ForgotPassword({ navigation }) {
   const [email, setEmail] = useState('');
-  // eslint-disable-next-line no-unused-vars
   const [loading, setLoading] = useState(false);
+
+  const sendMail = async () => {
+    setLoading(true);
+    await api.post('/recoverpassword', {
+      email
+    });
+
+    Alert.alert(
+      'Email enviado',
+      'Caso seu usuário exista, um email foi enviado com os próximos passos da redefinição de senha.'
+    );
+    navigation.goBack();
+    setLoading(false);
+  };
 
   return (
     <View
@@ -68,7 +82,7 @@ export default function ForgotPassword({ navigation }) {
 
           <ButtonApp
             loading={loading}
-            onPress={() => {}}
+            onPress={sendMail}
             textValue={'Enviar email de redefinição'}
           />
         </View>
