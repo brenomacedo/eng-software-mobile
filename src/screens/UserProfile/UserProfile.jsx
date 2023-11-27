@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import { useIsFocused, useRoute } from '@react-navigation/native';
 import styles from './styles';
 import ArrowBack from '../../components/ArrowBack/ArrowBack';
 import { images } from '../../utils/consts';
@@ -14,8 +14,10 @@ import RateModal from '../../components/RateModal/RateModal';
 import { useEffect, useMemo, useState } from 'react';
 import useAuth from '../../hooks/useAuth';
 import api from '../../api';
+import { Input } from '../../components';
 
 const UserProfile = ({ navigation }) => {
+  const isFocused = useIsFocused();
   const {
     params: { user: initialUser }
   } = useRoute();
@@ -25,6 +27,14 @@ const UserProfile = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
   const [loadingRating, setLoadingRating] = useState(false);
   const { authToken, user: loggedUser, isAuth } = useAuth();
+  const [comment, setComment] = useState('');
+  const [comments, setComments] = useState([]);
+  const [commentPage, setCommentPage] = useState(0);
+  const [loadedAllComments, setLoadedAllComments] = useState(false);
+  const [loadingComments, setLoadingComments] = useState(false);
+  const [editingComment, setEditingComment] = useState(false);
+  const [userComment, setUserComment] = useState(null);
+  const [updatingComment, setUpdatingComment] = useState(false);
 
   const userEventsRate = useMemo(() => {
     let totalEventRating = 0;
@@ -70,6 +80,10 @@ const UserProfile = ({ navigation }) => {
     );
   }, [user]);
 
+  const filteredComments = useMemo(() => {
+    return comments.filter(comment => comment.author_id !== loggedUser.id);
+  }, [loggedUser, comments]);
+
   const goBack = () => navigation.goBack();
 
   const onRateChosen = async rate => {
@@ -98,7 +112,6 @@ const UserProfile = ({ navigation }) => {
             return rating;
           }
         });
-        console.log(newUser);
         setUser(newUser);
       } else {
         const newUser = { ...user };
@@ -115,57 +128,214 @@ const UserProfile = ({ navigation }) => {
     setModalRateOpen(false);
   };
 
-  const renderRating = ratings => {
+  const loadCommentsNextPage = userId => {
+    setLoadingComments(true);
+    api
+      .get(`/comment/${userId}`, {
+        params: {
+          page: commentPage + 1,
+          authorId: loggedUser.id
+        }
+      })
+      .then(res => {
+        if (res.data.length < 5) {
+          setLoadedAllComments(true);
+        }
+        setCommentPage(commentPage + 1);
+
+        const newComments = [...comments, ...res.data];
+        setComments(newComments);
+      })
+      .catch(() => setLoadedAllComments(true))
+      .finally(() => setLoadingComments(false));
+  };
+
+  const createOrUpdateComment = userId => {
+    setUpdatingComment(true);
+    api
+      .post(
+        `/comment/${userId}`,
+        { content: comment },
+        {
+          headers: {
+            authorization: `Bearer ${authToken}`
+          }
+        }
+      )
+      .then(res => {
+        setUserComment(res.data);
+        if (editingComment) {
+          Alert.alert('Comentário atualizado!');
+        } else {
+          Alert.alert('Comentário postado!');
+        }
+      })
+      .catch(() => Alert.alert('Erro ao atualizar comentário'))
+      .finally(() => {
+        setUpdatingComment(false);
+        setEditingComment(false);
+      });
+  };
+
+  useEffect(() => {
+    if (isFocused) {
+      setLoading(true);
+      const getUserInfo = async userId => {
+        const user = await api
+          .get(`/user/${userId}`)
+          .then(res => res.data)
+          .catch(() => null);
+        if (user) {
+          setUser(user);
+        } else {
+          setError(true);
+        }
+      };
+      const getUserComments = async userId => {
+        const userComments = await api
+          .get(`/comment/${userId}`, {
+            params: {
+              page: 0,
+              authorId: loggedUser.id
+            }
+          })
+          .then(res => res.data)
+          .catch(() => null);
+
+        if (userComments) {
+          setComments(userComments);
+          if (userComments.length < 5) {
+            setLoadedAllComments(true);
+          }
+        } else {
+          setError(true);
+        }
+      };
+
+      Promise.all([getUserInfo(user.id), getUserComments(user.id)]).finally(
+        () => setLoading(false)
+      );
+    }
+  }, [isFocused]);
+
+  useEffect(() => {
+    setUserComment(
+      comments.find(comment => comment.author_id === loggedUser.id)
+    );
+  }, [loggedUser, comments]);
+
+  const renderProfileComments = () => {
+    if (comments.length === 0) {
+      return (
+        <Text style={styles.notLoadedText}>Nenhum comentário encontrado.</Text>
+      );
+    }
+
     return (
-      <View style={{ flexDirection: 'row' }}>
+      <View style={styles.comments}>
+        {userComment && !editingComment && (
+          <View style={styles.comment}>
+            <View style={styles.commentAuthor}>
+              <Image
+                source={images[userComment.author.profile_pic].source}
+                style={styles.commentAuthorPic}
+              ></Image>
+              <View style={styles.commentAuthorInfo}>
+                <Text style={styles.commentAuthorName} numberOfLines={1}>
+                  {userComment.author.name}
+                </Text>
+              </View>
+              <TouchableOpacity
+                onPress={() => {
+                  setComment(userComment.content);
+                  setEditingComment(true);
+                }}
+              >
+                <Image
+                  style={styles.eye}
+                  resizeMode="contain"
+                  source={require('../../../assets/Pencil.png')}
+                />
+              </TouchableOpacity>
+            </View>
+            <Text style={styles.commentContent}>{userComment.content}</Text>
+          </View>
+        )}
+        {filteredComments.map(comment => (
+          <View style={styles.comment} key={comment.id}>
+            <View style={styles.commentAuthor}>
+              <Image
+                source={images[comment.author.profile_pic].source}
+                style={styles.commentAuthorPic}
+              ></Image>
+              <View style={styles.commentAuthorInfo}>
+                <Text style={styles.commentAuthorName} numberOfLines={1}>
+                  {comment.author.name}
+                </Text>
+                {renderRating({ rating: 3, totalVotes: 150 }, 10, false, 0)}
+              </View>
+            </View>
+            <Text style={styles.commentContent}>{comment.content}</Text>
+          </View>
+        ))}
+        {!loadedAllComments && !loadingComments && (
+          <View style={styles.loadMoreCommentsSection}>
+            <TouchableOpacity onPress={() => loadCommentsNextPage(user.id)}>
+              <Image
+                style={styles.plusIcon}
+                source={require('../../../assets/plus.png')}
+              ></Image>
+            </TouchableOpacity>
+          </View>
+        )}
+      </View>
+    );
+  };
+
+  const renderRating = (
+    ratings,
+    starSize = 20,
+    showVotes = true,
+    spaceBottom = 12
+  ) => {
+    return (
+      <View style={{ flexDirection: 'row', marginBottom: spaceBottom }}>
         <View style={styles.userRatingStars}>
           <View
             style={[
-              styles.userRatingYellowStars,
-              { width: 132 * (ratings.rating / 5) }
+              styles.userRatingYellowStars(starSize),
+              {
+                width:
+                  (starSize * 5 + starSize * 0.4 * 4) * (ratings.rating / 5)
+              }
             ]}
           >
             {new Array(5).fill(0).map((_, index) => (
               <Image
-                style={styles.userRatingStar}
+                style={styles.userRatingStar(starSize)}
                 key={index}
                 source={require('../../../assets/yellowstar.png')}
               />
             ))}
           </View>
-          <View style={styles.userRatingGrayStars}>
+          <View style={styles.userRatingGrayStars(starSize)}>
             {new Array(5).fill(0).map((_, index) => (
               <Image
-                style={styles.userRatingStar}
+                style={styles.userRatingStar(starSize)}
                 key={index}
                 source={require('../../../assets/graystar.png')}
               />
             ))}
           </View>
         </View>
-        <Text style={{ color: 'white', marginLeft: 8 }}>
-          ({ratings.totalVotes})
-        </Text>
+        {showVotes && (
+          <Text style={{ color: 'white', marginLeft: 8 }}>
+            ({ratings.totalVotes})
+          </Text>
+        )}
       </View>
     );
   };
-
-  useEffect(() => {
-    const getUserInfo = async userId => {
-      const user = await api
-        .get(`/user/${userId}`)
-        .then(res => res.data)
-        .catch(() => null);
-      if (user) {
-        setUser(user);
-      } else {
-        setError(true);
-      }
-      setLoading(false);
-    };
-
-    getUserInfo(user.id);
-  }, []);
 
   return (
     <View style={styles.container}>
@@ -227,6 +397,37 @@ const UserProfile = ({ navigation }) => {
             )}
             <Text style={styles.ratingSubTitle}>Avaliações de eventos</Text>
             {renderRating(userEventsRate)}
+            <Text style={styles.commentsTitle}>Comentários</Text>
+            {!userComment ||
+              (editingComment && (
+                <>
+                  <Input
+                    value={comment}
+                    setValue={comment => setComment(comment)}
+                    isPassword={false}
+                    placeHolder={'Escreva um comentário sobre esse usuário'}
+                    containerHeight={150}
+                    lineHeight={24}
+                    multiline={true}
+                    numberOfLines={8}
+                    textInputStyle={{ paddingTop: 18 }}
+                    completeHeight={true}
+                  />
+                  <TouchableOpacity
+                    disabled={updatingComment}
+                    style={styles.rateUser}
+                    onPress={() => createOrUpdateComment(user.id)}
+                  >
+                    <Text style={styles.rateUserTitle}>
+                      {editingComment
+                        ? 'Atualizar comentário'
+                        : 'Adicionar comentário'}
+                    </Text>
+                  </TouchableOpacity>
+                </>
+              ))}
+
+            {renderProfileComments()}
           </ScrollView>
         </>
       )}

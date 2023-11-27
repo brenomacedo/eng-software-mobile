@@ -3,7 +3,8 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#212121',
-    flex: 1
+    flex: 1,
+    paddingBottom: 12
   },
   scrollContainer: {
     marginHorizontal: 20
@@ -63,27 +64,25 @@ const styles = StyleSheet.create({
   userRatingStars: {
     position: 'relative'
   },
-  userRatingYellowStars: {
+  userRatingYellowStars: starSize => ({
     flexDirection: 'row',
-    columnGap: 8,
-    marginBottom: 12,
+    columnGap: starSize * 0.4,
     position: 'absolute',
     left: 0,
     top: 0,
     height: 20,
     zIndex: 2,
     overflow: 'hidden'
-  },
-  userRatingGrayStars: {
+  }),
+  userRatingGrayStars: starSize => ({
     flexDirection: 'row',
-    columnGap: 8,
-    marginBottom: 12,
+    columnGap: starSize * 0.4,
     position: 'relative'
-  },
-  userRatingStar: {
-    width: 20,
-    height: 20
-  },
+  }),
+  userRatingStar: starSize => ({
+    width: starSize,
+    height: starSize
+  }),
   rateUserRatedText: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -100,6 +99,57 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins',
     fontSize: 16,
     marginTop: 32
+  },
+  commentsTitle: {
+    color: 'white',
+    fontSize: 18,
+    fontFamily: 'Poppins',
+    marginTop: 16
+  },
+  comment: {
+    flexDirection: 'column'
+  },
+  commentAuthor: {
+    flexDirection: 'row',
+    gap: 6,
+    alignItems: 'center'
+  },
+  commentAuthorPic: {
+    width: 36,
+    height: 36,
+    backgroundColor: 'red',
+    borderRadius: 18
+  },
+  commentAuthorInfo: {
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    flex: 1
+  },
+  commentAuthorRatingContainer: {},
+  commentAuthorName: {
+    color: 'white',
+    fontSize: 14
+  },
+  eye: {
+    width: 18,
+    height: 18
+  },
+  commentContent: {
+    color: 'white',
+    fontFamily: 'Poppins'
+  },
+  comments: {
+    rowGap: 12,
+    marginTop: 16
+  },
+  loadMoreCommentsSection: {
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+    flexDirection: 'row'
+  },
+  plusIcon: {
+    width: 24,
+    height: 24
   }
 });
 

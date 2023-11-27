@@ -20,7 +20,8 @@ export default function Input({
   multiline,
   numberOfLines,
   style = {},
-  textInputStyle = {}
+  textInputStyle = {},
+  completeHeight
 }) {
   const [hidePassword, setHidePassword] = useState(isPassword);
   return (
@@ -49,7 +50,11 @@ export default function Input({
         onBlur={onBlur || (() => {})}
         secureTextEntry={hidePassword}
         style={[
-          styles.Input(leftIcon ? true : false, containerHeight),
+          styles.Input(
+            leftIcon ? true : false,
+            containerHeight,
+            completeHeight
+          ),
           textInputStyle
         ]}
         placeholder={placeHolder}

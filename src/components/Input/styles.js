@@ -1,9 +1,9 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  Input: (doesTheInputHaveAnIcon, containerHeight) => ({
+  Input: (doesTheInputHaveAnIcon, containerHeight, completeHeight) => ({
     backgroundColor: '#D2D2D2',
-    height: '78%',
+    height: !completeHeight ? '78%' : '92%',
     width: '100%',
     borderRadius: 15,
     fontFamily: 'Poppins',
@@ -14,7 +14,12 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     marginTop: 4
   }),
-  InputContainer: (containerWidth, containerHeight, marginBottom, marginTop) => ({
+  InputContainer: (
+    containerWidth,
+    containerHeight,
+    marginBottom,
+    marginTop
+  ) => ({
     position: 'relative',
     height: containerHeight ? containerHeight : 90,
     width: containerWidth ? containerWidth : '100%',
