@@ -82,8 +82,6 @@ export default function EditEventScreen({ navigation, route }) {
   const handleEditRequest = async () => {
     setLoading(true);
     try {
-      console.log(tittle);
-
       const response = await api
         .patch(
           `/event/${event_id}`,
@@ -123,6 +121,22 @@ export default function EditEventScreen({ navigation, route }) {
         Alert.alert('Erro', err.response.data.error);
       }
     }
+  };
+
+  const handleDeleteRequest = () => {
+    setLoading(true);
+    api
+      .delete(`/event/${event_id}`, {
+        headers: {
+          authorization: `Bearer ${authToken}`
+        }
+      })
+      .then(() => {
+        Alert.alert('Evento deletado');
+        navigation.goBack();
+      })
+      .catch(() => Alert.alert('Erro ao deletar evento'))
+      .finally(() => setLoading(false));
   };
 
   return (
@@ -208,6 +222,14 @@ export default function EditEventScreen({ navigation, route }) {
         buttonMargin={10}
         textValue={'Atualizar'}
         onPress={handleEditRequest}
+      />
+      <View style={styles.lineSeparator}></View>
+      <ButtonApp
+        loading={loading}
+        buttonWidth={'90%'}
+        buttonMargin={10}
+        textValue={'Deletar'}
+        onPress={handleDeleteRequest}
       />
     </ScrollView>
   );

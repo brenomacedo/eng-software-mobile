@@ -62,6 +62,13 @@ const styles = StyleSheet.create({
     paddingRight: 32,
     width: '100%',
     height: 160
+  },
+  lineSeparator: {
+    height: 2,
+    backgroundColor: 'white',
+    marginVertical: 6,
+
+    width: '90%'
   }
 });
 

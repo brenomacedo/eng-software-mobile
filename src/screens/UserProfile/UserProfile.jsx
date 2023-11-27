@@ -222,10 +222,12 @@ const UserProfile = ({ navigation }) => {
     setUserComment(
       comments.find(comment => comment.author_id === loggedUser.id)
     );
+
+    console.log(comments.find(comment => comment.author_id === loggedUser.id));
   }, [loggedUser, comments]);
 
   const renderProfileComments = () => {
-    if (comments.length === 0) {
+    if (filteredComments.length === 0 && !userComment) {
       return (
         <Text style={styles.notLoadedText}>Nenhum comentário encontrado.</Text>
       );
@@ -398,34 +400,33 @@ const UserProfile = ({ navigation }) => {
             <Text style={styles.ratingSubTitle}>Avaliações de eventos</Text>
             {renderRating(userEventsRate)}
             <Text style={styles.commentsTitle}>Comentários</Text>
-            {!userComment ||
-              (editingComment && (
-                <>
-                  <Input
-                    value={comment}
-                    setValue={comment => setComment(comment)}
-                    isPassword={false}
-                    placeHolder={'Escreva um comentário sobre esse usuário'}
-                    containerHeight={150}
-                    lineHeight={24}
-                    multiline={true}
-                    numberOfLines={8}
-                    textInputStyle={{ paddingTop: 18 }}
-                    completeHeight={true}
-                  />
-                  <TouchableOpacity
-                    disabled={updatingComment}
-                    style={styles.rateUser}
-                    onPress={() => createOrUpdateComment(user.id)}
-                  >
-                    <Text style={styles.rateUserTitle}>
-                      {editingComment
-                        ? 'Atualizar comentário'
-                        : 'Adicionar comentário'}
-                    </Text>
-                  </TouchableOpacity>
-                </>
-              ))}
+            {(!userComment || editingComment) && (
+              <>
+                <Input
+                  value={comment}
+                  setValue={comment => setComment(comment)}
+                  isPassword={false}
+                  placeHolder={'Escreva um comentário sobre esse usuário'}
+                  containerHeight={150}
+                  lineHeight={24}
+                  multiline={true}
+                  numberOfLines={8}
+                  textInputStyle={{ paddingTop: 18 }}
+                  completeHeight={true}
+                />
+                <TouchableOpacity
+                  disabled={updatingComment}
+                  style={styles.rateUser}
+                  onPress={() => createOrUpdateComment(user.id)}
+                >
+                  <Text style={styles.rateUserTitle}>
+                    {editingComment
+                      ? 'Atualizar comentário'
+                      : 'Adicionar comentário'}
+                  </Text>
+                </TouchableOpacity>
+              </>
+            )}
 
             {renderProfileComments()}
           </ScrollView>
