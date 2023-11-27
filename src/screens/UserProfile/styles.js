@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#212121',
+    backgroundColor: '#313131',
     flex: 1,
     paddingBottom: 12
   },
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   },
   rateUser: {
     width: '100%',
-    backgroundColor: '#F90000',
+    backgroundColor: '#E13535',
     borderRadius: 12,
     paddingVertical: 8
   },
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
   commentAuthorPic: {
     width: 36,
     height: 36,
-    backgroundColor: 'red',
+    backgroundColor: '#E13535',
     borderRadius: 18
   },
   commentAuthorInfo: {

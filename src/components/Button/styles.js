@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   Button: (buttonWidth, buttonMargin, loading) => ({
-    backgroundColor: loading ? '#aaa' : '#F90000',
+    backgroundColor: loading ? '#aaa' : '#E13535',
     color: 'white',
     height: 50,
     width: buttonWidth ? buttonWidth : '100%',

@@ -39,7 +39,7 @@ const Message = function ({ data, index, onMessageAction, loading }) {
               disabled={loading}
               style={{
                 ...styles.button,
-                backgroundColor: loading ? 'gray' : '#F90000'
+                backgroundColor: loading ? 'gray' : '#E13535'
               }}
               onPress={handleReject}
             >

@@ -4,7 +4,7 @@ export default StyleSheet.create({
   scroll: {
     flex: 1,
     paddingTop: 30,
-    backgroundColor: '#212121'
+    backgroundColor: '#313131'
   },
   bell: {
     height: 30,
@@ -34,7 +34,7 @@ export default StyleSheet.create({
   },
 
   eventDetailsContainer: {
-    backgroundColor: '#212121',
+    backgroundColor: '#313131',
     alignItems: 'center',
     minHeight: '100%'
   },
@@ -108,7 +108,7 @@ export default StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#212121'
+    backgroundColor: '#313131'
   },
   noResults: {
     color: 'white',

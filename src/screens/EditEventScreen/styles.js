@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   scroll: {
     flex: 1,
     width: Dimensions.get('window').width,
-    backgroundColor: '#212121',
+    backgroundColor: '#313131',
     paddingTop: 10,
     paddingBottom: 20,
     position: 'relative'

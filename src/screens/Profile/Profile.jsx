@@ -200,7 +200,7 @@ const Profile = ({ navigation }) => {
     <ScrollView
       style={{ flex: 1 }}
       contentContainerStyle={{
-        backgroundColor: '#212121',
+        backgroundColor: '#313131',
         flexDirection: 'column',
         alignItems: 'center',
         paddingHorizontal: 30,

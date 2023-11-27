@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
   topBar: {
     flexDirection: 'row',
     height: 65,
-    backgroundColor: '#121212',
+    backgroundColor: '#313131',
     justifyContent: 'space-evenly'
   },
   topBarItemContainer: {

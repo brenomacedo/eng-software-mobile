@@ -9,12 +9,12 @@ export default StyleSheet.create({
     borderBottomLeftRadius: 32,
     borderBottomRightRadius: 32,
     zIndex: 1,
-    backgroundColor: '#212121',
+    backgroundColor: '#313131',
     flexDirection: 'column',
     padding: 24
   },
   loginButton: {
-    backgroundColor: '#F90000',
+    backgroundColor: '#E13535',
     alignSelf: 'flex-end',
     marginTop: 24,
     marginBottom: 12,
@@ -63,7 +63,7 @@ export default StyleSheet.create({
   addEventButton: {
     width: 60,
     height: 60,
-    backgroundColor: '#F90000',
+    backgroundColor: '#E13535',
     zIndex: 4,
     position: 'absolute',
     bottom: 20,
@@ -78,7 +78,7 @@ export default StyleSheet.create({
   },
   mapView: { flex: 1 },
   calloutContentContainer: {
-    backgroundColor: '#212121',
+    backgroundColor: '#313131',
     padding: 8,
     flexDirection: 'column',
     justifyContent: 'center',

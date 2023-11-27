@@ -29,7 +29,7 @@ export default function ForgotPassword({ navigation }) {
   return (
     <View
       style={{
-        backgroundColor: '#212121',
+        backgroundColor: '#313131',
         width: '100%',
         height: '100%',
         alignItems: 'center',
@@ -40,7 +40,7 @@ export default function ForgotPassword({ navigation }) {
       <ArrowBack onPress={navigation.goBack} />
       <View
         style={{
-          backgroundColor: '#212121',
+          backgroundColor: '#313131',
           width: '100%',
           height: '100%',
           alignItems: 'center',

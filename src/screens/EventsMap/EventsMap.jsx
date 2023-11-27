@@ -132,7 +132,7 @@ const EventsMap = ({ navigation }) => {
                     paddingHorizontal: 4,
                     justifyContent: 'center',
                     alignItems: 'center',
-                    backgroundColor: '#f90000',
+                    backgroundColor: '#E13535',
                     borderRadius: 4
                   }}
                 >

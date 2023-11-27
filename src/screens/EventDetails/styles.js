@@ -5,7 +5,7 @@ export default StyleSheet.create({
     flex: 1
   },
   eventDetailsContainer: {
-    backgroundColor: '#212121',
+    backgroundColor: '#313131',
     alignItems: 'center',
     minHeight: '100%',
     paddingBottom: 20
@@ -46,7 +46,7 @@ export default StyleSheet.create({
   button: {
     width: '100%',
     height: 60,
-    backgroundColor: '#f90000',
+    backgroundColor: '#E13535',
     borderRadius: 15,
     marginTop: 16,
     justifyContent: 'center',
@@ -68,7 +68,7 @@ export default StyleSheet.create({
     marginTop: 16,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#f90000'
+    backgroundColor: '#E13535'
   },
   seeParticipantsText: {
     color: 'white',
@@ -151,7 +151,7 @@ export default StyleSheet.create({
   },
   rateUser: {
     width: '100%',
-    backgroundColor: '#F90000',
+    backgroundColor: '#E13535',
     borderRadius: 12,
     paddingVertical: 8
   },

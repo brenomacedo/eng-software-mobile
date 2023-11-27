@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MapStack from './MapStack';
-import eventStack from "./eventStack";
-import requestStack from "./requestStack";
+import eventStack from './eventStack';
+import requestStack from './requestStack';
 import styles from './styles';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import Profile from '../../screens/Profile/Profile';
@@ -61,7 +61,7 @@ const BottomNavigator = () => {
             <Text
               style={[
                 styles.topBarLabel,
-                { color: isFocused ? '#F90000' : '#fff' }
+                { color: isFocused ? '#E13535' : '#fff' }
               ]}
             >
               {route.label}

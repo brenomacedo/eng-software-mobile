@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     height: 30
   },
   chooseRateButton: {
-    backgroundColor: '#F90000',
+    backgroundColor: '#E13535',
     borderRadius: 12,
     paddingVertical: 8,
     width: '100%',
