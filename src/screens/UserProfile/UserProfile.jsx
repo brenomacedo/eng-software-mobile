@@ -263,23 +263,35 @@ const UserProfile = ({ navigation }) => {
             <Text style={styles.commentContent}>{userComment.content}</Text>
           </View>
         )}
-        {filteredComments.map(comment => (
-          <View style={styles.comment} key={comment.id}>
-            <View style={styles.commentAuthor}>
-              <Image
-                source={images[comment.author.profile_pic].source}
-                style={styles.commentAuthorPic}
-              ></Image>
-              <View style={styles.commentAuthorInfo}>
-                <Text style={styles.commentAuthorName} numberOfLines={1}>
-                  {comment.author.name}
-                </Text>
-                {renderRating({ rating: 3, totalVotes: 150 }, 10, false, 0)}
+        {filteredComments.map(comment => {
+          const userRating = user.ratings.find(
+            rating => rating.user_id === comment.author.id
+          );
+
+          return (
+            <View style={styles.comment} key={comment.id}>
+              <View style={styles.commentAuthor}>
+                <Image
+                  source={images[comment.author.profile_pic].source}
+                  style={styles.commentAuthorPic}
+                ></Image>
+                <View style={styles.commentAuthorInfo}>
+                  <Text style={styles.commentAuthorName} numberOfLines={1}>
+                    {comment.author.name}
+                  </Text>
+                  {userRating &&
+                    renderRating(
+                      { rating: userRating.rating, totalVotes: 1 },
+                      10,
+                      false,
+                      0
+                    )}
+                </View>
               </View>
+              <Text style={styles.commentContent}>{comment.content}</Text>
             </View>
-            <Text style={styles.commentContent}>{comment.content}</Text>
-          </View>
-        ))}
+          );
+        })}
         {!loadedAllComments && !loadingComments && (
           <View style={styles.loadMoreCommentsSection}>
             <TouchableOpacity onPress={() => loadCommentsNextPage(user.id)}>
