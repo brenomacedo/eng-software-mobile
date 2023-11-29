@@ -264,9 +264,10 @@ const UserProfile = ({ navigation }) => {
           </View>
         )}
         {filteredComments.map(comment => {
-          const userRating = user.ratings.find(
-            rating => rating.user_id === comment.author.id
-          );
+          const userRating =
+            user &&
+            user.ratings &&
+            user.ratings.find(rating => rating.user_id === comment.author.id);
 
           return (
             <View style={styles.comment} key={comment.id}>
