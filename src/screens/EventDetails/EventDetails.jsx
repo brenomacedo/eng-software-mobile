@@ -86,7 +86,7 @@ const EventDetails = ({ navigation, route }) => {
 
   const viewUserProfile = user => {
     setIsParticipantsModalOpen(false);
-    navigation.navigate('UserProfile', { user });
+    navigation.navigate('UserProfile', { user, fromEye: true });
   };
 
   const renderUserRating = ratings => {

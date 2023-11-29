@@ -71,7 +71,6 @@ const SearchResults = ({ navigation, route }) => {
   const isFocused = useIsFocused();
 
   const seeDetails = data => {
-    console.log(data.eventId);
     navigation.navigate('EventDetails', {
       title: data.title,
       location: data.location,

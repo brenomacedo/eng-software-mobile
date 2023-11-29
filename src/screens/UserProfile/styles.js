@@ -150,6 +150,20 @@ const styles = StyleSheet.create({
   plusIcon: {
     width: 24,
     height: 24
+  },
+  editProfileButton: {
+    backgroundColor: '#E13535',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 140,
+    height: 32,
+    borderRadius: 5,
+    alignSelf: 'center',
+    marginBottom: 24
+  },
+  editProfileButtonText: {
+    color: 'white',
+    fontSize: 18
   }
 });
 

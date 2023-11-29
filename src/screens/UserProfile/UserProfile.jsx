@@ -18,15 +18,17 @@ import { Input } from '../../components';
 
 const UserProfile = ({ navigation }) => {
   const isFocused = useIsFocused();
-  const {
-    params: { user: initialUser }
-  } = useRoute();
+  const { authToken, user: loggedUser, isAuth } = useAuth();
+  const { params } = useRoute();
   const [modalRateOpen, setModalRateOpen] = useState(false);
-  const [user, setUser] = useState(initialUser);
+  const [user, setUser] = useState(
+    params && params.fromEye
+      ? params.user
+      : { ...loggedUser, ratings: [], events: [] }
+  );
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
   const [loadingRating, setLoadingRating] = useState(false);
-  const { authToken, user: loggedUser, isAuth } = useAuth();
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState([]);
   const [commentPage, setCommentPage] = useState(0);
@@ -222,8 +224,6 @@ const UserProfile = ({ navigation }) => {
     setUserComment(
       comments.find(comment => comment.author_id === loggedUser.id)
     );
-
-    console.log(comments.find(comment => comment.author_id === loggedUser.id));
   }, [loggedUser, comments]);
 
   const renderProfileComments = () => {
@@ -365,6 +365,14 @@ const UserProfile = ({ navigation }) => {
               source={images[user.profile_pic].source}
               style={styles.userProfilePic}
             ></Image>
+            {!(params && params.fromEye) && (
+              <TouchableOpacity
+                onPress={() => navigation.navigate('PSProfile')}
+                style={styles.editProfileButton}
+              >
+                <Text style={styles.editProfileButtonText}>Editar Perfil</Text>
+              </TouchableOpacity>
+            )}
             <Text style={styles.userName} numberOfLines={1}>
               {user.name}
             </Text>

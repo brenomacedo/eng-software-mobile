@@ -4,8 +4,8 @@ import eventStack from './eventStack';
 import requestStack from './requestStack';
 import styles from './styles';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
-import Profile from '../../screens/Profile/Profile';
 import useAuth from '../../hooks/useAuth';
+import ProfileStack from './ProfileStack';
 
 const BOTTOM_TAB_ROUTES = [
   {
@@ -81,7 +81,7 @@ const BottomNavigator = () => {
       tabBar={tabBar}
     >
       <BottomTab.Screen name="mapStack" component={MapStack} />
-      <BottomTab.Screen name="profile" component={Profile} />
+      <BottomTab.Screen name="profile" component={ProfileStack} />
       <BottomTab.Screen name="eventStack" component={eventStack} />
       <BottomTab.Screen name="requests" component={requestStack} />
     </BottomTab.Navigator>
