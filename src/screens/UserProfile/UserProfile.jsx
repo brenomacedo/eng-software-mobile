@@ -83,7 +83,9 @@ const UserProfile = ({ navigation }) => {
   }, [user]);
 
   const filteredComments = useMemo(() => {
-    return comments.filter(comment => comment.author_id !== loggedUser.id);
+    return comments.filter(
+      comment => !loggedUser || comment.author_id !== loggedUser.id
+    );
   }, [loggedUser, comments]);
 
   const goBack = () => navigation.goBack();
@@ -94,7 +96,7 @@ const UserProfile = ({ navigation }) => {
     const rating = await api
       .post(
         '/user/rate',
-        { user_rated: user.id, rating: rate },
+        { user_rated: user && user.id, rating: rate },
         {
           headers: {
             authorization: `Bearer ${authToken}`
@@ -136,7 +138,7 @@ const UserProfile = ({ navigation }) => {
       .get(`/comment/${userId}`, {
         params: {
           page: commentPage + 1,
-          authorId: loggedUser.id
+          authorId: loggedUser && loggedUser.id
         }
       })
       .then(res => {
@@ -198,7 +200,7 @@ const UserProfile = ({ navigation }) => {
           .get(`/comment/${userId}`, {
             params: {
               page: 0,
-              authorId: loggedUser.id
+              authorId: loggedUser && loggedUser.id
             }
           })
           .then(res => res.data)
@@ -222,7 +224,9 @@ const UserProfile = ({ navigation }) => {
 
   useEffect(() => {
     setUserComment(
-      comments.find(comment => comment.author_id === loggedUser.id)
+      comments.find(
+        comment => loggedUser && comment.author_id === loggedUser.id
+      )
     );
   }, [loggedUser, comments]);
 
@@ -264,6 +268,7 @@ const UserProfile = ({ navigation }) => {
           </View>
         )}
         {filteredComments.map(comment => {
+          console.log(comment);
           const userRating =
             user &&
             user.ratings &&
