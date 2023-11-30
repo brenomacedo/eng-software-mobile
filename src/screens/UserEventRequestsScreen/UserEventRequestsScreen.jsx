@@ -8,6 +8,7 @@ import useAuth from '../../hooks/useAuth';
 import api from '../../api';
 
 const Message = function ({ data, index, onMessageAction, loading }) {
+  console.log(data);
   const handleAccept = () => {
     onMessageAction(data, index, 'ACCEPTED');
   };
@@ -96,7 +97,7 @@ const UserEventRequestsScreen = ({ navigation, route }) => {
           .then(res => res.data);
         response.map(request => {
           let newObject = {
-            Nome: request.name,
+            Nome: request.user.name,
             Mensagem: request.message,
             id: request.id,
             status: request.status
